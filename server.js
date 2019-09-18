@@ -8,5 +8,5 @@ const server = express();
 server.listen(port);
 
 server.use('/health', (req, res) => {
-	res.json({ status: 'UP' });
+  res.json({ status: 'UP' });
 });
