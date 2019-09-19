@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon --watch www-back-end www-back-end/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo 1"
   },
   "repository": {
     "type": "git",
