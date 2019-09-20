@@ -1,8 +1,8 @@
-const dotenv = require('dotenv');
-dotenv.config();
+import { config } from 'dotenv';
+config();
 const port = process.env.PORT
 
-const express = require("express");
+import express from "express";
 const server = express();
 
 server.listen(port);
