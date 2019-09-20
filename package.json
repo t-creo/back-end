@@ -4,7 +4,7 @@
   "description": "Backend para la aplicación World White Web",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon --watch www-back-end www-back-end/server.js",
+    "start": "nodemon --watch src --exec ts-node src/server.ts",
     "test": "echo 1",
     "tsc": "tsc"
   },
