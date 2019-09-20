@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon --watch www-back-end www-back-end/server.js",
-    "test": "echo 1"
+    "test": "echo 1",
+    "tsc": "tsc"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,8 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "nodemon": "^1.19.2"
+    "nodemon": "^1.19.2",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.3"
   }
 }
