@@ -4,6 +4,10 @@
         "javascriptreact",
         "typescript"
     ],
+    "editor.insertSpaces": true,
+    "[typescript]": {
+        "editor.tabSize": 2,
+    },
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,
