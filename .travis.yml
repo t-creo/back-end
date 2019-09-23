@@ -2,10 +2,6 @@ language: node_js
 node_js:
   - "10.16.0"
 if: branch IN (master, develop)
-jobs:
-  include:
-    - stage: "Building 🔧👷"
-      name: "Running tests 🧪"
-      script: npm test
-      name: "Sending coverage info to coveralls.io 📈📝"
-      script: npm run upload-coverage
+script:
+  - npm test
+  - npm run upload-coverage
