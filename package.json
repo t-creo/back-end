@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon --watch src --exec ts-node src/server.ts",
-    "test": "echo 1",
+    "lint": "eslint src --ext .ts",
+    "test": "npm run lint",
     "tsc": "tsc"
   },
   "repository": {
