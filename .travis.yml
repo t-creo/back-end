@@ -4,7 +4,8 @@ node_js:
 if: branch IN (master, develop)
 jobs:
   include:
-    - stage: "Running unit-tests 🧪"
+    - stage: "Building 🔧👷"
+      name: "Running tests 🧪"
       script: npm test
-    - stage: "Sending coverage info to coveralls.io 📈📝"
+      name: "Sending coverage info to coveralls.io 📈📝"
       script: npm run upload-coverage
