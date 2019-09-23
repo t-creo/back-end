@@ -8,7 +8,6 @@
     "prod": "node lib/server.js",
     "lint": "eslint src tests --ext .ts",
     "pretest": "npm run lint",
-    "build": "npm run test && tsc",
     "test": "jest",
     "tsc": "tsc"
   },
