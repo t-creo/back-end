@@ -1,12 +1,4 @@
-import { config } from 'dotenv'
-config()
-const port = process.env.PORT
+import app from './app'
+import config from './config'
 
-import express from 'express'
-const server = express()
-
-server.listen(port)
-
-server.use('/health', (req, res) => {
-  res.json({ status: 'UP' })
-})
+app.listen(config.port)
