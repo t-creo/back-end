@@ -5,7 +5,8 @@ describe('/health endpoint', () => {
   test('returns http status code 200', () => {
     return request(app)
       .get('/health')
-      .expect(200, {
+      .expect(200)
+      .expect({
         status: 'UP'
       })
   })
