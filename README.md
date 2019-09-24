@@ -1,7 +1,8 @@
 # www-back-end
-Backend para la aplicación World White Web
 
-MiniProyecto de Desarrollo de Software para la USBve.
+![](https://img.shields.io/docker/automated/german1608/world-white-web?style=flat-square) ![](https://img.shields.io/travis/World-White-Web/www-back-end/develop?style=flat-square) ![npm type definitions](https://img.shields.io/npm/types/typescript?style=flat-square) [![Coverage Status](https://coveralls.io/repos/github/World-White-Web/www-back-end/badge.svg?branch=develop)](https://coveralls.io/github/World-White-Web/www-back-end?branch=develop)
+
+Backend para la aplicación World White Web. MiniProyecto de Desarrollo de Software para la USBve.
 
 ## Integrantes
 
