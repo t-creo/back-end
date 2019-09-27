@@ -8,7 +8,12 @@ export class Error400 extends Error implements ErrorObjectInterface {
     userMessage = "An error has ocurred";
 }
 
-export class Error401 extends Error implements ErrorObjectInterface {}
+export class Error401 extends Error implements ErrorObjectInterface {
+    status      = 401;
+    title       = "Unauthorized";
+    message     = "Not authenticated";
+    userMessage = "Client needs to authenticate";
+}
 
 export class Error403 extends Error implements ErrorObjectInterface {}
 
