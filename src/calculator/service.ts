@@ -1,5 +1,6 @@
 import {TextCredibilityWeights, Credibility} from './models'
 import Filter, { FilterParams } from 'bad-words'
+import SimpleSpamFilter, { SimpleSpamFilterParams } from 'simple-spam-filter'
 
 const BAD_WORD_PLACEHOLDER = '*'
 
@@ -27,10 +28,23 @@ function badWordsCriteria(text: string) : number {
   return 100 - (100 * badWordsInText.length / wordsInText.length)
 }
 
+function spamCriteria(text: string) : number {
+  const spamParams : SimpleSpamFilterParams = {
+    minWords: 5,
+    maxPercentCaps: 30,
+    maxNumSwearWords: 2
+  }
+  const spamFilter : SimpleSpamFilter = new SimpleSpamFilter(spamParams)
+  return spamFilter.isSpam(text)
+    ? 0
+    : 100
+}
+
 function textCredibility(text: string, params: TextCredibilityWeights) : Credibility {
   const badWordsCalculation = params.weightBadWords * badWordsCriteria(text)
+  const spamCalculation = params.weightSpam * spamCriteria(text)
   return {
-    credibility: badWordsCalculation
+    credibility: badWordsCalculation + spamCalculation
   }
 }
 
