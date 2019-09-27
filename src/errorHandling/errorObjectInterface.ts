@@ -13,4 +13,4 @@ interface ErrorDetailInterface {
     validationCode:     string;
 }
 
-export default ErrorObjectInterface;
+export default ErrorObjectInterface
