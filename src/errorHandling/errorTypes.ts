@@ -15,7 +15,12 @@ export class Error401 extends Error implements ErrorObjectInterface {
     userMessage = "Client needs to authenticate";
 }
 
-export class Error403 extends Error implements ErrorObjectInterface {}
+export class Error403 extends Error implements ErrorObjectInterface {
+    status      = 403;
+    title       = "Forbidden";
+    message     = "Cannot Access";
+    userMessage = "Client cannot access this resource";
+}
 
 /* Server-side Errors */
 export class Error500 extends Error implements ErrorObjectInterface {}
