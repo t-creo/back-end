@@ -12,3 +12,5 @@ interface ErrorDetailInterface {
     userErrorMessage:   string;
     validationCode:     string;
 }
+
+export default ErrorObjectInterface;
