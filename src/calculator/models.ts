@@ -1,3 +1,9 @@
 export interface Credibility {
-  credibility: number;
+  credibility: number
+}
+
+export interface TextCredibilityParams {
+  weightSpam: number
+  weightBadWords: number
+  weightMisspelling: number
 }
