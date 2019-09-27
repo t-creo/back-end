@@ -42,7 +42,26 @@ describe('/calculate/plain-text endpoint', () => {
           ...params
         })
       })
+    })
 
+    describe('full spam criteria', () => {
+      const params = {
+        weightBadWords: 0,
+        weightMisspelling: 0,
+        weightSpam: 1
+      }
+      it('returns credibility=100 with not spam text', () => {
+        return testCredibilityWithOkData({ credibility: 100 }, {
+          text: 'Why hello good sir, how are you doing?',
+          ...params
+        })
+      })
+      it('returns credibility=0 with spam text', () => {
+        return testCredibilityWithOkData({ credibility: 0 }, {
+          text: 'YO MAN WATUPPPPP SONN',
+          ...params
+        })
+      })
     })
   })
 })
