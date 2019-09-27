@@ -17,5 +17,8 @@ declare module 'bad-words' {
   }
 
   export default Filter
+  export {
+    FilterParams
+  }
 }
 
