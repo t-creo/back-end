@@ -28,11 +28,9 @@ function badWordsCriteria(text: string) : number {
 }
 
 function textCredibility(text: string, params: TextCredibilityWeights) : Credibility {
-  console.log(text)
-  console.log(params)
   const badWordsCalculation = params.weightBadWords * badWordsCriteria(text)
   return {
-    credibility: params.weightBadWords * badWordsCalculation
+    credibility: badWordsCalculation
   }
 }
 
