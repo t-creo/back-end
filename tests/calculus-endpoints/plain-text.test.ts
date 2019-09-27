@@ -8,32 +8,39 @@ interface PlainTextQueryParams extends TextCredibilityWeights {
 
 describe('/calculate/plain-text endpoint', () => {
   describe('http 200 calls', () => {
-    describe('full bad criteria', () => {
-      function testCredibilityWithOkData(
-        expectedReturn : Credibility,textToAnalyze: string) {
-        const textCredibilityWeights : PlainTextQueryParams = {
-          weightBadWords: 1,
-          weightMisspelling: 0,
-          weightSpam: 0,
-          text: textToAnalyze
-        }
-        return request(app)
-          .get('/calculate/plain-text')
-          .query(textCredibilityWeights)
-          .expect(200)
-          .expect(expectedReturn)
-
+    function testCredibilityWithOkData(
+      expectedReturn : Credibility, params: PlainTextQueryParams) {
+      return request(app)
+        .get('/calculate/plain-text')
+        .query(params)
+        .expect(200)
+        .expect(expectedReturn)
+    }
+    describe('full bad words criteria', () => {
+      const params = {
+        weightBadWords: 1,
+        weightMisspelling: 0,
+        weightSpam: 0,
       }
-      it('returns credibility=100 on full bad words filtering with no bad words', () => {
-        return testCredibilityWithOkData({ credibility: 100 }, 'yes no')
+      it('returns credibility=100 with no bad words', () => {
+        return testCredibilityWithOkData({ credibility: 100 }, {
+          text: 'yes no',
+          ...params
+        })
       })
 
       it('returns credibility=50 with 2 words and 1 bad', () => {
-        return testCredibilityWithOkData({ credibility: 50 }, 'yes hell')
+        return testCredibilityWithOkData({ credibility: 50 }, {
+          text: 'yes hell',
+          ...params
+        })
       })
 
       it('returns credibility=0 with 2 words and 2 bad words', () => {
-        return testCredibilityWithOkData({ credibility: 0 }, 'hell hell')
+        return testCredibilityWithOkData({ credibility: 0 }, {
+          text: 'hell hell',
+          ...params
+        })
       })
 
     })
