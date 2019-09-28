@@ -56,9 +56,9 @@ async function twitterUserCredibility(userId: string) {
     const user : TwitterUser = {
       name: response.name,
       verified: response.verified,
-      year_joined : response.created_at.split(' ').pop()
+      yearJoined : response.created_at.split(' ').pop()
     }
-    const userCredCalculation = getVerifWeigth(user.verified) + getCreationWeight(user.year_joined)
+    const userCredCalculation = getVerifWeigth(user.verified) + getCreationWeight(user.yearJoined)
     return  {
       credibility: userCredCalculation
     }
@@ -73,12 +73,12 @@ function getVerifWeigth(isUserVerified : boolean) : number {
   }
 }
 
-function getCreationWeight(year_joined : number) : number {
-  const current_year = new Date().getFullYear()
+function getCreationWeight(yearJoined : number) : number {
+  const currentYear = new Date().getFullYear()
   const twitterCreationYear = 2006
-  const account_age = current_year - twitterCreationYear
-  const max_account_age = current_year - year_joined
-  return account_age/max_account_age
+  const accountAge = currentYear - twitterCreationYear
+  const maxAccountAge = currentYear - yearJoined
+  return accountAge/maxAccountAge
 }
 
 export {

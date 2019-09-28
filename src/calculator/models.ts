@@ -11,5 +11,5 @@ export interface TextCredibilityWeights {
 export interface TwitterUser {
   name: string
   verified: boolean
-  year_joined: number
+  yearJoined: number
 }
