@@ -28,9 +28,26 @@ Solo es necesario tener instalado Node lts/dubnium (v10.16.0). Se recomienda usa
 #### Para desarrollo
 
 1. Ejecuta `npm install` para descargar todas las dependencias.
-2. Ejecuta `npm start` para correr el servidor de desarrollo. El mismo se encarga recargar las páginas en el navegador cuando guardas alguna modificación a los archvos del repositorio.
-3. Visita http://localhost:3000/health 
-4. Verificar que retorne cógigo 200 y un JSON { "status": "UP" }
+2. Exporta el puerto como variable de entorno, abre un terminal y ejecuta:
+
+Para un shell temporal:
+```sh
+$ export PORT=3000
+```
+
+Para todas las sesiones:
+```sh
+#- BASH
+$ echo 'export PORT=3000' >> ~/.bash_profile
+$ source ~/.bash_profile
+#- ZSH
+$ echo 'export PORT=3000' >> ~/.zsh_profile
+$ source ~/.zsh_profile
+```
+
+3. Ejecuta `npm start` para correr el servidor de desarrollo. El mismo se encarga recargar las páginas en el navegador cuando guardas alguna modificación a los archvos del repositorio.
+4. Visita http://localhost:3000/health
+5. Verificar que retorne código 200 y un JSON { "status": "UP" }
 
 ## Como contribuir
 
