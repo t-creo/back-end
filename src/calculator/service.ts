@@ -1,4 +1,4 @@
-import {TextCredibilityWeights, Credibility} from './models'
+import {TextCredibilityWeights, Credibility, TwitterUser} from './models'
 import Filter, { FilterParams } from 'bad-words'
 import Twit from 'twit'
 
@@ -35,7 +35,7 @@ function textCredibility(text: string, params: TextCredibilityWeights) : Credibi
   }
 }
 
-async function userInfoTest(userId: string)  {
+async function getUserInfo(userId: string) {
 
   const client = new Twit({
     consumer_key: process.env.TWITTER_CONSUMER_KEY || '',
@@ -50,6 +50,37 @@ async function userInfoTest(userId: string)  {
   }
 }
 
+async function twitterUserCredibility(userId: string) { 
+  return getUserInfo(userId)
+  .then(response => {
+    const user : TwitterUser = {
+      name: response.name,
+      verified: response.verified,
+      year_joined : response.created_at.split(' ').pop()
+    }
+    const userCredCalculation = getVerifWeigth(user.verified) + getCreationWeight(user.year_joined)
+    return  {
+      credibility: userCredCalculation
+    }
+  })  
+}
+
+function getVerifWeigth(isUserVerified : boolean) : number {
+  if (isUserVerified) {
+    return 50
+  } else {
+    return 0
+  }
+}
+
+function getCreationWeight(year_joined : number) : number {
+  const current_year = new Date().getFullYear()
+  const twitterCreationYear = 2006
+  const account_age = current_year - twitterCreationYear
+  const max_account_age = current_year - year_joined
+  return account_age/max_account_age
+}
+
 export {
-  textCredibility, userInfoTest
+  textCredibility, getUserInfo, twitterUserCredibility
 }
