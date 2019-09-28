@@ -63,7 +63,7 @@ function textCredibility(text: string, params: TextCredibilityWeights) : Credibi
 }
 
 function followersImpact(userFollowers: number) : number {
-  const maxFollowers = 5000000
+  const maxFollowers = 2000000
   return (userFollowers / maxFollowers) * 50
 }
 
