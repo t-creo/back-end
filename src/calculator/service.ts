@@ -109,5 +109,5 @@ function getCreationWeight(yearJoined : number) : number {
 }
 
 export {
-  textCredibility, getUserInfo, twitterUserCredibility
+  textCredibility, twitterUserCredibility
 }
