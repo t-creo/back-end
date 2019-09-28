@@ -70,19 +70,25 @@ describe('/calculate/plain-text endpoint', () => {
         weightMisspelling: 1,
         weightSpam: 0
       }
-      it('returns credibility=100 with when there are no misspells', () => {
+      it('returns credibility=100 when there are no misspells', () => {
         return testCredibilityWithOkData({ credibility: 100 }, {
           text: 'correct phrase with no bad spell',
           ...params
         })
       })
-      it('returns credibility=0 with spam text', () => {
+      it('returns credibility=0 when text is fully missspelled', () => {
         return testCredibilityWithOkData({ credibility: 0 }, {
-          text: 'corrept phrse with no bad spell',
+          text: 'corrept phrse wihte nonoon badddd spellsssssss',
           ...params
         })
       })
 
+      it('returns credibility=50 with half misspells and other half correct spelled', () => {
+        return testCredibilityWithOkData({ credibility: 50 }, {
+          text: 'correct phrss',
+          ...params
+        })
+      })
     })
   })
 })
