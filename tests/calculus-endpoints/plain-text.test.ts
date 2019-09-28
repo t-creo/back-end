@@ -90,5 +90,22 @@ describe('/calculate/plain-text endpoint', () => {
         })
       })
     })
+
+    describe('mixed one', () => {
+      const params = {
+        weightBadWords: 0.2,
+        weightMisspelling: 0.2,
+        weightSpam: 0.6
+      }
+      it('returns a correct value for mixed calculation', () => {
+        // The following `text` is spam (0.4 * 0 = 0),
+        // has a misspell (100 - (100 * 1 / 4) = 75),
+        // and doesn't have bad words (100 - (100 * 0 / 4) == 100)
+        return testCredibilityWithOkData({ credibility: 35 }, {
+          text: 'WATUPPPPP ok sir all',
+          ...params
+        })
+      })
+    })
   })
 })
