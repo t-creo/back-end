@@ -42,13 +42,12 @@ async function userInfoTest(userId: string)  {
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET || '',
     app_only_auth: true
   })
-  return client.get('users/show', { user_id : userId })
-    .then(data => {
-      return data.data
-    })
-    .catch(err => {
-      return err
-    })
+  try {
+    const response = await client.get('users/show', { user_id: userId })
+    return response.data
+  } catch (e) {
+    return e
+  }
 }
 
 export {
