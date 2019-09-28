@@ -50,22 +50,15 @@ async function userInfoTest(userId: string)  {
   }
 }
 
-function whatever(userId: string) { 
+async function whatever(userId: string) { 
   // aqui deberia poder llenar la interfaz 
   // para tenerla disponible en varias funciones y hacer calculos
   return userInfoTest(userId)
   .then(response => {
-    return response.data.name
+    return response.name
   })
 }
 
-function userCredibility(userId: string) : Credibility {
-  // 1 2 y 3 son funciones que hacen calculos con lo que esta en la interfaz
-  return {
-    credibility: 1 + 2 + 3
-  }
-}
-
 export {
-  textCredibility, userCredibility
+  textCredibility, whatever
 }
