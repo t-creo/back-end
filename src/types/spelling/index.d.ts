@@ -13,3 +13,7 @@ declare module 'spelling' {
 
   export default Spelling
 }
+
+declare module 'spelling/dictionaries/en_US' {
+  export default string
+}
