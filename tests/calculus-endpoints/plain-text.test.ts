@@ -63,5 +63,26 @@ describe('/calculate/plain-text endpoint', () => {
         })
       })
     })
+
+    describe('full misspelling criteria', () => {
+      const params = {
+        weightBadWords: 0,
+        weightMisspelling: 1,
+        weightSpam: 0
+      }
+      it('returns credibility=100 with when there are no misspells', () => {
+        return testCredibilityWithOkData({ credibility: 100 }, {
+          text: 'correct phrase with no bad spell',
+          ...params
+        })
+      })
+      it('returns credibility=0 with spam text', () => {
+        return testCredibilityWithOkData({ credibility: 0 }, {
+          text: 'corrept phrse with no bad spell',
+          ...params
+        })
+      })
+
+    })
   })
 })
