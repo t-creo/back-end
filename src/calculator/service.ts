@@ -1,6 +1,8 @@
 import {TextCredibilityWeights, Credibility} from './models'
 import Filter, { FilterParams } from 'bad-words'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from 'simple-spam-filter'
+import Spelling from 'spelling'
+import dictionary from 'spelling/dictionaries/en_US'
 
 const BAD_WORD_PLACEHOLDER = '*'
 
@@ -40,11 +42,22 @@ function spamCriteria(text: string) : number {
     : 100
 }
 
+function missSpellingCriteria(text: string) : number {
+  const wordsInText = getCleanedWords(text)
+  const spellingChecker = new Spelling(dictionary)
+  const numOfMissSpells : number = wordsInText.reduce((acc, curr) =>
+    spellingChecker.lookup(curr).found
+      ? acc
+      : acc + 1, 0)
+  return 100 - (100 * numOfMissSpells / wordsInText.length)
+}
+
 function textCredibility(text: string, params: TextCredibilityWeights) : Credibility {
   const badWordsCalculation = params.weightBadWords * badWordsCriteria(text)
   const spamCalculation = params.weightSpam * spamCriteria(text)
+  const missSpellingCalculation = params.weightMisspelling * missSpellingCriteria(text)
   return {
-    credibility: badWordsCalculation + spamCalculation
+    credibility: badWordsCalculation + spamCalculation + missSpellingCalculation
   }
 }
 
