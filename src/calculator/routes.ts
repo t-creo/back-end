@@ -11,7 +11,7 @@ calculatorRoutes.get('/plain-text', function(req, res) {
   }))
 })
 
-calculatorRoutes.get('/twitter/social/:userId', function(req, res, next) { 
+calculatorRoutes.get('/twitter/user/:id', function(req, res, next) { 
   twitterUserCredibility(req.params.userId)
     .then(response => {
       res.send(response)
