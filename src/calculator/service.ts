@@ -55,7 +55,10 @@ async function whatever(userId: string) {
   // para tenerla disponible en varias funciones y hacer calculos
   return userInfoTest(userId)
   .then(response => {
-    return response.name
+    const user : TwitterUser = {
+      name: response.name
+    }
+    return user
   })
 }
 
