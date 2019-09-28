@@ -7,3 +7,7 @@ export interface TextCredibilityWeights {
   weightBadWords: number
   weightMisspelling: number
 }
+
+export interface TwitterUser {
+  name: string
+}

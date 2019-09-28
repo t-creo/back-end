@@ -1,4 +1,4 @@
-import {TextCredibilityWeights, Credibility} from './models'
+import {TextCredibilityWeights, Credibility, TwitterUser} from './models'
 import Filter, { FilterParams } from 'bad-words'
 import Twit from 'twit'
 
@@ -50,6 +50,22 @@ async function userInfoTest(userId: string)  {
   }
 }
 
+function whatever(userId: string) { 
+  // aqui deberia poder llenar la interfaz 
+  // para tenerla disponible en varias funciones y hacer calculos
+  return userInfoTest(userId)
+  .then(response => {
+    return response.data.name
+  })
+}
+
+function userCredibility(userId: string) : Credibility {
+  // 1 2 y 3 son funciones que hacen calculos con lo que esta en la interfaz
+  return {
+    credibility: 1 + 2 + 3
+  }
+}
+
 export {
-  textCredibility, userInfoTest
+  textCredibility, userCredibility
 }
