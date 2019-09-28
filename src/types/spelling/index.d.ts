@@ -15,5 +15,6 @@ declare module 'spelling' {
 }
 
 declare module 'spelling/dictionaries/en_US' {
-  export default string
+  const dictionary : string
+  export default dictionary
 }
