@@ -1,5 +1,5 @@
 import express from 'express'
-import { textCredibility, getUserInfo, twitterUserCredibility } from './service'
+import { textCredibility, twitterUserCredibility } from './service'
 
 const calculatorRoutes = express.Router()
 
