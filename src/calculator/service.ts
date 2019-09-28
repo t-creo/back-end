@@ -1,5 +1,6 @@
 import {TextCredibilityWeights, Credibility} from './models'
 import Filter, { FilterParams } from 'bad-words'
+import Twit from 'twit'
 
 const BAD_WORD_PLACEHOLDER = '*'
 
@@ -34,22 +35,20 @@ function textCredibility(text: string, params: TextCredibilityWeights) : Credibi
   }
 }
 
-function userInfoTest(userId: string) : boolean {
-  
-  var Twitter = require('twitter');
-  var Twit = require('twit')
+async function userInfoTest(userId: string)  {
 
-  var client = new Twit({
-    consumer_key: process.env.TWITTER_CONSUMER_KEY,
-    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-    access_token: process.env.TWITTER_ACCESS_TOKEN_KEY,
-    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
-  });
-
-  var user = client.get('users/show', { user_id : userId}, function (err: any, data: any, response: any) { console.log(data) })
-  console.log(user)
-  
-  return true
+  const client = new Twit({
+    consumer_key: process.env.TWITTER_CONSUMER_KEY || '',
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET || '',
+    app_only_auth: true
+  })
+  return client.get('users/show', { user_id : userId })
+    .then(data => {
+      return data.data
+    })
+    .catch(err => {
+      return err
+    })
 }
 
 export {
