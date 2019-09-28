@@ -24,6 +24,9 @@
   "homepage": "https://github.com/World-White-Web/www-back-end#readme",
   "dependencies": {
     "dotenv": "^8.1.0",
+    "bad-words": "^3.0.3",
+    "simple-spam-filter": "0.0.2",
+    "spelling": "^2.0.1",
     "express": "^4.17.1"
   },
   "devDependencies": {
