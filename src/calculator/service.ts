@@ -3,6 +3,7 @@ import Filter, { FilterParams } from 'bad-words'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from 'simple-spam-filter'
 import Spelling from 'spelling'
 import dictionary from 'spelling/dictionaries/en_US'
+import { userInfo } from 'os'
 
 const BAD_WORD_PLACEHOLDER = '*'
 
@@ -61,6 +62,22 @@ function textCredibility(text: string, params: TextCredibilityWeights) : Credibi
   }
 }
 
+function followersImpact(userFollowers: number) : number {
+  const maxFollowers = 5000000
+  return (userFollowers / maxFollowers) * 50
+}
+
+function ffProportion(userFollowers: number, userFollowing: number) : number {
+  return (userFollowers / (userFollowers + userFollowing)) * 50
+}
+
+function socialCredibility(userID: string) : Credibility {
+  return {
+    credibility: followersImpact(1) + ffProportion(2, 3)
+  }
+}
+
 export {
-  textCredibility
+  textCredibility,
+  socialCredibility
 }
