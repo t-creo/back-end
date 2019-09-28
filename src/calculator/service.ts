@@ -34,6 +34,24 @@ function textCredibility(text: string, params: TextCredibilityWeights) : Credibi
   }
 }
 
+function userInfoTest(userId: string) : boolean {
+  
+  var Twitter = require('twitter');
+  var Twit = require('twit')
+
+  var client = new Twit({
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    access_token: process.env.TWITTER_ACCESS_TOKEN_KEY,
+    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+  });
+
+  var user = client.get('users/show', { user_id : userId}, function (err: any, data: any, response: any) { console.log(data) })
+  console.log(user)
+  
+  return true
+}
+
 export {
-  textCredibility
+  textCredibility, userInfoTest
 }

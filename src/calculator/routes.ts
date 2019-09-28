@@ -1,7 +1,8 @@
 import express from 'express'
-import { textCredibility } from './service'
+import { textCredibility, userInfoTest } from './service'
 
 const calculatorRoutes = express.Router()
+const testRoutes = express.Router()
 
 calculatorRoutes.get('/plain-text', function(req, res) {
   res.send(textCredibility(req.query.text, {
@@ -9,6 +10,10 @@ calculatorRoutes.get('/plain-text', function(req, res) {
     weightMisspelling: +req.query.weightMisspelling,
     weightSpam: +req.query.weightSpam
   }))
+})
+
+calculatorRoutes.get('/twitter/social/:userId', function(req, res) { 
+  res.send(userInfoTest(req.params.userId))
 })
 
 export default calculatorRoutes
