@@ -63,7 +63,6 @@ function textCredibility(text: string, params: TextCredibilityWeights) : Credibi
 }
 
 async function getUserInfo(userId: string) {
-
   const client = new Twit({
     consumer_key: process.env.TWITTER_CONSUMER_KEY || '',
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET || '',
@@ -79,17 +78,17 @@ async function getUserInfo(userId: string) {
 
 async function twitterUserCredibility(userId: string) { 
   return getUserInfo(userId)
-  .then(response => {
-    const user : TwitterUser = {
-      name: response.name,
-      verified: response.verified,
-      yearJoined : response.created_at.split(' ').pop()
-    }
-    const userCredCalculation = getVerifWeigth(user.verified) + getCreationWeight(user.yearJoined)
-    return  {
-      credibility: userCredCalculation
-    }
-  })  
+    .then(response => {
+      const user : TwitterUser = {
+        name: response.name,
+        verified: response.verified,
+        yearJoined : response.created_at.split(' ').pop()
+      }
+      const userCredCalculation = getVerifWeigth(user.verified) + getCreationWeight(user.yearJoined)
+      return  {
+        credibility: userCredCalculation
+      }
+    })  
 }
 
 function getVerifWeigth(isUserVerified : boolean) : number {
