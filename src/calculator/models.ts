@@ -18,4 +18,11 @@ export interface TwitterUser {
   name: string
   verified: boolean
   yearJoined: number
+  followersCount: number
+  friendsCount: number
+}
+
+export interface Tweet {
+  text: string
+  user: TwitterUser
 }
