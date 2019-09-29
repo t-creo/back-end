@@ -4,7 +4,6 @@ import Twit from 'twit'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from 'simple-spam-filter'
 import Spelling from 'spelling'
 import dictionary from 'spelling/dictionaries/en_US'
-import { userInfo } from 'os'
 
 const BAD_WORD_PLACEHOLDER = '*'
 
@@ -77,7 +76,7 @@ async function getUserInfo(userId: string) {
   }
 }
 
-async function twitterUserCredibility(userId: string) { 
+async function twitterUserCredibility(userId: string) {
   return getUserInfo(userId)
     .then(response => {
       const user : TwitterUser = {
@@ -89,7 +88,7 @@ async function twitterUserCredibility(userId: string) {
       return  {
         credibility: userCredCalculation
       }
-    })  
+    })
 }
 
 function getVerifWeigth(isUserVerified : boolean) : number {
