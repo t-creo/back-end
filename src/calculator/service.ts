@@ -1,5 +1,6 @@
-import {TextCredibilityWeights, Credibility} from './models'
+import {TextCredibilityWeights, Credibility, TwitterUser} from './models'
 import Filter, { FilterParams } from 'bad-words'
+import Twit from 'twit'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from 'simple-spam-filter'
 import Spelling from 'spelling'
 import dictionary from 'spelling/dictionaries/en_US'
@@ -62,6 +63,51 @@ function textCredibility(text: string, params: TextCredibilityWeights) : Credibi
   }
 }
 
+async function getUserInfo(userId: string) {
+  const client = new Twit({
+    consumer_key: process.env.TWITTER_CONSUMER_KEY || '',
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET || '',
+    app_only_auth: true
+  })
+  try {
+    const response = await client.get('users/show', { user_id: userId })
+    return response.data
+  } catch (e) {
+    return e
+  }
+}
+
+async function twitterUserCredibility(userId: string) { 
+  return getUserInfo(userId)
+    .then(response => {
+      const user : TwitterUser = {
+        name: response.name,
+        verified: response.verified,
+        yearJoined : response.created_at.split(' ').pop()
+      }
+      const userCredCalculation = getVerifWeigth(user.verified) + getCreationWeight(user.yearJoined)
+      return  {
+        credibility: userCredCalculation
+      }
+    })  
+}
+
+function getVerifWeigth(isUserVerified : boolean) : number {
+  if (isUserVerified) {
+    return 50
+  } else {
+    return 0
+  }
+}
+
+function getCreationWeight(yearJoined : number) : number {
+  const currentYear = new Date().getFullYear()
+  const twitterCreationYear = 2006
+  const accountAge = currentYear - twitterCreationYear
+  const maxAccountAge = currentYear - yearJoined
+  return accountAge/maxAccountAge
+}
+
 function followersImpact(userFollowers: number) : number {
   const maxFollowers = 2000000
   return (userFollowers / maxFollowers) * 50
@@ -78,6 +124,5 @@ function socialCredibility(userID: string) : Credibility {
 }
 
 export {
-  textCredibility,
-  socialCredibility
+  textCredibility, twitterUserCredibility, socialCredibility
 }
