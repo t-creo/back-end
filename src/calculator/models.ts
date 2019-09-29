@@ -8,6 +8,12 @@ export interface TextCredibilityWeights {
   weightMisspelling: number
 }
 
+export interface TweetCredibilityWeights extends TextCredibilityWeights {
+  weightText: number
+  weightSocial: number
+  weightUser: number
+}
+
 export interface TwitterUser {
   name: string
   verified: boolean

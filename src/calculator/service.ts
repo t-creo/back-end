@@ -1,7 +1,7 @@
 import {TextCredibilityWeights, Credibility, TwitterUser} from './models'
 import config from '../config'
 import Filter, { FilterParams } from 'bad-words'
-import Twit from 'twit'
+import Twit, { Response } from 'twit'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from 'simple-spam-filter'
 import Spelling from 'spelling'
 import dictionary from 'spelling/dictionaries/en_US'
@@ -80,6 +80,20 @@ async function getUserInfo(userId: string) {
   }
 }
 
+async function getTweetInfo(tweetId: string) : Promise<Response> {
+  const client = buildTwitClient()
+  try {
+    const response = await client.get('statuses/show.json', { id: tweetId })
+    return response.data
+  } catch (e) {
+    return e
+  }
+}
+
+function calculateUserCredibility(user: TwitterUser) : number {
+  return getVerifWeigth(user.verified) + getCreationWeight(user.yearJoined)
+}
+
 async function twitterUserCredibility(userId: string) {
   return getUserInfo(userId)
     .then(response => {
@@ -88,11 +102,25 @@ async function twitterUserCredibility(userId: string) {
         verified: response.verified,
         yearJoined : response.created_at.split(' ').pop()
       }
-      const userCredCalculation = getVerifWeigth(user.verified) + getCreationWeight(user.yearJoined)
       return  {
-        credibility: userCredCalculation
+        credibility: calculateUserCredibility(user)
       }
     })
+}
+
+async function twitterTweetCredibility(tweetId: string, ) : Promise<Credibility> {
+  try {
+    const tweet = await getTweetInfo(tweetId)
+    const user : TwitterUser = {
+      name: tweet.user.name,
+      verified: tweet.user.verified,
+      yearJoined: tweet.user.created_at.split(' ').pop()
+    }
+    
+  } catch (e) {
+    console.log(e)
+    throw e
+  }
 }
 
 function getVerifWeigth(isUserVerified : boolean) : number {
