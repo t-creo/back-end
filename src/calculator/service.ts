@@ -1,4 +1,5 @@
 import {TextCredibilityWeights, Credibility, TwitterUser} from './models'
+import config from '../config'
 import Filter, { FilterParams } from 'bad-words'
 import Twit from 'twit'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from 'simple-spam-filter'
@@ -7,6 +8,13 @@ import dictionary from 'spelling/dictionaries/en_US'
 
 const BAD_WORD_PLACEHOLDER = '*'
 
+function buildTwitClient() : Twit {
+  return new Twit({
+    consumer_key: config.TWITTER_CONSUMER_KEY,
+    consumer_secret: config.TWITTER_CONSUMER_SECRET,
+    app_only_auth: true
+  })
+}
 
 function getCleanedWords(text: string) : string[] {
   return text.replace(/[.]|\n|,/g, ' ').split(' ')
@@ -63,11 +71,7 @@ function textCredibility(text: string, params: TextCredibilityWeights) : Credibi
 }
 
 async function getUserInfo(userId: string) {
-  const client = new Twit({
-    consumer_key: process.env.TWITTER_CONSUMER_KEY || '',
-    consumer_secret: process.env.TWITTER_CONSUMER_SECRET || '',
-    app_only_auth: true
-  })
+  const client = buildTwitClient()
   try {
     const response = await client.get('users/show', { user_id: userId })
     return response.data
