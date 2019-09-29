@@ -10,10 +10,10 @@ describe('Error Handler', () => {
     } catch (e) {
       assert.deepEqual(e, 
         {
-          status      : 400,
-          title       : 'Bad Request',
-          message     : 'A validation failed',
-          userMessage : 'An error has ocurred',
+          status: 400,
+          title: 'Bad Request',
+          message: 'A validation failed',
+          userMessage: 'An error has ocurred',
         }
       )
     }
@@ -25,10 +25,10 @@ describe('Error Handler', () => {
     } catch (e) {
       assert.deepEqual(e, 
         {
-          status      : 401,
-          title       : 'Unauthorized',
-          message     : 'Not authenticated',
-          userMessage : 'Client needs to authenticate',
+          status: 401,
+          title: 'Unauthorized',
+          message: 'Not authenticated',
+          userMessage: 'Client needs to authenticate',
         }
       )
     }
@@ -40,10 +40,10 @@ describe('Error Handler', () => {
     } catch (e) {
       assert.deepEqual(e, 
         {
-          status      : 403,
-          title       : 'Forbidden',
-          message     : 'Cannot Access',
-          userMessage : 'Client cannot access this resource',
+          status: 403,
+          title: 'Forbidden',
+          message: 'Cannot Access',
+          userMessage: 'Client cannot access this resource',
         }
       )
     }
@@ -55,10 +55,10 @@ describe('Error Handler', () => {
     } catch (e) {
       assert.deepEqual(e, 
         {
-          status      : 500,
-          title       : 'Internal Server Error',
-          message     : 'An error has ocurred',
-          userMessage : 'An error has ocurred',
+          status: 500,
+          title: 'Internal Server Error',
+          message: 'An error has ocurred',
+          userMessage: 'An error has ocurred',
         }
       )
     }
@@ -70,10 +70,10 @@ describe('Error Handler', () => {
     } catch (e) {
       assert.deepEqual(e, 
         {
-          status      : 0,
-          title       : '',
-          message     : '',
-          userMessage : '',
+          status: 0,
+          title: '',
+          message: '',
+          userMessage: '',
         }
       )
     }
