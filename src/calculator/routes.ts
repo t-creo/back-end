@@ -19,8 +19,8 @@ calculatorRoutes.get('/twitter/user/:id', function(req, res, next) {
     })
 })
 
-calculatorRoutes.get('/twitter/social/:user_id', async function(req, res){
-  const socialCredibilityVal = await socialCredibility(req.params.user_id)
+calculatorRoutes.get('/twitter/social/:userId', async function(req, res){
+  const socialCredibilityVal = await socialCredibility(req.params.userId)
   res.send(socialCredibilityVal)
 })
 
