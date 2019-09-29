@@ -117,9 +117,12 @@ function ffProportion(userFollowers: number, userFollowing: number) : number {
   return (userFollowers / (userFollowers + userFollowing)) * 50
 }
 
-function socialCredibility(userID: string) : Credibility {
+async function socialCredibility(userID: string) {
+  const response = await getUserInfo(userID)
+  const followersImpactCalc = followersImpact(response.followers_count)
+  const ffProportionCalc = ffProportion(response.followers_count, response.friends_count)
   return {
-    credibility: followersImpact(1) + ffProportion(2, 3)
+    credibility: followersImpactCalc + ffProportionCalc
   }
 }
 
