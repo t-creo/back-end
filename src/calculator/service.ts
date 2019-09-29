@@ -76,7 +76,7 @@ async function getUserInfo(userId: string) {
   }
 }
 
-async function twitterUserCredibility(userId: string) { 
+async function twitterUserCredibility(userId: string) {
   return getUserInfo(userId)
     .then(response => {
       const user : TwitterUser = {
@@ -88,7 +88,7 @@ async function twitterUserCredibility(userId: string) {
       return  {
         credibility: userCredCalculation
       }
-    })  
+    })
 }
 
 function getVerifWeigth(isUserVerified : boolean) : number {
@@ -107,6 +107,24 @@ function getCreationWeight(yearJoined : number) : number {
   return accountAge/maxAccountAge
 }
 
+function followersImpact(userFollowers: number) : number {
+  const maxFollowers = 2000000
+  return (userFollowers / maxFollowers) * 50
+}
+
+function ffProportion(userFollowers: number, userFollowing: number) : number {
+  return (userFollowers / (userFollowers + userFollowing)) * 50
+}
+
+async function socialCredibility(userID: string) {
+  const response = await getUserInfo(userID)
+  const followersImpactCalc = followersImpact(response.followers_count)
+  const ffProportionCalc = ffProportion(response.followers_count, response.friends_count)
+  return {
+    credibility: followersImpactCalc + ffProportionCalc
+  }
+}
+
 export {
-  textCredibility, twitterUserCredibility
+  textCredibility, twitterUserCredibility, socialCredibility
 }
