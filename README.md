@@ -11,6 +11,7 @@ Backend para la aplicación World White Web. MiniProyecto de Desarrollo de Softw
 * Nairelys Hernandez
 * Fabiola Martinez
 * David Cabeza
+* Jose Acevedo
 
 ## Tutores
 
