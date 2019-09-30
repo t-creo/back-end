@@ -1,4 +1,5 @@
-import {TextCredibilityWeights, Credibility, TwitterUser} from './models'
+import {TextCredibilityWeights, Credibility, TwitterUser, TweetCredibilityWeights, Tweet} from './models'
+import config from '../config'
 import Filter, { FilterParams } from 'bad-words'
 import Twit from 'twit'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from 'simple-spam-filter'
@@ -7,6 +8,30 @@ import dictionary from 'spelling/dictionaries/en_US'
 
 const BAD_WORD_PLACEHOLDER = '*'
 
+function responseToTwitterUser(response: any) : TwitterUser {
+  return {
+    name: response.name,
+    verified: response.verified,
+    yearJoined: response.created_at.split(' ').pop(),
+    followersCount: response.followers_count,
+    friendsCount: response.friends_count
+  }
+}
+
+function responseToTweet(response: any) : Tweet {
+  return {
+    text: response.text,
+    user: responseToTwitterUser(response.user)
+  }
+}
+
+function buildTwitClient() : Twit {
+  return new Twit({
+    consumer_key: config.TWITTER_CONSUMER_KEY,
+    consumer_secret: config.TWITTER_CONSUMER_SECRET,
+    app_only_auth: true
+  })
+}
 
 function getCleanedWords(text: string) : string[] {
   return text.replace(/[.]|\n|,/g, ' ').split(' ')
@@ -53,7 +78,7 @@ function missSpellingCriteria(text: string) : number {
   return 100 - (100 * numOfMissSpells / wordsInText.length)
 }
 
-function textCredibility(text: string, params: TextCredibilityWeights) : Credibility {
+function calculateTextCredibility(text: string, params: TextCredibilityWeights) : Credibility {
   const badWordsCalculation = params.weightBadWords * badWordsCriteria(text)
   const spamCalculation = params.weightSpam * spamCriteria(text)
   const missSpellingCalculation = params.weightMisspelling * missSpellingCriteria(text)
@@ -62,33 +87,60 @@ function textCredibility(text: string, params: TextCredibilityWeights) : Credibi
   }
 }
 
-async function getUserInfo(userId: string) {
-  const client = new Twit({
-    consumer_key: process.env.TWITTER_CONSUMER_KEY || '',
-    consumer_secret: process.env.TWITTER_CONSUMER_SECRET || '',
-    app_only_auth: true
-  })
+async function getUserInfo(userId: string) : Promise<TwitterUser> {
+  const client = buildTwitClient()
   try {
     const response = await client.get('users/show', { user_id: userId })
-    return response.data
+    return responseToTwitterUser(response.data)
   } catch (e) {
     return e
   }
 }
 
+async function getTweetInfo(tweetId: string) : Promise<Tweet> {
+  const client = buildTwitClient()
+  try {
+    const response = await client.get('statuses/show', { id: tweetId })
+    return responseToTweet(response.data)
+  } catch (e) {
+    return e
+  }
+}
+
+function calculateUserCredibility(user: TwitterUser) : number {
+  return getVerifWeigth(user.verified) + getCreationWeight(user.yearJoined)
+}
+
+function calculateSocialCredibility(user: TwitterUser) : number {
+  const followersImpactCalc = followersImpact(user.followersCount)
+  const ffProportionCalc = ffProportion(user.followersCount, user.friendsCount)
+  return followersImpactCalc + ffProportionCalc
+}
+
 async function twitterUserCredibility(userId: string) {
   return getUserInfo(userId)
     .then(response => {
-      const user : TwitterUser = {
-        name: response.name,
-        verified: response.verified,
-        yearJoined : response.created_at.split(' ').pop()
-      }
-      const userCredCalculation = getVerifWeigth(user.verified) + getCreationWeight(user.yearJoined)
       return  {
-        credibility: userCredCalculation
+        credibility: calculateUserCredibility(response)
       }
     })
+}
+
+async function calculateTweetCredibility(tweetId: string,
+  params: TweetCredibilityWeights) : Promise<Credibility> {
+  try {
+    const tweet: Tweet = await getTweetInfo(tweetId)
+    const user: TwitterUser = tweet.user
+    const userCredibility: number = calculateUserCredibility(user) * params.weightText
+    const textCredibility: number = calculateTextCredibility(tweet.text, params).credibility * params.weightText
+    const socialCredibility: number = calculateSocialCredibility(user) * params.weightSocial
+    return {
+      credibility: userCredibility + textCredibility + socialCredibility
+    }
+  } catch (e) {
+    console.log(e)
+    throw e
+  }
 }
 
 function getVerifWeigth(isUserVerified : boolean) : number {
@@ -117,14 +169,15 @@ function ffProportion(userFollowers: number, userFollowing: number) : number {
 }
 
 async function socialCredibility(userID: string) {
-  const response = await getUserInfo(userID)
-  const followersImpactCalc = followersImpact(response.followers_count)
-  const ffProportionCalc = ffProportion(response.followers_count, response.friends_count)
+  const response: TwitterUser = await getUserInfo(userID)
   return {
-    credibility: followersImpactCalc + ffProportionCalc
+    credibility: calculateSocialCredibility(response)
   }
 }
 
 export {
-  textCredibility, twitterUserCredibility, socialCredibility
+  calculateTextCredibility,
+  twitterUserCredibility,
+  calculateTweetCredibility,
+  socialCredibility
 }
