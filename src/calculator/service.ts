@@ -108,7 +108,7 @@ async function getTweetInfo(tweetId: string) : Promise<Tweet> {
 }
 
 function calculateUserCredibility(user: TwitterUser) : number {
-  return getVerifWeigth(user.verified) + getCreationWeight(user.yearJoined)
+  return getVerifWeight(user.verified) + getCreationWeight(user.yearJoined)
 }
 
 function calculateSocialCredibility(user: TwitterUser) : number {
@@ -124,6 +124,12 @@ async function twitterUserCredibility(userId: string) {
         credibility: calculateUserCredibility(response)
       }
     })
+}
+
+function scrapperUserCredibility(verified: boolean, joined: number) : Credibility{
+  return { 
+    credibility: getVerifWeight(verified) + getCreationWeight(joined) 
+  } 
 }
 
 async function calculateTweetCredibility(tweetId: string,
@@ -143,7 +149,7 @@ async function calculateTweetCredibility(tweetId: string,
   }
 }
 
-function getVerifWeigth(isUserVerified : boolean) : number {
+function getVerifWeight(isUserVerified : boolean) : number {
   if (isUserVerified) {
     return 50
   } else {
@@ -179,5 +185,6 @@ export {
   calculateTextCredibility,
   twitterUserCredibility,
   calculateTweetCredibility,
-  socialCredibility
+  socialCredibility,
+  scrapperUserCredibility
 }
