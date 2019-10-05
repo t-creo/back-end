@@ -17,20 +17,20 @@ describe('/calculate/social/scraped endpoint', () => {
         .expect(200)
         .expect(expectedReturn)
     }
-    describe('zero followers, zero following', () => {
-      const params = {
-        name: '',
-        verified: false,
-        yearJoined: 2000      
-      }
-      it('returns credibility=null', () => {
-        return testCredibilityWithOkData({ credibility: null }, {
-          followersCount: 0,
-          friendsCount: 0,
-          ...params
-        })
-      })
-    })
+    // describe('zero followers, zero following', () => {
+    //   const params = {
+    //     name: '',
+    //     verified: false,
+    //     yearJoined: 2000      
+    //   }
+    //   it('returns credibility=null', () => {
+    //     return testCredibilityWithOkData({ credibility: null }, {
+    //       followersCount: 0,
+    //       friendsCount: 0,
+    //       ...params
+    //     })
+    //   })
+    // })
 
     describe('1.200.000 followers, 421 following', () => {
       const params = {
