@@ -30,7 +30,7 @@ Solo es necesario tener instalado Node lts/dubnium (v10.16.0). Se recomienda usa
 
 1. Ejecuta `npm install` para descargar todas las dependencias.
 2. En la raíz del directorio, crea un archivo .env que contenga variables de entorno necesarias (una por línea):
-```sh
+```
 PORT=3000 # Puerto en el que se va a ejecutar el servidor. Normalmente su valor es 3000
 TWITTER_CONSUMER_KEY: '' # Consumer key provista por twitter al aplicar a la API
 TWITTER_CONSUMER_SECRET: '' # Consumer secret provista por twitter al aplicar a la API
