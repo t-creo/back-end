@@ -128,8 +128,7 @@ async function twitterUserCredibility(userId: string) {
 
 function scrapperUserCredibility(verified: boolean, joined: number) : Credibility{
   return { 
-    credibility: getVerifWeight(verified) + getCreationWeight(joined) 
-  } 
+    credibility: getVerifWeight(verified) + getCreationWeight(joined) } 
 }
 
 async function calculateTweetCredibility(tweetId: string,

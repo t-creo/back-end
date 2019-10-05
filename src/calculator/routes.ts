@@ -20,13 +20,9 @@ calculatorRoutes.get('/twitter/user/:id', function(req, res, next) {
     })
 })
 
-calculatorRoutes.get('/scrapper/user-verified/:verified/user-joined/:joined', function(req, res, next) {
-  const userCredibility = scrapperUserCredibility(req.params.verified == 'true', Number(req.params.joined))
-  if (res.statusCode == 200){
+calculatorRoutes.get('/calculate/user/scrape/:verified/:accountCreationYear', function(req, res, next) {
+  const userCredibility = scrapperUserCredibility(req.params.verified === 'true', Number(req.params.accountCreationYear))
     res.send(userCredibility)
-  } else { 
-    next(new HttpError(res.statusCode))
-  } 
 })
 
 calculatorRoutes.get('/twitter/social/:userId', async function(req, res) {
