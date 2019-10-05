@@ -175,7 +175,7 @@ async function socialCredibility(userID: string) {
   }
 }
 
-function ScrappedSocialCredibility(followersCount: number, friendsCount: number){
+function scrappedSocialCredibility(followersCount: number, friendsCount: number){
   const user : TwitterUser = {
     name: "",
     verified: false,
@@ -193,5 +193,5 @@ export {
   twitterUserCredibility,
   calculateTweetCredibility,
   socialCredibility,
-  ScrappedSocialCredibility
+  scrappedSocialCredibility
 }
