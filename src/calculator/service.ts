@@ -5,7 +5,6 @@ import Twit from 'twit'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from 'simple-spam-filter'
 import Spelling from 'spelling'
 import dictionary from 'spelling/dictionaries/en_US'
-import { nullLiteral } from '@babel/types'
 
 const BAD_WORD_PLACEHOLDER = '*'
 
