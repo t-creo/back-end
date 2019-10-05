@@ -19,7 +19,7 @@ describe('/calculate/social/scraped endpoint', () => {
     }
     describe('zero followers, zero following', () => {
       const params = {
-        name: "",
+        name: '',
         verified: false,
         yearJoined: 2000      
       }
@@ -34,7 +34,7 @@ describe('/calculate/social/scraped endpoint', () => {
 
     describe('1.200.000 followers, 421 following', () => {
       const params = {
-        name: "",
+        name: '',
         verified: false,
         yearJoined: 2000  
       }

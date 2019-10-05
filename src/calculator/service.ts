@@ -177,7 +177,7 @@ async function socialCredibility(userID: string) {
 
 function scrappedSocialCredibility(followersCount: number, friendsCount: number){
   const user : TwitterUser = {
-    name: "",
+    name: '',
     verified: false,
     yearJoined: 2018,
     followersCount: followersCount,
