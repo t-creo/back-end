@@ -1,5 +1,5 @@
 import express from 'express'
-import { calculateTextCredibility, socialCredibility, twitterUserCredibility, calculateTweetCredibility } from './service'
+import { calculateTextCredibility, socialCredibility, twitterUserCredibility, calculateTweetCredibility, ScrappedSocialCredibility } from './service'
 
 const calculatorRoutes = express.Router()
 
@@ -37,6 +37,11 @@ calculatorRoutes.get('/twitter/tweets', function(req, res, next) {
       res.send(response)
       next()
     })
+})
+
+calculatorRoutes.get('/social/scraped', function(req, res, next){
+  res.send(ScrappedSocialCredibility(req.query.followers, req.query.following))
+  next()
 })
 
 export default calculatorRoutes

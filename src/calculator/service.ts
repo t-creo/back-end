@@ -5,6 +5,7 @@ import Twit from 'twit'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from 'simple-spam-filter'
 import Spelling from 'spelling'
 import dictionary from 'spelling/dictionaries/en_US'
+import { nullLiteral } from '@babel/types'
 
 const BAD_WORD_PLACEHOLDER = '*'
 
@@ -175,9 +176,23 @@ async function socialCredibility(userID: string) {
   }
 }
 
+function ScrappedSocialCredibility(followersCount: number, friendsCount: number){
+  const user : TwitterUser = {
+    name: "",
+    verified: false,
+    yearJoined: 2018,
+    followersCount: followersCount,
+    friendsCount: friendsCount
+  }
+  return {
+    credibility: calculateSocialCredibility(user)
+  }
+}
+
 export {
   calculateTextCredibility,
   twitterUserCredibility,
   calculateTweetCredibility,
-  socialCredibility
+  socialCredibility,
+  ScrappedSocialCredibility
 }
