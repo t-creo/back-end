@@ -9,9 +9,7 @@ describe('/calculate/tweets/scraped endpoint', () => {
       expectedReturn : Credibility, tweetText: string, tweetCredibilityWeights: TweetCredibilityWeights, twitterUser: TwitterUser) {
       return request(app)
         .get('/calculate/tweets/scraped')
-        .query(tweetText)
-        .query(tweetCredibilityWeights)
-        .query(twitterUser)
+        .query({tweetText, tweetCredibilityWeights, twitterUser})
         .expect(200)
         .expect(expectedReturn)
     }
@@ -26,14 +24,14 @@ describe('/calculate/tweets/scraped endpoint', () => {
         weightUser: 20.34,
         weightSocial: 20.34
       }
-      const twitterUser = {
+      const twitterUser : TwitterUser = {
         name: '',
         verified: false,
         yearJoined: 2010,
         followersCount: 2000,
         friendsCount: 2000
       }
-      it('returns credibility=83790.61868983101 with', () => {
+      it('returns credibility=83790.61868983101', () => {
         return testCredibilityWithOkData({ credibility: 83790.61868983101 }, tweetText, tweetCredibilityWeights, twitterUser)
       })
     })
