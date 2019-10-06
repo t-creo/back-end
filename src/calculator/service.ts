@@ -189,9 +189,12 @@ async function socialCredibility(userID: string) {
   }
 }
 
-function scrapedtweetCredibility(text: string, tweetCredibilityWeights: TweetCredibilityWeights, twitterUser: TwitterUser){
+function scrapedtweetCredibility(tweetText: string, tweetCredibilityWeights: TweetCredibilityWeights, twitterUser: TwitterUser){
+  const userCredibility: number = calculateUserCredibility(twitterUser) * tweetCredibilityWeights.weightUser
+  const textCredibility: number = calculateTextCredibility(tweetText, tweetCredibilityWeights).credibility * tweetCredibilityWeights.weightText
+  const socialCredibility: number = calculateSocialCredibility(twitterUser) * tweetCredibilityWeights.weightSocial
   return {
-    credibility: 0
+    credibility: userCredibility + textCredibility + socialCredibility
   }
 }
 
