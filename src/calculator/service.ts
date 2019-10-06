@@ -198,11 +198,25 @@ function scrapedtweetCredibility(tweetText: string, tweetCredibilityWeights: Twe
   }
 }
 
+function scrapedSocialCredibility(followersCount: number, friendsCount: number){
+  const user : TwitterUser = {
+    name: '',
+    verified: false,
+    yearJoined: 2018,
+    followersCount: followersCount,
+    friendsCount: friendsCount
+  }
+  return {
+    credibility: calculateSocialCredibility(user)
+  }
+}
+
 export {
   calculateTextCredibility,
   twitterUserCredibility,
   calculateTweetCredibility,
   socialCredibility,
   scrapperTwitterUserCredibility,
+  scrapedSocialCredibility,
   scrapedtweetCredibility
 }

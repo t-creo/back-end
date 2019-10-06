@@ -1,5 +1,5 @@
 import express from 'express'
-import { calculateTextCredibility, socialCredibility, twitterUserCredibility, calculateTweetCredibility, scrapperTwitterUserCredibility, scrapedtweetCredibility} from './service'
+import { calculateTextCredibility, socialCredibility, twitterUserCredibility, calculateTweetCredibility, scrapperTwitterUserCredibility, scrapedSocialCredibility, scrapedtweetCredibility} from './service'
 import { validationResult } from 'express-validator'
 import { validate, errorMapper } from './validation'
 
@@ -56,6 +56,14 @@ calculatorRoutes.get('/twitter/tweets', function(req, res, next) {
       res.send(response)
       next()
     })
+})
+
+calculatorRoutes.get('/social/scraped', validate('scrapedSocialCredibility'), function(req, res){
+  const errors = validationResult(req)
+  if (!errors.isEmpty()){
+    errorMapper(errors.array())
+  }
+  res.send(scrapedSocialCredibility(req.query.followersCount, req.query.friendsCount))
 })
 
 calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), function(req, res){
