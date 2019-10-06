@@ -1,9 +1,9 @@
 import express from 'express'
+import { validationResult } from 'express-validator'
 import { calculateTextCredibility, socialCredibility, twitterUserCredibility, calculateTweetCredibility } from './service'
 import { validate, errorMapper } from './validation'
 
 const calculatorRoutes = express.Router()
-const { validationResult } = require('express-validator')
 
 calculatorRoutes.get('/plain-text', validate('calculateTextCredibility'), function(req: any, res: any) {
   const errors = validationResult(req)
