@@ -1,6 +1,5 @@
 import express from 'express'
 import { calculateTextCredibility, socialCredibility, twitterUserCredibility, calculateTweetCredibility, scrapperUserCredibility} from './service'
-import HttpError from '../errorHandling/httpError'
 
 const calculatorRoutes = express.Router()
 
@@ -20,9 +19,9 @@ calculatorRoutes.get('/twitter/user/:id', function(req, res, next) {
     })
 })
 
-calculatorRoutes.get('/user/scrape', function(req, res, next) {
+calculatorRoutes.get('/user/scrape', function(req, res) {
   const userCredibility = scrapperUserCredibility(req.query.verified === 'true', Number(req.query.accountCreationYear))
-    res.send(userCredibility)
+  res.send(userCredibility)
 })
 
 calculatorRoutes.get('/twitter/social/:userId', async function(req, res) {
