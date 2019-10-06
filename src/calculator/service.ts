@@ -145,7 +145,7 @@ async function calculateTweetCredibility(tweetId: string,
   try {
     const tweet: Tweet = await getTweetInfo(tweetId)
     const user: TwitterUser = tweet.user
-    const userCredibility: number = calculateUserCredibility(user) * params.weightText
+    const userCredibility: number = calculateUserCredibility(user) * params.weightUser
     const textCredibility: number = calculateTextCredibility(tweet.text, params).credibility * params.weightText
     const socialCredibility: number = calculateSocialCredibility(user) * params.weightSocial
     return {
