@@ -31,8 +31,11 @@ export function validate(method: string) : any {
   case 'scrapedSocialCredibility': {
     return [
       check('followersCount', 'followersCount.NUMBER').isInt(),
-      check('followersCount', 'followersCount.NON_NEGATIVE').isInt({gt: 0}),
-      check('followersCount', 'followersCount.REQUIRED').exists()
+      check('followersCount', 'followersCount.NON_NEGATIVE').isInt({gt: -1}),
+      check('followersCount', 'followersCount.REQUIRED').exists(),
+      check('friendsCount', 'friendsCount.NUMBER').isInt(),
+      check('friendsCount', 'friendsCount.NON_NEGATIVE').isInt({gt: -1}),
+      check('friendsCount', 'friendsCount.REQUIRED').exists(),
     ]
   }
   }
