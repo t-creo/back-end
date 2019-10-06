@@ -328,7 +328,7 @@ describe('Input Validation', () => {
           userErrorMessage: 'accountCreationYear.NOT_IN_RANGE',
           validationCode: 'accountCreationYear.NOT_IN_RANGE'
         }]
-      }, { verified: true, accountCreationYear: 2005 })
+      }, { verified: true, accountCreationYear: 2020 })
     })
   })
 })
