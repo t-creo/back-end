@@ -5,6 +5,7 @@ import enDictionary, { Dictionary } from 'dictionary-en-us'
 import util from 'util'
 import NSpell from 'nspell'
 import wash from 'washyourmouthoutwithsoap'
+import SimpleSpamFilter, { SimpleSpamFilterParams } from './spam-filter'
 
 const dictionaryFactory = util.promisify(enDictionary)
 
