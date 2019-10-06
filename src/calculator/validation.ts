@@ -28,6 +28,13 @@ export function validate(method: string) : any {
       check('id', 'userId.NUMBER').isInt(),
     ]
   }
+  case 'scrapedSocialCredibility': {
+    return [
+      check('followersCount', 'followersCount.NUMBER').isInt(),
+      check('followersCount', 'followersCount.NON_NEGATIVE').isInt({gt: 0}),
+      check('followersCount', 'followersCount.REQUIRED').exists()
+    ]
+  }
   }
 }
 

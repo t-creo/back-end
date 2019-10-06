@@ -49,7 +49,11 @@ calculatorRoutes.get('/twitter/tweets', function(req, res, next) {
     })
 })
 
-calculatorRoutes.get('/social/scraped', function(req, res){
+calculatorRoutes.get('/social/scraped', validate('scrapedSocialCredibility'), function(req, res){
+  const errors = validationResult(req)
+  if (!errors.isEmpty()){
+    errorMapper(errors.array())
+  }
   res.send(scrappedSocialCredibility(req.query.followersCount, req.query.friendsCount))
 })
 
