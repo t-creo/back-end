@@ -1,9 +1,15 @@
 import express from 'express'
+import { validationResult } from 'express-validator'
 import { calculateTextCredibility, socialCredibility, twitterUserCredibility, calculateTweetCredibility } from './service'
+import { validate, errorMapper } from './validation'
 
 const calculatorRoutes = express.Router()
 
-calculatorRoutes.get('/plain-text', function(req, res) {
+calculatorRoutes.get('/plain-text', validate('calculateTextCredibility'), function(req: any, res: any) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    errorMapper(errors.array())
+  }
   res.send(calculateTextCredibility(req.query.text, {
     weightBadWords: +req.query.weightBadWords,
     weightMisspelling: +req.query.weightMisspelling,
@@ -11,7 +17,11 @@ calculatorRoutes.get('/plain-text', function(req, res) {
   }))
 })
 
-calculatorRoutes.get('/twitter/user/:id', function(req, res, next) {
+calculatorRoutes.get('/twitter/user/:id', validate('twitterUserCredibility'), function(req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    errorMapper(errors.array())
+  }
   twitterUserCredibility(req.params.id)
     .then(response => {
       res.send(response)
