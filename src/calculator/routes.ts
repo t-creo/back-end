@@ -40,7 +40,7 @@ calculatorRoutes.get('/twitter/tweets', function(req, res, next) {
 })
 
 calculatorRoutes.get('/social/scraped', function(req, res){
-  res.send(scrappedSocialCredibility(req.query.followers, req.query.following))
+  res.send(scrappedSocialCredibility(req.query.followersCount, req.query.friendsCount))
 })
 
 export default calculatorRoutes
