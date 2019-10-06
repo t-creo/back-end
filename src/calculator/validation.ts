@@ -42,6 +42,25 @@ export function validate(method: string) : any {
       check('tweetText', 'tweetText.REQUIRED').exists(),
       check('tweetText', 'tweetText.NOT_EMPTY').not().isEmpty(),
       check('tweetText', 'tweetText.MAX_LENGTH_EXCEEDED').isLength({ max: 240 }),
+      check('weightSpam', 'weightSpam.REQUIRED').exists(),
+      check('weightSpam', 'weightSpam.NUMBER').isFloat(),
+      check('weightSpam', 'weightSpam.NOT_IN_RANGE').isFloat({ min: 0, max: 100 }),
+      check('weightBadWords', 'weightBadWords.REQUIRED').exists(),
+      check('weightBadWords', 'weightBadWords.NUMBER').isFloat(),
+      check('weightBadWords', 'weightBadWords.NOT_IN_RANGE').isFloat({min : 0, max : 100}),
+      check('weightMisspelling', 'weightMisspelling.REQUIRED').exists(),
+      check('weightMisspelling', 'weightMisspelling.NUMBER').isFloat(),
+      check('weightMisspelling', 'weightMisspelling.NOT_IN_RANGE').isFloat({min : 0, max : 100}),
+      check('followers', 'followers.NUMBER').isInt(),
+      check('followers', 'followers.NON_NEGATIVE').isInt({gt: -1}),
+      check('followers', 'followers.REQUIRED').exists(),
+      check('following', 'following.NUMBER').isInt(),
+      check('following', 'following.NON_NEGATIVE').isInt({gt: -1}),
+      check('following', 'following.REQUIRED').exists(),
+      check('verified', 'verified.REQUIRED').exists(),
+      check('verified', 'verified.BOOLEAN').isBoolean(),
+      check('accountCreationYear', 'accountCreationYear.NUMBER').isInt(),
+      check('accountCreationYear', 'accountCreationYear.NOT_IN_RANGE').isInt({min: 2006})
     ]
   }
   }
