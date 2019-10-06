@@ -24,15 +24,17 @@
   },
   "homepage": "https://github.com/World-White-Web/www-back-end#readme",
   "dependencies": {
-    "bad-words": "^3.0.3",
+    "dictionary-en-us": "^2.1.1",
+    "dictionary-es": "^1.2.3",
+    "dictionary-fr": "^2.3.2",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "express-validator": "^6.2.0",
     "express-winston": "^4.0.0",
-    "simple-spam-filter": "0.0.2",
-    "spelling": "^2.0.1",
+    "winston": "^3.2.1",
+    "nspell": "^2.1.2",
     "twit": "^2.2.11",
-    "winston": "^3.2.1"
+    "washyourmouthoutwithsoap": "^1.0.2"
   },
   "devDependencies": {
     "@types/dotenv": "^6.1.1",
