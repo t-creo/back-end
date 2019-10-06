@@ -189,10 +189,17 @@ async function socialCredibility(userID: string) {
   }
 }
 
+function scrapedtweetCredibility(text: string, tweetCredibilityWeights: TweetCredibilityWeights, twitterUser: TwitterUser){
+  return {
+    credibility: 0
+  }
+}
+
 export {
   calculateTextCredibility,
   twitterUserCredibility,
   calculateTweetCredibility,
   socialCredibility,
-  scrapperTwitterUserCredibility
+  scrapperTwitterUserCredibility,
+  scrapedtweetCredibility
 }
