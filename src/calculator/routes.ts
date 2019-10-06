@@ -58,7 +58,7 @@ calculatorRoutes.get('/twitter/tweets', function(req, res, next) {
     })
 })
 
-calculatorRoutes.get('/tweets/scraped', function(req, res){
+calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), function(req, res){
   const errors = validationResult(req)
   if (!errors.isEmpty()){
     errorMapper(errors.array())

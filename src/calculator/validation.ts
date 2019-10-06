@@ -37,6 +37,13 @@ export function validate(method: string) : any {
       check('accountCreationYear', 'accountCreationYear.NOT_IN_RANGE').isInt({min: 2006, max: 2019})
     ]
   }
+  case 'scrapedTweetCredibility': {
+    return [
+      check('tweetText', 'tweetText.REQUIRED').exists(),
+      check('tweetText', 'tweetText.NOT_EMPTY').not().isEmpty(),
+      check('tweetText', 'tweetText.MAX_LENGTH_EXCEEDED').isLength({ max: 240 }),
+    ]
+  }
   }
 }
 
