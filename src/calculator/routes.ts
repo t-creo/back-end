@@ -20,8 +20,8 @@ calculatorRoutes.get('/twitter/user/:id', function(req, res, next) {
     })
 })
 
-calculatorRoutes.get('/calculate/user/scrape/:verified/:accountCreationYear', function(req, res, next) {
-  const userCredibility = scrapperUserCredibility(req.params.verified === 'true', Number(req.params.accountCreationYear))
+calculatorRoutes.get('/user/scrape', function(req, res, next) {
+  const userCredibility = scrapperUserCredibility(req.query.verified === 'true', Number(req.query.accountCreationYear))
     res.send(userCredibility)
 })
 
