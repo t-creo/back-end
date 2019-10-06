@@ -18,12 +18,19 @@ describe('Input Validation', () => {
         title: 'Bad Request',
         message: 'A validation failed',
         userMessage: 'An error has ocurred',
-        errors: [{
-          field: 'text',
-          errorMessage: 'text.REQUIRED',
-          userErrorMessage: 'text.REQUIRED',
-          validationCode: 'text.REQUIRED'
-        }]
+        errors: [
+          { field: 'text',
+            errorMessage: 'text.REQUIRED',
+            userErrorMessage: 'text.REQUIRED',
+            validationCode: 'text.REQUIRED' },
+          { field: 'text',
+            errorMessage: 'text.NOT_EMPTY',
+            userErrorMessage: 'text.NOT_EMPTY',
+            validationCode: 'text.NOT_EMPTY' },
+          { field: 'text',
+            errorMessage: 'text.STRING',
+            userErrorMessage: 'text.STRING',
+            validationCode: 'text.STRING' }]
       }, { weightSpam: 1, weightBadWords: 0, weightMisspelling: 0 })
     })
 
@@ -48,12 +55,19 @@ describe('Input Validation', () => {
         title: 'Bad Request',
         message: 'A validation failed',
         userMessage: 'An error has ocurred',
-        errors: [{
-          field: 'weightSpam',
-          errorMessage: 'weightSpam.REQUIRED',
-          userErrorMessage: 'weightSpam.REQUIRED',
-          validationCode: 'weightSpam.REQUIRED'
-        }]
+        errors: [
+          { field: 'weightSpam',
+            errorMessage: 'weightSpam.REQUIRED',
+            userErrorMessage: 'weightSpam.REQUIRED',
+            validationCode: 'weightSpam.REQUIRED' },
+          { field: 'weightSpam',
+            errorMessage: 'weightSpam.NUMBER',
+            userErrorMessage: 'weightSpam.NUMBER',
+            validationCode: 'weightSpam.NUMBER' },
+          { field: 'weightSpam',
+            errorMessage: 'weightSpam.NOT_IN_RANGE',
+            userErrorMessage: 'weightSpam.NOT_IN_RANGE',
+            validationCode: 'weightSpam.NOT_IN_RANGE' }]
       }, { text: 'test', weightBadWords: 0, weightMisspelling: 0 })
     })
 
@@ -63,12 +77,15 @@ describe('Input Validation', () => {
         title: 'Bad Request',
         message: 'A validation failed',
         userMessage: 'An error has ocurred',
-        errors: [{
-          field: 'weightSpam',
-          errorMessage: 'weightSpam.NUMBER',
-          userErrorMessage: 'weightSpam.NUMBER',
-          validationCode: 'weightSpam.NUMBER'
-        }]
+        errors: [
+          { field: 'weightSpam',
+            errorMessage: 'weightSpam.NUMBER',
+            userErrorMessage: 'weightSpam.NUMBER',
+            validationCode: 'weightSpam.NUMBER' },
+          { field: 'weightSpam',
+            errorMessage: 'weightSpam.NOT_IN_RANGE',
+            userErrorMessage: 'weightSpam.NOT_IN_RANGE',
+            validationCode: 'weightSpam.NOT_IN_RANGE' } ]
       }, { text: 'test', weightSpam: 'test', weightBadWords: 0, weightMisspelling: 0 })
     })
 
@@ -93,12 +110,19 @@ describe('Input Validation', () => {
         title: 'Bad Request',
         message: 'A validation failed',
         userMessage: 'An error has ocurred',
-        errors: [{
-          field: 'weightBadWords',
-          errorMessage: 'weightBadWords.REQUIRED',
-          userErrorMessage: 'weightBadWords.REQUIRED',
-          validationCode: 'weightBadWords.REQUIRED'
-        }]
+        errors: [
+          {field: 'weightBadWords',
+            errorMessage: 'weightBadWords.REQUIRED',
+            userErrorMessage: 'weightBadWords.REQUIRED',
+            validationCode: 'weightBadWords.REQUIRED' },
+          { field: 'weightBadWords',
+            errorMessage: 'weightBadWords.NUMBER',
+            userErrorMessage: 'weightBadWords.NUMBER',
+            validationCode: 'weightBadWords.NUMBER' },
+          { field: 'weightBadWords',
+            errorMessage: 'weightBadWords.NOT_IN_RANGE',
+            userErrorMessage: 'weightBadWords.NOT_IN_RANGE',
+            validationCode: 'weightBadWords.NOT_IN_RANGE' } ]
       }, { text: 'test', weightSpam: 0, weightMisspelling: 0 })
     })
 
@@ -108,12 +132,15 @@ describe('Input Validation', () => {
         title: 'Bad Request',
         message: 'A validation failed',
         userMessage: 'An error has ocurred',
-        errors: [{
-          field: 'weightBadWords',
-          errorMessage: 'weightBadWords.NUMBER',
-          userErrorMessage: 'weightBadWords.NUMBER',
-          validationCode: 'weightBadWords.NUMBER'
-        }]
+        errors: [
+          { field: 'weightBadWords',
+            errorMessage: 'weightBadWords.NUMBER',
+            userErrorMessage: 'weightBadWords.NUMBER',
+            validationCode: 'weightBadWords.NUMBER' },
+          { field: 'weightBadWords',
+            errorMessage: 'weightBadWords.NOT_IN_RANGE',
+            userErrorMessage: 'weightBadWords.NOT_IN_RANGE',
+            validationCode: 'weightBadWords.NOT_IN_RANGE' } ]
       }, { text: 'test', weightSpam: 0, weightBadWords: 'test', weightMisspelling: 0 })
     })
 
@@ -138,12 +165,19 @@ describe('Input Validation', () => {
         title: 'Bad Request',
         message: 'A validation failed',
         userMessage: 'An error has ocurred',
-        errors: [{
-          field: 'weightMisspelling',
-          errorMessage: 'weightMisspelling.REQUIRED',
-          userErrorMessage: 'weightMisspelling.REQUIRED',
-          validationCode: 'weightMisspelling.REQUIRED'
-        }]
+        errors: [
+          { field: 'weightMisspelling',
+            errorMessage: 'weightMisspelling.REQUIRED',
+            userErrorMessage: 'weightMisspelling.REQUIRED',
+            validationCode: 'weightMisspelling.REQUIRED' },
+          { field: 'weightMisspelling',
+            errorMessage: 'weightMisspelling.NUMBER',
+            userErrorMessage: 'weightMisspelling.NUMBER',
+            validationCode: 'weightMisspelling.NUMBER' },
+          { field: 'weightMisspelling',
+            errorMessage: 'weightMisspelling.NOT_IN_RANGE',
+            userErrorMessage: 'weightMisspelling.NOT_IN_RANGE',
+            validationCode: 'weightMisspelling.NOT_IN_RANGE' } ]
       }, { text: 'test', weightSpam: 0, weightBadWords: 0 })
     })
 
@@ -153,12 +187,15 @@ describe('Input Validation', () => {
         title: 'Bad Request',
         message: 'A validation failed',
         userMessage: 'An error has ocurred',
-        errors: [{
-          field: 'weightMisspelling',
-          errorMessage: 'weightMisspelling.NUMBER',
-          userErrorMessage: 'weightMisspelling.NUMBER',
-          validationCode: 'weightMisspelling.NUMBER'
-        }]
+        errors: [
+          { field: 'weightMisspelling',
+            errorMessage: 'weightMisspelling.NUMBER',
+            userErrorMessage: 'weightMisspelling.NUMBER',
+            validationCode: 'weightMisspelling.NUMBER' },
+          { field: 'weightMisspelling',
+            errorMessage: 'weightMisspelling.NOT_IN_RANGE',
+            userErrorMessage: 'weightMisspelling.NOT_IN_RANGE',
+            validationCode: 'weightMisspelling.NOT_IN_RANGE' }]
       }, { text: 'test', weightSpam: 0, weightBadWords: 3.3, weightMisspelling: 'test' })
     })
 

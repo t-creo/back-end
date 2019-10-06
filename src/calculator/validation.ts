@@ -1,3 +1,4 @@
+import { ValidationError } from 'express-validator'
 import HttpError from '../errorHandling/httpError'
 
 const { check } = require('express-validator')
@@ -30,12 +31,14 @@ export function validate(method: string) : any {
   }
 }
 
-export function errorMapper(errors: any) : any {
-  const error = errors[0]
-  throw new HttpError(400, [{
-    'field': error.param,
-    'errorMessage': error.msg,
-    'userErrorMessage': error.msg,
-    'validationCode': error.msg
-  }])
+export function errorMapper(errors: ValidationError[]) : void {
+  const mappedErrors = errors.map((error) => {
+    return {
+      'field': error.param,
+      'errorMessage': error.msg,
+      'userErrorMessage': error.msg,
+      'validationCode': error.msg
+    }
+  })
+  throw new HttpError(400, mappedErrors)
 }
