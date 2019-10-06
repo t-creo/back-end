@@ -102,7 +102,7 @@ describe('/calculate/plain-text endpoint', () => {
         // has a misspell (100 - (100 * 1 / 4) = 75),
         // and doesn't have bad words (100 - (100 * 0 / 4) == 100)
         return testCredibilityWithOkData({ credibility: 35 }, {
-          text: 'WATUPPPPP ok sir all',
+          text: 'WATUPPPPP fine sir all',
           ...params
         })
       })
