@@ -126,7 +126,7 @@ async function twitterUserCredibility(userId: string) {
     })
 }
 
-function scrapperUserCredibility(verified: boolean, accountCreationYear: number) : Credibility{
+function scrapperTwitterUserCredibility(verified: boolean, accountCreationYear: number) : Credibility{
   const user:  TwitterUser = {
     name: '',
     verified: verified,
@@ -194,5 +194,5 @@ export {
   twitterUserCredibility,
   calculateTweetCredibility,
   socialCredibility,
-  scrapperUserCredibility
+  scrapperTwitterUserCredibility
 }
