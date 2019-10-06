@@ -6,7 +6,12 @@ describe('Error Handler', () => {
   
   test('Return HTTP error code 400', () => {
     try {
-      throw new HttpError(400)
+      throw new HttpError(400, [{
+        'field': 'text',
+        'errorMessage': 'some error',
+        'userErrorMessage': 'some error',
+        'validationCode': 'text.REQUIRED'
+      }])
     } catch (e) {
       assert.deepEqual(e, 
         {
@@ -14,6 +19,12 @@ describe('Error Handler', () => {
           title: 'Bad Request',
           message: 'A validation failed',
           userMessage: 'An error has ocurred',
+          errors: [{
+            field: 'text',
+            errorMessage: 'some error',
+            userErrorMessage: 'some error',
+            validationCode: 'text.REQUIRED'
+          }]
         }
       )
     }

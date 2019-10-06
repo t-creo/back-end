@@ -1,4 +1,4 @@
-interface ErrorObjectInterface {
+export interface ErrorObjectInterface {
     status: number;
     title: string;
     message: string;
@@ -6,11 +6,9 @@ interface ErrorObjectInterface {
     errors?: ErrorDetailInterface[];
 }
 
-interface ErrorDetailInterface {
+export interface ErrorDetailInterface {
     field: string;
     errorMessage: string;
     userErrorMessage: string;
     validationCode: string;
 }
-
-export default ErrorObjectInterface
