@@ -234,4 +234,101 @@ describe('Input Validation', () => {
         })
     })
   })
+
+  describe('/GET /calculate/user/scrape', () => {
+    function testScrapperTwitterUserCredibility(
+      expectedReturn : any, params: any) {
+      return request(app)
+        .get('/calculate/user/scrape')
+        .query(params)
+        .expect(expectedReturn)
+    } 
+    
+    it('verified.REQUIRED', () => {
+      return testScrapperTwitterUserCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [
+          { field: 'verified',
+            errorMessage: 'verified.REQUIRED',
+            userErrorMessage: 'verified.REQUIRED',
+            validationCode: 'verified.REQUIRED' },
+          { field: 'verified',
+            errorMessage: 'verified.BOOLEAN',
+            userErrorMessage: 'verified.BOOLEAN',
+            validationCode: 'verified.BOOLEAN' }]
+      }, { accountCreationYear: 2009 })
+    })
+
+    it('verified.BOOLEAN', () => {
+      return testScrapperTwitterUserCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [
+          { field: 'verified',
+            errorMessage: 'verified.BOOLEAN',
+            userErrorMessage: 'verified.BOOLEAN',
+            validationCode: 'verified.BOOLEAN' }]
+      }, {  verified: 'test', accountCreationYear: 2009 })
+    })
+
+    it('accountCreationYear.REQUIRED', () => {
+      return testScrapperTwitterUserCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [
+          { field: 'accountCreationYear',
+            errorMessage: 'accountCreationYear.REQUIRED',
+            userErrorMessage: 'accountCreationYear.REQUIRED',
+            validationCode: 'accountCreationYear.REQUIRED' },
+          { field: 'accountCreationYear',
+            errorMessage: 'accountCreationYear.NUMBER',
+            userErrorMessage: 'accountCreationYear.NUMBER',
+            validationCode: 'accountCreationYear.NUMBER' },
+          { field: 'accountCreationYear',
+            errorMessage: 'accountCreationYear.NOT_IN_RANGE',
+            userErrorMessage: 'accountCreationYear.NOT_IN_RANGE',
+            validationCode: 'accountCreationYear.NOT_IN_RANGE' }]
+      }, { verified: false })
+    })
+
+    it('accountCreationYear.NUMBER', () => {
+      return testScrapperTwitterUserCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [
+          { field: 'accountCreationYear',
+            errorMessage: 'accountCreationYear.NUMBER',
+            userErrorMessage: 'accountCreationYear.NUMBER',
+            validationCode: 'accountCreationYear.NUMBER' },
+          { field: 'accountCreationYear',
+            errorMessage: 'accountCreationYear.NOT_IN_RANGE',
+            userErrorMessage: 'accountCreationYear.NOT_IN_RANGE',
+            validationCode: 'accountCreationYear.NOT_IN_RANGE' } ]
+      }, { verified: true, accountCreationYear: 'test' })
+    })
+
+    it('accountCreationYear.NOT_IN_RANGE', () => {
+      return testScrapperTwitterUserCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [{
+          field: 'accountCreationYear',
+          errorMessage: 'accountCreationYear.NOT_IN_RANGE',
+          userErrorMessage: 'accountCreationYear.NOT_IN_RANGE',
+          validationCode: 'accountCreationYear.NOT_IN_RANGE'
+        }]
+      }, { verified: true, accountCreationYear: 2005 })
+    })
+  })
 })
