@@ -4,10 +4,9 @@ import Twit from 'twit'
 import enDictionary, { Dictionary } from 'dictionary-en-us'
 import util from 'util'
 import NSpell from 'nspell'
+import wash from 'washyourmouthoutwithsoap'
 
 const dictionaryFactory = util.promisify(enDictionary)
-
-const BAD_WORD_PLACEHOLDER = '*'
 
 function responseToTwitterUser(response: any) : TwitterUser {
   return {
@@ -39,7 +38,7 @@ function getCleanedWords(text: string) : string[] {
 }
 
 function isBadWord(word: string) : boolean {
-  return word.split('').every(i => i === BAD_WORD_PLACEHOLDER)
+  return wash.check('en', word)
 }
 
 function getBadWords(words: string[]) : string[] {
@@ -47,12 +46,7 @@ function getBadWords(words: string[]) : string[] {
 }
 
 function badWordsCriteria(text: string) : number {
-  const filterParams : FilterParams = {
-    placeHolder: BAD_WORD_PLACEHOLDER
-  }
-  const filter = new Filter(filterParams)
-  const cleanedString = filter.clean(text)
-  const wordsInText = getCleanedWords(cleanedString)
+  const wordsInText = getCleanedWords(text)
   const badWordsInText = getBadWords(wordsInText)
   return 100 - (100 * badWordsInText.length / wordsInText.length)
 }
@@ -147,8 +141,8 @@ async function calculateTweetCredibility(tweetId: string,
     const tweet: Tweet = await getTweetInfo(tweetId)
     const user: TwitterUser = tweet.user
     const userCredibility: number = calculateUserCredibility(user) * params.weightUser
-    const textCredibility: number = calculateTextCredibility(tweet.text, params).credibility * params.weightText
-    const socialCredibility: number = calculateSocialCredibility(user, maxFollowers) * params.weightSocial
+    const textCredibility: number = (await calculateTextCredibility(tweet.text, params)).credibility * params.weightText
+    const socialCredibility: number = calculateSocialCredibility(user) * params.weightSocial
     return {
       credibility: userCredibility + textCredibility + socialCredibility
     }
