@@ -1,10 +1,11 @@
 import {TextCredibilityWeights, Credibility, TwitterUser, TweetCredibilityWeights, Tweet} from './models'
 import config from '../config'
-import Filter, { FilterParams } from 'bad-words'
 import Twit from 'twit'
-import SimpleSpamFilter, { SimpleSpamFilterParams } from 'simple-spam-filter'
-import Spelling from 'spelling'
-import dictionary from 'spelling/dictionaries/en_US'
+import enDictionary, { Dictionary } from 'dictionary-en-us'
+import util from 'util'
+import NSpell from 'nspell'
+
+const dictionaryFactory = util.promisify(enDictionary)
 
 const BAD_WORD_PLACEHOLDER = '*'
 
@@ -68,20 +69,21 @@ function spamCriteria(text: string) : number {
     : 100
 }
 
-function missSpellingCriteria(text: string) : number {
+async function missSpellingCriteria(text: string) : Promise<number> {
   const wordsInText = getCleanedWords(text)
-  const spellingChecker = new Spelling(dictionary)
+  const d: Dictionary = await dictionaryFactory()
+  const spellingChecker = new NSpell(d.aff, d.dic)
   const numOfMissSpells : number = wordsInText.reduce((acc, curr) =>
-    spellingChecker.lookup(curr).found
+    spellingChecker.correct(curr)
       ? acc
       : acc + 1, 0)
   return 100 - (100 * numOfMissSpells / wordsInText.length)
 }
 
-function calculateTextCredibility(text: string, params: TextCredibilityWeights) : Credibility {
+async function calculateTextCredibility(text: string, params: TextCredibilityWeights) : Promise<Credibility> {
   const badWordsCalculation = params.weightBadWords * badWordsCriteria(text)
   const spamCalculation = params.weightSpam * spamCriteria(text)
-  const missSpellingCalculation = params.weightMisspelling * missSpellingCriteria(text)
+  const missSpellingCalculation = params.weightMisspelling * (await missSpellingCriteria(text))
   return {
     credibility: badWordsCalculation + spamCalculation + missSpellingCalculation
   }
