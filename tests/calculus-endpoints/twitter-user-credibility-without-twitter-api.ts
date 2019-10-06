@@ -7,7 +7,7 @@ interface userCredibilityParams extends TwitterUser {
     yearJoined: number
 }
 
-describe('/calculate/user/scrape/:verified/:accountCreationYear endpoint', () => {
+describe('/user/scrape endpoint', () => {
   describe('http 200 calls', () => {
     function testCredibilityWithOkData(
       expectedReturn: Credibility, params: userCredibilityParams) {
