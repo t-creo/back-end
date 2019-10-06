@@ -127,8 +127,17 @@ async function twitterUserCredibility(userId: string) {
 }
 
 function scrapperUserCredibility(verified: boolean, accountCreationYear: number) : Credibility{
+  const user:  TwitterUser = {
+    name: '',
+    verified: verified,
+    yearJoined: accountCreationYear,
+    followersCount: 0,
+    friendsCount: 0,
+  }
+  
   return { 
-    credibility: getVerifWeight(verified) + getCreationWeight(accountCreationYear) } 
+    credibility: getVerifWeight(user.verified) + getCreationWeight(user.yearJoined) 
+  } 
 }
 
 async function calculateTweetCredibility(tweetId: string,
