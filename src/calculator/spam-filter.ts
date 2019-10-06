@@ -34,23 +34,19 @@ class SimpleSpamFilter {
   isSpam(tweet: string): boolean {
     if (this.minWords !== undefined &&
       tweet.split(' ').length < this.minWords) {
-      console.log('`%s` does not meet minimum word requirement', tweet)
       return true
     }
 
     if (this.maxPercentCaps !== undefined &&
       percentCaps(tweet) > this.maxPercentCaps) {
-      console.log('`%s` exceeds max percentage of capitalized characters', tweet)
       return true
     }
 
     if (this.maxNumSwearWords !== undefined &&
       numSwearWords(tweet) > this.maxNumSwearWords) {
-      console.log('`%s` exceeds max number of swear words', tweet)
       return true
     }
 
-    console.log('`%s` is not spam', tweet)
     return false
 
   }
