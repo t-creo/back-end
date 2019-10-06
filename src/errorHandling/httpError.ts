@@ -1,4 +1,4 @@
-import ErrorObjectInterface from './errorObjectInterface' // eslint-disable-line no-unused-vars
+import { ErrorObjectInterface, ErrorDetailInterface } from './errorObjectInterface' // eslint-disable-line no-unused-vars
 
 class HttpError extends Error implements ErrorObjectInterface {
 
@@ -6,8 +6,9 @@ class HttpError extends Error implements ErrorObjectInterface {
   title: string;
   message: string;
   userMessage: string;
+  errors?: ErrorDetailInterface[]
 
-  constructor(status: number) {
+  constructor(status: number, errors?: ErrorDetailInterface[]) {
     super()
 
     this.status = 0
@@ -21,6 +22,7 @@ class HttpError extends Error implements ErrorObjectInterface {
       this.title = 'Bad Request'
       this.message = 'A validation failed'
       this.userMessage = 'An error has ocurred'
+      this.errors = errors
       break
     }
     case 401: { 
