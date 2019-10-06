@@ -28,6 +28,15 @@ export function validate(method: string) : any {
       check('id', 'userId.NUMBER').isInt(),
     ]
   }
+  case 'scrapperTwitterUserCredibility': {
+    return [
+      check('verified', 'verified.REQUIRED').exists(),
+      check('verified', 'verified.BOOLEAN').isBoolean(),
+      check('accountCreationYear', 'accountCreationYear.REQUIRED').exists(),
+      check('accountCreationYear', 'accountCreationYear.NUMBER').isInt(),
+      check('accountCreationYear', 'accountCreationYear.NOT_IN_RANGE').isInt({min: 2006, max: 2019})
+    ]
+  }
   }
 }
 

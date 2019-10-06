@@ -1,6 +1,6 @@
 import express from 'express'
+import { calculateTextCredibility, socialCredibility, twitterUserCredibility, calculateTweetCredibility, scrapperTwitterUserCredibility} from './service'
 import { validationResult } from 'express-validator'
-import { calculateTextCredibility, socialCredibility, twitterUserCredibility, calculateTweetCredibility } from './service'
 import { validate, errorMapper } from './validation'
 
 const calculatorRoutes = express.Router()
@@ -27,6 +27,15 @@ calculatorRoutes.get('/twitter/user/:id', validate('twitterUserCredibility'), fu
       res.send(response)
       next()
     })
+})
+
+calculatorRoutes.get('/user/scrape', validate('scrapperTwitterUserCredibility'), function(req, res) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    errorMapper(errors.array())
+  }
+  const userCredibility = scrapperTwitterUserCredibility(req.query.verified === 'true', Number(req.query.accountCreationYear))
+  res.send(userCredibility)
 })
 
 calculatorRoutes.get('/twitter/social/:userId', async function(req, res) {
