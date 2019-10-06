@@ -83,8 +83,8 @@ calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), fun
     name: '',
     verified: req.query.verified,
     yearJoined: req.query.accountCreationYear,
-    followersCount: req.query.followers,
-    friendsCount: req.query.following
+    followersCount: req.query.followersCount,
+    friendsCount: req.query.friendsCount
   }
   ))
 })
