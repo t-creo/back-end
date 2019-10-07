@@ -51,7 +51,6 @@ export function validate(method: string) : any {
     return [
       check('tweetText', 'tweetText.REQUIRED').exists(),
       check('tweetText', 'tweetText.NOT_EMPTY').not().isEmpty(),
-      check('tweetText', 'tweetText.MAX_LENGTH_EXCEEDED').isLength({ max: 240 }),
       check('weightSpam', 'weightSpam.REQUIRED').exists(),
       check('weightSpam', 'weightSpam.NUMBER').isFloat(),
       check('weightSpam', 'weightSpam.NOT_IN_RANGE').isFloat({ min: 0, max: 100 }),
