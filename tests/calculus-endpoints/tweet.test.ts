@@ -93,5 +93,52 @@ describe('/calculate/tweets/scraped endpoint', () => {
           })
       })
     })
+
+    describe('test with only social user cred filter', () => {
+      const tweetText: string = 'WATTUPPP ok sir fine'
+      const tweetCredibilityWeights: TweetCredibilityWeights = {
+        weightSpam: 0.2,
+        weightBadWords: 0.2,
+        weightMisspelling: 0.6,
+        weightText: 0,
+        weightUser: 0,
+        weightSocial: 1
+      }
+      const twitterUser : TwitterUser = {
+        name: '',
+        verified: true,
+        yearJoined: 2006,
+        friendsCount: 2000,
+        followersCount: 2000
+      }
+      it('returns credibility=0 with 1 following and 0 followers on social user on twitter scrape endpoint', () => {
+        // The user is not verified and their account was created this year
+        return testCredibilityWithOkData({ credibility: 0 },
+          tweetText, tweetCredibilityWeights, {
+            ...twitterUser,
+            followersCount: 0,
+            friendsCount: 1
+          })
+      })
+      it('returns credibility=100 with 0 following and 2000000 followers on social user on twitter scrape endpoint', () => {
+        // The user is verified and their account was created the
+        // same year that twitter was created
+        return testCredibilityWithOkData({ credibility: 100 },
+          tweetText, tweetCredibilityWeights, {
+            ...twitterUser,
+            followersCount: 2000000,
+            friendsCount: 0,
+          })
+      })
+      it('returns credibility=75 with 2000000 following and 2000000 followers on social user on twitter scrape endpoint', () => {
+        // The user is verified and their creation year was the current one
+        return testCredibilityWithOkData({ credibility: 75 },
+          tweetText, tweetCredibilityWeights, {
+            ...twitterUser,
+            friendsCount: 2000000,
+            followersCount: 2000000
+          })
+      })
+    })
   })
 })
