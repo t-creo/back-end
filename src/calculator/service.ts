@@ -134,10 +134,9 @@ function scrapperTwitterUserCredibility(verified: boolean, accountCreationYear: 
     followersCount: 0,
     friendsCount: 0,
   }
-  
-  return { 
-    credibility: getVerifWeight(user.verified) + getCreationWeight(user.yearJoined) 
-  } 
+  return {
+    credibility: calculateUserCredibility(user)
+  }
 }
 
 async function calculateTweetCredibility(tweetId: string,
@@ -168,9 +167,9 @@ function getVerifWeight(isUserVerified : boolean) : number {
 function getCreationWeight(yearJoined : number) : number {
   const currentYear = new Date().getFullYear()
   const twitterCreationYear = 2006
-  const accountAge = currentYear - twitterCreationYear
-  const maxAccountAge = currentYear - yearJoined
-  return accountAge/maxAccountAge
+  const maxAccountAge = currentYear - twitterCreationYear
+  const accountAge = currentYear - yearJoined
+  return 50 * (accountAge / maxAccountAge)
 }
 
 function followersImpact(userFollowers: number) : number {

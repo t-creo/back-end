@@ -72,19 +72,19 @@ calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), fun
     errorMapper(errors.array())
   }
   res.send(scrapedtweetCredibility(req.query.tweetText, {
-    weightSpam: req.query.weightSpam,
-    weightBadWords: req.query.weightBadWords,
-    weightMisspelling: req.query.weightMisspelling,
-    weightText: req.query.weightText,
-    weightUser: req.query.weightUser,
-    weightSocial: req.query.weightSocial,
+    weightSpam: +req.query.weightSpam,
+    weightBadWords: +req.query.weightBadWords,
+    weightMisspelling: +req.query.weightMisspelling,
+    weightText: +req.query.weightText,
+    weightUser: +req.query.weightUser,
+    weightSocial: +req.query.weightSocial,
   },
   {
     name: '',
-    verified: req.query.verified,
-    yearJoined: req.query.yearJoined,
-    followersCount: req.query.followersCount,
-    friendsCount: req.query.friendsCount
+    verified: req.query.verified === 'true',
+    yearJoined: +req.query.yearJoined,
+    followersCount: +req.query.followersCount,
+    friendsCount: +req.query.friendsCount
   }
   ))
 })

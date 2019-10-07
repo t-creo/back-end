@@ -23,8 +23,8 @@ describe('/user/scrape endpoint', () => {
         followersCount: 123,
         friendsCount: 12
       }
-      it('returns credibility=51', () => {
-        return testCredibilityWithOkData({ credibility: 51 }, {
+      it('returns credibility=100', () => {
+        return testCredibilityWithOkData({ credibility: 100 }, {
           verified: true,
           yearJoined: 2006,
           ...params
