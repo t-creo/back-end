@@ -259,7 +259,7 @@ describe('Input Validation', () => {
             errorMessage: 'verified.BOOLEAN',
             userErrorMessage: 'verified.BOOLEAN',
             validationCode: 'verified.BOOLEAN' }]
-      }, { accountCreationYear: 2009 })
+      }, { yearJoined: 2009 })
     })
 
     it('verified.BOOLEAN', () => {
@@ -273,62 +273,62 @@ describe('Input Validation', () => {
             errorMessage: 'verified.BOOLEAN',
             userErrorMessage: 'verified.BOOLEAN',
             validationCode: 'verified.BOOLEAN' }]
-      }, {  verified: 'test', accountCreationYear: 2009 })
+      }, {  verified: 'test', yearJoined: 2009 })
     })
 
-    it('accountCreationYear.REQUIRED', () => {
+    it('yearJoined.REQUIRED', () => {
       return testScrapperTwitterUserCredibility({
         status: 400,
         title: 'Bad Request',
         message: 'A validation failed',
         userMessage: 'An error has ocurred',
         errors: [
-          { field: 'accountCreationYear',
-            errorMessage: 'accountCreationYear.REQUIRED',
-            userErrorMessage: 'accountCreationYear.REQUIRED',
-            validationCode: 'accountCreationYear.REQUIRED' },
-          { field: 'accountCreationYear',
-            errorMessage: 'accountCreationYear.NUMBER',
-            userErrorMessage: 'accountCreationYear.NUMBER',
-            validationCode: 'accountCreationYear.NUMBER' },
-          { field: 'accountCreationYear',
-            errorMessage: 'accountCreationYear.NOT_IN_RANGE',
-            userErrorMessage: 'accountCreationYear.NOT_IN_RANGE',
-            validationCode: 'accountCreationYear.NOT_IN_RANGE' }]
+          { field: 'yearJoined',
+            errorMessage: 'yearJoined.REQUIRED',
+            userErrorMessage: 'yearJoined.REQUIRED',
+            validationCode: 'yearJoined.REQUIRED' },
+          { field: 'yearJoined',
+            errorMessage: 'yearJoined.NUMBER',
+            userErrorMessage: 'yearJoined.NUMBER',
+            validationCode: 'yearJoined.NUMBER' },
+          { field: 'yearJoined',
+            errorMessage: 'yearJoined.NOT_IN_RANGE',
+            userErrorMessage: 'yearJoined.NOT_IN_RANGE',
+            validationCode: 'yearJoined.NOT_IN_RANGE' }]
       }, { verified: false })
     })
 
-    it('accountCreationYear.NUMBER', () => {
+    it('yearJoined.NUMBER', () => {
       return testScrapperTwitterUserCredibility({
         status: 400,
         title: 'Bad Request',
         message: 'A validation failed',
         userMessage: 'An error has ocurred',
         errors: [
-          { field: 'accountCreationYear',
-            errorMessage: 'accountCreationYear.NUMBER',
-            userErrorMessage: 'accountCreationYear.NUMBER',
-            validationCode: 'accountCreationYear.NUMBER' },
-          { field: 'accountCreationYear',
-            errorMessage: 'accountCreationYear.NOT_IN_RANGE',
-            userErrorMessage: 'accountCreationYear.NOT_IN_RANGE',
-            validationCode: 'accountCreationYear.NOT_IN_RANGE' } ]
-      }, { verified: true, accountCreationYear: 'test' })
+          { field: 'yearJoined',
+            errorMessage: 'yearJoined.NUMBER',
+            userErrorMessage: 'yearJoined.NUMBER',
+            validationCode: 'yearJoined.NUMBER' },
+          { field: 'yearJoined',
+            errorMessage: 'yearJoined.NOT_IN_RANGE',
+            userErrorMessage: 'yearJoined.NOT_IN_RANGE',
+            validationCode: 'yearJoined.NOT_IN_RANGE' } ]
+      }, { verified: true, yearJoined: 'test' })
     })
 
-    it('accountCreationYear.NOT_IN_RANGE', () => {
+    it('yearJoined.NOT_IN_RANGE', () => {
       return testScrapperTwitterUserCredibility({
         status: 400,
         title: 'Bad Request',
         message: 'A validation failed',
         userMessage: 'An error has ocurred',
         errors: [{
-          field: 'accountCreationYear',
-          errorMessage: 'accountCreationYear.NOT_IN_RANGE',
-          userErrorMessage: 'accountCreationYear.NOT_IN_RANGE',
-          validationCode: 'accountCreationYear.NOT_IN_RANGE'
+          field: 'yearJoined',
+          errorMessage: 'yearJoined.NOT_IN_RANGE',
+          userErrorMessage: 'yearJoined.NOT_IN_RANGE',
+          validationCode: 'yearJoined.NOT_IN_RANGE'
         }]
-      }, { verified: true, accountCreationYear: 2020 })
+      }, { verified: true, yearJoined: 2020 })
     })
   })
 })

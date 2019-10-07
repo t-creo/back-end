@@ -34,7 +34,7 @@ calculatorRoutes.get('/user/scrape', validate('scrapperTwitterUserCredibility'),
   if (!errors.isEmpty()) {
     errorMapper(errors.array())
   }
-  const userCredibility = scrapperTwitterUserCredibility(req.query.verified === 'true', Number(req.query.accountCreationYear))
+  const userCredibility = scrapperTwitterUserCredibility(req.query.verified === 'true', Number(req.query.yearJoined))
   res.send(userCredibility)
 })
 
@@ -58,7 +58,7 @@ calculatorRoutes.get('/twitter/tweets', function(req, res, next) {
     })
 })
 
-calculatorRoutes.get('/social/scraped', validate('scrapedSocialCredibility'), function(req, res){
+calculatorRoutes.get('/social/scrape', validate('scrapedSocialCredibility'), function(req, res){
   const errors = validationResult(req)
   if (!errors.isEmpty()){
     errorMapper(errors.array())

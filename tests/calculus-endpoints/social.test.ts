@@ -3,12 +3,12 @@ import app from '../../src/app'
 import { Credibility, TwitterUser } from '../../src/calculator/models'
 import { ErrorObjectInterface } from '../../src/errorHandling/errorObjectInterface'
 
-describe('/calculate/social/scraped endpoint', () => {
+describe('/calculate/social/scrape endpoint', () => {
   describe('http 200 requests', () => {
     function testCredibilityWithOkData(
       expectedReturn : Credibility, params: TwitterUser) {
       return request(app)
-        .get('/calculate/social/scraped')
+        .get('/calculate/social/scrape')
         .query(params)
         .expect(200)
         .expect(expectedReturn)
@@ -49,7 +49,7 @@ describe('/calculate/social/scraped endpoint', () => {
     function testCredibilityWithIncorrectData(
       expectedReturn : ErrorObjectInterface, params: TwitterUser) {
       return request(app)
-        .get('/calculate/social/scraped')
+        .get('/calculate/social/scrape')
         .query(params)
         .expect(400)
         .expect(expectedReturn)

@@ -12,16 +12,16 @@ describe('/user/scrape endpoint', () => {
     function testCredibilityWithOkData(
       expectedReturn: Credibility, params: userCredibilityParams) {
       return request(app)
-        .get('/calculate/social/scraped')
+        .get('/calculate/user/scrape')
         .query(params)
         .expect(200)
         .expect(expectedReturn)
     }
     describe('verified true, year joined 2006', () => {
       const params = {
-        name: '',
-        followersCount: 0,
-        friendsCount: 0
+        name: 'f',
+        followersCount: 123,
+        friendsCount: 12
       }
       it('returns credibility=51', () => {
         return testCredibilityWithOkData({ credibility: 51 }, {
