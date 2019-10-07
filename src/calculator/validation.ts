@@ -42,9 +42,35 @@ export function validate(method: string) : any {
     return [
       check('verified', 'verified.REQUIRED').exists(),
       check('verified', 'verified.BOOLEAN').isBoolean(),
-      check('accountCreationYear', 'accountCreationYear.REQUIRED').exists(),
-      check('accountCreationYear', 'accountCreationYear.NUMBER').isInt(),
-      check('accountCreationYear', 'accountCreationYear.NOT_IN_RANGE').isInt({min: 2006, max: 2019})
+      check('yearJoined', 'yearJoined.REQUIRED').exists(),
+      check('yearJoined', 'yearJoined.NUMBER').isInt(),
+      check('yearJoined', 'yearJoined.NOT_IN_RANGE').isInt({min: 2006, max: 2019})
+    ]
+  }
+  case 'scrapedTweetCredibility': {
+    return [
+      check('tweetText', 'tweetText.REQUIRED').exists(),
+      check('tweetText', 'tweetText.NOT_EMPTY').not().isEmpty(),
+      check('tweetText', 'tweetText.MAX_LENGTH_EXCEEDED').isLength({ max: 240 }),
+      check('weightSpam', 'weightSpam.REQUIRED').exists(),
+      check('weightSpam', 'weightSpam.NUMBER').isFloat(),
+      check('weightSpam', 'weightSpam.NOT_IN_RANGE').isFloat({ min: 0, max: 100 }),
+      check('weightBadWords', 'weightBadWords.REQUIRED').exists(),
+      check('weightBadWords', 'weightBadWords.NUMBER').isFloat(),
+      check('weightBadWords', 'weightBadWords.NOT_IN_RANGE').isFloat({min : 0, max : 100}),
+      check('weightMisspelling', 'weightMisspelling.REQUIRED').exists(),
+      check('weightMisspelling', 'weightMisspelling.NUMBER').isFloat(),
+      check('weightMisspelling', 'weightMisspelling.NOT_IN_RANGE').isFloat({min : 0, max : 100}),
+      check('followersCount', 'followersCount.NUMBER').isInt(),
+      check('followersCount', 'followersCount.NON_NEGATIVE').isInt({gt: -1}),
+      check('followersCount', 'followersCount.REQUIRED').exists(),
+      check('friendsCount', 'friendsCount.NUMBER').isInt(),
+      check('friendsCount', 'friendsCount.NON_NEGATIVE').isInt({gt: -1}),
+      check('friendsCount', 'friendsCount.REQUIRED').exists(),
+      check('verified', 'verified.REQUIRED').exists(),
+      check('verified', 'verified.BOOLEAN').isBoolean(),
+      check('yearJoined', 'yearJoined.NUMBER').isInt(),
+      check('yearJoined', 'yearJoined.NOT_IN_RANGE').isInt({min: 2006})
     ]
   }
   }

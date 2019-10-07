@@ -134,10 +134,9 @@ function scrapperTwitterUserCredibility(verified: boolean, accountCreationYear: 
     followersCount: 0,
     friendsCount: 0,
   }
-  
-  return { 
-    credibility: getVerifWeight(user.verified) + getCreationWeight(user.yearJoined) 
-  } 
+  return {
+    credibility: calculateUserCredibility(user)
+  }
 }
 
 async function calculateTweetCredibility(tweetId: string,
@@ -145,7 +144,7 @@ async function calculateTweetCredibility(tweetId: string,
   try {
     const tweet: Tweet = await getTweetInfo(tweetId)
     const user: TwitterUser = tweet.user
-    const userCredibility: number = calculateUserCredibility(user) * params.weightText
+    const userCredibility: number = calculateUserCredibility(user) * params.weightUser
     const textCredibility: number = calculateTextCredibility(tweet.text, params).credibility * params.weightText
     const socialCredibility: number = calculateSocialCredibility(user) * params.weightSocial
     return {
@@ -168,9 +167,9 @@ function getVerifWeight(isUserVerified : boolean) : number {
 function getCreationWeight(yearJoined : number) : number {
   const currentYear = new Date().getFullYear()
   const twitterCreationYear = 2006
-  const accountAge = currentYear - twitterCreationYear
-  const maxAccountAge = currentYear - yearJoined
-  return accountAge/maxAccountAge
+  const maxAccountAge = currentYear - twitterCreationYear
+  const accountAge = currentYear - yearJoined
+  return 50 * (accountAge / maxAccountAge)
 }
 
 function followersImpact(userFollowers: number) : number {
@@ -189,7 +188,16 @@ async function socialCredibility(userID: string) {
   }
 }
 
-function scrappedSocialCredibility(followersCount: number, friendsCount: number){
+function scrapedtweetCredibility(tweetText: string, tweetCredibilityWeights: TweetCredibilityWeights, twitterUser: TwitterUser){
+  const userCredibility: number = calculateUserCredibility(twitterUser) * tweetCredibilityWeights.weightUser
+  const textCredibility: number = calculateTextCredibility(tweetText, tweetCredibilityWeights).credibility * tweetCredibilityWeights.weightText
+  const socialCredibility: number = calculateSocialCredibility(twitterUser) * tweetCredibilityWeights.weightSocial
+  return {
+    credibility: userCredibility + textCredibility + socialCredibility
+  }
+}
+
+function scrapedSocialCredibility(followersCount: number, friendsCount: number){
   const user : TwitterUser = {
     name: '',
     verified: false,
@@ -207,6 +215,7 @@ export {
   twitterUserCredibility,
   calculateTweetCredibility,
   socialCredibility,
-  scrappedSocialCredibility,
-  scrapperTwitterUserCredibility
+  scrapperTwitterUserCredibility,
+  scrapedSocialCredibility,
+  scrapedtweetCredibility
 }

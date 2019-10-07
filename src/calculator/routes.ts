@@ -1,5 +1,5 @@
 import express from 'express'
-import { calculateTextCredibility, socialCredibility, twitterUserCredibility, calculateTweetCredibility, scrapperTwitterUserCredibility, scrappedSocialCredibility} from './service'
+import { calculateTextCredibility, socialCredibility, twitterUserCredibility, calculateTweetCredibility, scrapperTwitterUserCredibility, scrapedSocialCredibility, scrapedtweetCredibility} from './service'
 import { validationResult } from 'express-validator'
 import { validate, errorMapper } from './validation'
 
@@ -34,7 +34,7 @@ calculatorRoutes.get('/user/scrape', validate('scrapperTwitterUserCredibility'),
   if (!errors.isEmpty()) {
     errorMapper(errors.array())
   }
-  const userCredibility = scrapperTwitterUserCredibility(req.query.verified === 'true', Number(req.query.accountCreationYear))
+  const userCredibility = scrapperTwitterUserCredibility(req.query.verified === 'true', Number(req.query.yearJoined))
   res.send(userCredibility)
 })
 
@@ -58,12 +58,35 @@ calculatorRoutes.get('/twitter/tweets', function(req, res, next) {
     })
 })
 
-calculatorRoutes.get('/social/scraped', validate('scrapedSocialCredibility'), function(req, res){
+calculatorRoutes.get('/social/scrape', validate('scrapedSocialCredibility'), function(req, res){
   const errors = validationResult(req)
   if (!errors.isEmpty()){
     errorMapper(errors.array())
   }
-  res.send(scrappedSocialCredibility(req.query.followersCount, req.query.friendsCount))
+  res.send(scrapedSocialCredibility(req.query.followersCount, req.query.friendsCount))
+})
+
+calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), function(req, res){
+  const errors = validationResult(req)
+  if (!errors.isEmpty()){
+    errorMapper(errors.array())
+  }
+  res.send(scrapedtweetCredibility(req.query.tweetText, {
+    weightSpam: +req.query.weightSpam,
+    weightBadWords: +req.query.weightBadWords,
+    weightMisspelling: +req.query.weightMisspelling,
+    weightText: +req.query.weightText,
+    weightUser: +req.query.weightUser,
+    weightSocial: +req.query.weightSocial,
+  },
+  {
+    name: '',
+    verified: req.query.verified === 'true',
+    yearJoined: +req.query.yearJoined,
+    followersCount: +req.query.followersCount,
+    friendsCount: +req.query.friendsCount
+  }
+  ))
 })
 
 export default calculatorRoutes
