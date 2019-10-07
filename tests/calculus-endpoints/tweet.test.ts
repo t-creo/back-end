@@ -35,7 +35,7 @@ describe('/calculate/tweets/scraped endpoint', () => {
       })
       it('returns credibility=0 on full text on twitter scrape endpoint', () => {
         return testCredibilityWithOkData({ credibility: 0 },
-          'idiot stupid', tweetCredibilityWeights, twitterUser)
+          'c0ck fukk', tweetCredibilityWeights, twitterUser)
       })
       it('returns credibility=100 on full text on twitter scrape endpoint', () => {
         return testCredibilityWithOkData({ credibility: 100 },
