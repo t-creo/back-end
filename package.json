@@ -10,7 +10,8 @@
     "pretest": "npm run lint",
     "test": "jest --coverage",
     "tsc": "tsc",
-    "upload-coverage": "cat coverage/lcov.info | coveralls"
+    "upload-coverage": "cat coverage/lcov.info | coveralls",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
