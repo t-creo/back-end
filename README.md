@@ -1,6 +1,6 @@
 # www-back-end
 
-![](https://img.shields.io/docker/automated/german1608/world-white-web?style=flat-square) ![](https://travis-ci.org/World-White-Web/www-back-end.svg?branch=develop) ![npm type definitions](https://img.shields.io/npm/types/typescript?style=flat-square) [![Coverage Status](https://coveralls.io/repos/github/World-White-Web/www-back-end/badge.svg?branch=develop)](https://coveralls.io/github/World-White-Web/www-back-end?branch=develop)
+![](https://img.shields.io/docker/automated/german1608/world-white-web?style=flat-square) ![Travis (.org) branch](https://img.shields.io/travis/World-White-Web/www-back-end/develop) ![npm type definitions](https://img.shields.io/npm/types/typescript?style=flat-square) [![Coverage Status](https://coveralls.io/repos/github/World-White-Web/www-back-end/badge.svg?branch=develop)](https://coveralls.io/github/World-White-Web/www-back-end?branch=develop)
 
 Backend para la aplicación World White Web. MiniProyecto de Desarrollo de Software para la USBve.
 
