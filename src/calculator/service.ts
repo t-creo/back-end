@@ -1,4 +1,4 @@
-import {TextCredibilityWeights, Credibility, TwitterUser, TweetCredibilityWeights, Tweet, MaxFollowers} from './models'
+import {TextCredibilityWeights, Credibility, TwitterUser, TweetCredibilityWeights, Tweet} from './models'
 import config from '../config'
 import Filter, { FilterParams } from 'bad-words'
 import Twit from 'twit'

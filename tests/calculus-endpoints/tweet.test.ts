@@ -5,10 +5,10 @@ import { Credibility, TwitterUser, TweetCredibilityWeights } from '../../src/cal
 describe('/calculate/tweets/scraped endpoint', () => {
   describe('http 200 requests', () => {
     function testCredibilityWithOkData(
-      expectedReturn : Credibility, tweetText: string, tweetCredibilityWeights: TweetCredibilityWeights, twitterUser: TwitterUser) {
+      expectedReturn : Credibility, tweetText: string, tweetCredibilityWeights: TweetCredibilityWeights, twitterUser: TwitterUser, maxFollowers: number) {
       return request(app)
         .get('/calculate/tweets/scraped')
-        .query({tweetText, ...tweetCredibilityWeights, ...twitterUser})
+        .query({tweetText, ...tweetCredibilityWeights, ...twitterUser, maxFollowers})
         .expect(200)
         .expect(expectedReturn)
     }
@@ -20,26 +20,27 @@ describe('/calculate/tweets/scraped endpoint', () => {
         weightMisspelling: 0.6,
         weightText: 1,
         weightUser: 0,
-        weightSocial: 0
+        weightSocial: 0,
       }
       const twitterUser : TwitterUser = {
         name: '',
         verified: false,
         yearJoined: 2010,
         followersCount: 2000,
-        friendsCount: 2000
+        friendsCount: 2000,
       }
+      const maxFollowers : number = 2000000
       it('returns credibility=65 on full text on twitter scrape endpoint', () => {
         return testCredibilityWithOkData({ credibility: 65 },
-          'WATTUPP ok sir fine', tweetCredibilityWeights, twitterUser)
+          'WATTUPP ok sir fine', tweetCredibilityWeights, twitterUser, maxFollowers)
       })
       it('returns credibility=0 on full text on twitter scrape endpoint', () => {
         return testCredibilityWithOkData({ credibility: 0 },
-          'c0ck fukk', tweetCredibilityWeights, twitterUser)
+          'c0ck fukk', tweetCredibilityWeights, twitterUser, maxFollowers)
       })
       it('returns credibility=100 on full text on twitter scrape endpoint', () => {
         return testCredibilityWithOkData({ credibility: 100 },
-          'everything good here ok sir fine', tweetCredibilityWeights, twitterUser)
+          'everything good here ok sir fine', tweetCredibilityWeights, twitterUser, maxFollowers)
       })
     })
 
@@ -60,6 +61,7 @@ describe('/calculate/tweets/scraped endpoint', () => {
         friendsCount: 2000,
         followersCount: 2000
       }
+      const maxFollowers : number = 2000000
       it('returns credibility=0 on full user on twitter scrape endpoint', () => {
         // The user is not verified and their account was created this year
         return testCredibilityWithOkData({ credibility: 0 },
@@ -67,13 +69,14 @@ describe('/calculate/tweets/scraped endpoint', () => {
             ...twitterUser,
             yearJoined: new Date().getFullYear(),
             verified: false
-          })
+          },
+          maxFollowers)
       })
       it('returns credibility=100 on full user on twitter scrape endpoint', () => {
         // The user is verified and their account was created the
         // same year that twitter was created
         return testCredibilityWithOkData({ credibility: 100 },
-          tweetText, tweetCredibilityWeights, twitterUser)
+          tweetText, tweetCredibilityWeights, twitterUser, maxFollowers)
       })
       it('returns credibility=50 with verified and new account on full user on twitter scrape endpoint', () => {
         // The user is verified and their creation year was the current one
@@ -81,7 +84,8 @@ describe('/calculate/tweets/scraped endpoint', () => {
           tweetText, tweetCredibilityWeights, {
             ...twitterUser,
             yearJoined: new Date().getFullYear()
-          })
+          },
+          maxFollowers)
       })
       it('returns credibility=50 with unverified and old account on full user on twitter scrape endpoint', () => {
         // The user is not verified and their creation year was the same
@@ -90,7 +94,8 @@ describe('/calculate/tweets/scraped endpoint', () => {
           tweetText, tweetCredibilityWeights, {
             ...twitterUser,
             verified: false,
-          })
+          },
+          maxFollowers)
       })
     })
 
@@ -111,6 +116,7 @@ describe('/calculate/tweets/scraped endpoint', () => {
         friendsCount: 2000,
         followersCount: 2000
       }
+      const maxFollowers : number = 2000000
       it('returns credibility=0 with 1 following and 0 followers on social user on twitter scrape endpoint', () => {
         // The user is not verified and their account was created this year
         return testCredibilityWithOkData({ credibility: 0 },
@@ -118,7 +124,8 @@ describe('/calculate/tweets/scraped endpoint', () => {
             ...twitterUser,
             followersCount: 0,
             friendsCount: 1
-          })
+          },
+          maxFollowers)
       })
       it('returns credibility=100 with 0 following and 2000000 followers on social user on twitter scrape endpoint', () => {
         // The user is verified and their account was created the
@@ -128,7 +135,8 @@ describe('/calculate/tweets/scraped endpoint', () => {
             ...twitterUser,
             followersCount: 2000000,
             friendsCount: 0,
-          })
+          },
+          maxFollowers)
       })
       it('returns credibility=75 with 2000000 following and 2000000 followers on social user on twitter scrape endpoint', () => {
         // The user is verified and their creation year was the current one
@@ -137,7 +145,8 @@ describe('/calculate/tweets/scraped endpoint', () => {
             ...twitterUser,
             friendsCount: 2000000,
             followersCount: 2000000
-          })
+          },
+          maxFollowers)
       })
     })
   })

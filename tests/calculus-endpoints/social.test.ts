@@ -20,7 +20,8 @@ describe('/calculate/social/scrape endpoint', () => {
         verified: false,
         yearJoined: 2000,
         followersCount: 1200000,
-        friendsCount: 421
+        friendsCount: 421,
+        maxFollowers: 2000000
       }
       it('returns credibility=30.04999998245834 with', () => {
         return testCredibilityWithOkData({ credibility: 30.04999998245834 }, params)
@@ -61,7 +62,8 @@ describe('/calculate/social/scrape endpoint', () => {
         verified: false,
         yearJoined: 2000,
         followersCount: -1,
-        friendsCount: 1
+        friendsCount: 1,
+        maxFollowers: 2000000
       }
       it('returns error object interface with message', () => {
         return testCredibilityWithIncorrectData({

@@ -51,7 +51,7 @@ calculatorRoutes.get('/twitter/tweets', function(req, res, next) {
     weightSocial: +req.query.weightSocial,
     weightText: +req.query.weightText,
     weightUser: +req.query.weightUser }, 
-    req.query.maxFollowers)
+  req.query.maxFollowers)
     .then(response => {
       res.send(response)
       next()
