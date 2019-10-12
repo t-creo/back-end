@@ -72,6 +72,39 @@ export function validate(method: string) : any {
       check('yearJoined', 'yearJoined.NOT_IN_RANGE').isInt({min: 2006})
     ]
   }
+  case 'socialCredibility': {
+    return [
+      check('userId', 'userId.REQUIRED').exists(),
+      check('userId', 'userId.NUMBER').isInt(),
+      check('maxFollowers', 'maxFollowers.NUMBER').isInt(),
+      check('maxFollowers', 'maxFollowers.POSITIVE').isInt({gt: -1})
+    ]
+  }
+  case 'tweetCredibility': {
+    return [
+      check('tweetId', 'tweetId.REQUIRED').exists(),
+      check('weightSpam', 'weightSpam.REQUIRED').exists(),
+      check('weightSpam', 'weightSpam.NUMBER').isFloat(),
+      check('weightSpam', 'weightSpam.NOT_IN_RANGE').isFloat({ min: 0, max: 100 }),
+      check('weightBadWords', 'weightBadWords.REQUIRED').exists(),
+      check('weightBadWords', 'weightBadWords.NUMBER').isFloat(),
+      check('weightBadWords', 'weightBadWords.NOT_IN_RANGE').isFloat({min : 0, max : 100}),
+      check('weightMisspelling', 'weightMisspelling.REQUIRED').exists(),
+      check('weightMisspelling', 'weightMisspelling.NUMBER').isFloat(),
+      check('weightMisspelling', 'weightMisspelling.NOT_IN_RANGE').isFloat({min : 0, max : 100}),
+      check('weightText', 'weightText.REQUIRED').exists(),
+      check('weightText', 'weightText.NUMBER').isFloat(),
+      check('weightText', 'weightText.NOT_IN_RANGE').isFloat({ min: 0, max: 100 }),
+      check('weightUser', 'weightUser.REQUIRED').exists(),
+      check('weightUser', 'weightUser.NUMBER').isFloat(),
+      check('weightUser', 'weightUser.NOT_IN_RANGE').isFloat({min : 0, max : 100}),
+      check('weightSocial', 'weightSocial.REQUIRED').exists(),
+      check('weightSocial', 'weightSocial.NUMBER').isFloat(),
+      check('weightSocial', 'weightSocial.NOT_IN_RANGE').isFloat({min : 0, max : 100}),
+      check('maxFollowers', 'maxFollowers.NUMBER').isInt(),
+      check('maxFollowers', 'maxFollowers.POSITIVE').isInt({gt: -1})
+    ]
+  }
   }
 }
 
