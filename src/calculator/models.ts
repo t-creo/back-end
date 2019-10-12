@@ -24,5 +24,8 @@ export interface TwitterUser {
 
 export interface Tweet {
   text: string
+  lang: Language
   user: TwitterUser
 }
+
+export type Language = 'es' | 'en' | 'fr'

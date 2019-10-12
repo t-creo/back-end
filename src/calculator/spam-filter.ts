@@ -4,11 +4,13 @@
  */
 
 import wash from 'washyourmouthoutwithsoap'
+import { Language } from './models'
 
 interface SimpleSpamFilterParams {
   minWords?: number
   maxPercentCaps?: number
   maxNumSwearWords?: number
+  lang: Language
 }
 /*
  * Checks if a given tweet is spam.
@@ -24,11 +26,13 @@ class SimpleSpamFilter {
   minWords?: number
   maxPercentCaps?: number
   maxNumSwearWords?: number
+  lang: Language
 
   constructor (opts: SimpleSpamFilterParams) {
     this.minWords = opts.minWords
     this.maxPercentCaps = opts.maxPercentCaps
     this.maxNumSwearWords = opts.maxNumSwearWords
+    this.lang = opts.lang
   }
 
   isSpam(tweet: string): boolean {
@@ -43,7 +47,7 @@ class SimpleSpamFilter {
     }
 
     if (this.maxNumSwearWords !== undefined &&
-      numSwearWords(tweet) > this.maxNumSwearWords) {
+      numSwearWords(tweet, this.lang) > this.maxNumSwearWords) {
       return true
     }
 
@@ -80,11 +84,11 @@ function percentCaps (tweet: string) {
  * @api private
  */
 
-function numSwearWords (tweet: string) {
+function numSwearWords (tweet: string, lang: Language) {
   function getCleanedWords(text: string) : string[] {
     return text.replace(/[.]|\n|,/g, ' ').split(' ')
   }
-  return getCleanedWords(tweet).filter(word => wash.check('en', word)).length
+  return getCleanedWords(tweet).filter(word => wash.check(lang, word)).length
 }
 
 /*
