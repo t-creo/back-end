@@ -331,4 +331,79 @@ describe('Input Validation', () => {
       }, { verified: true, yearJoined: 2020 })
     })
   })
+  describe('/GET /calculate/twitter/tweets', () => {
+    function testTweetCredibility(
+      expectedReturn : any, params: any) {
+      return request(app)
+        .get('/calculate/twitter/tweets')
+        .query(params)
+        .expect(expectedReturn)
+    }
+
+    it('weightBadWords.NOT_IN_RANGE', () => {
+      return testTweetCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [
+          { field: 'weightBadWords',
+            errorMessage: 'weightBadWords.NOT_IN_RANGE',
+            userErrorMessage: 'weightBadWords.NOT_IN_RANGE',
+            validationCode: 'weightBadWords.NOT_IN_RANGE' } ]
+      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0, weightBadWords: -1, weightMisspelling: 0, weightText: 0, weightUser: 0, weightSocial: 0})
+    })
+    it('weightMisspelling.NOT_IN_RANGE', () => {
+      return testTweetCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [
+          { field: 'weightMisspelling',
+            errorMessage: 'weightMisspelling.NOT_IN_RANGE',
+            userErrorMessage: 'weightMisspelling.NOT_IN_RANGE',
+            validationCode: 'weightMisspelling.NOT_IN_RANGE' } ]
+      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0, weightBadWords: 1, weightMisspelling: 1000, weightText: 0, weightUser: 0, weightSocial: 0})
+    })
+    it('weightSpam.NOT_IN_RANGE', () => {
+      return testTweetCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [
+          { field: 'weightSpam',
+            errorMessage: 'weightSpam.NOT_IN_RANGE',
+            userErrorMessage: 'weightSpam.NOT_IN_RANGE',
+            validationCode: 'weightSpam.NOT_IN_RANGE' } ]
+      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: -10, weightBadWords: 1, weightMisspelling: 0, weightText: 0, weightUser: 0, weightSocial: 0})
+    })
+    it('maxFollowers.POSITIVE', () => {
+      return testTweetCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [
+          { field: 'maxFollowers',
+            errorMessage: 'maxFollowers.POSITIVE',
+            userErrorMessage: 'maxFollowers.POSITIVE',
+            validationCode: 'maxFollowers.POSITIVE' } ]
+      }, { tweetId: 867412932409282560, maxFollowers: -1, weightSpam: 0, weightBadWords: 1, weightMisspelling: 0, weightText: 0, weightUser: 0, weightSocial: 0})
+    })
+    it('weightUser.NOT_IN_RANGE', () => {
+      return testTweetCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [
+          { field: 'weightUser',
+            errorMessage: 'weightUser.NOT_IN_RANGE',
+            userErrorMessage: 'weightUser.NOT_IN_RANGE',
+            validationCode: 'weightUser.NOT_IN_RANGE' } ]
+      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0, weightBadWords: 1, weightMisspelling: 0, weightText: 0, weightUser: -10, weightSocial: 0})
+    })
+  })
 })

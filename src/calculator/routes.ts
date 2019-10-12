@@ -38,12 +38,20 @@ calculatorRoutes.get('/user/scrape', validate('scrapperTwitterUserCredibility'),
   res.send(userCredibility)
 })
 
-calculatorRoutes.get('/twitter/social/:userId', async function(req, res) {
+calculatorRoutes.get('/twitter/social/:userId', validate('socialCredibility'), async function(req, res) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()){
+    errorMapper(errors.array())
+  }
   const socialCredibilityVal = await socialCredibility(req.params.userId, req.query.maxFollowers)
   res.send(socialCredibilityVal)
 })
 
-calculatorRoutes.get('/twitter/tweets', function(req, res, next) {
+calculatorRoutes.get('/twitter/tweets', validate('tweetCredibility'), function(req, res, next) {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()){
+    errorMapper(errors.array())
+  }
   calculateTweetCredibility(req.query.tweetId, {
     weightBadWords: +req.query.weightBadWords,
     weightMisspelling: +req.query.weightMisspelling,
