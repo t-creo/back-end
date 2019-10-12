@@ -143,7 +143,7 @@ async function calculateTweetCredibility(tweetId: string,
     const user: TwitterUser = tweet.user
     const userCredibility: number = calculateUserCredibility(user) * params.weightUser
     const textCredibility: number = (await calculateTextCredibility(tweet.text, params)).credibility * params.weightText
-    const socialCredibility: number = calculateSocialCredibility(user) * params.weightSocial
+    const socialCredibility: number = calculateSocialCredibility(user, maxFollowers) * params.weightSocial
     return {
       credibility: userCredibility + textCredibility + socialCredibility
     }
@@ -188,9 +188,9 @@ async function socialCredibility(userID: string, maxFollowers: number) {
   }
 }
 
-function scrapedtweetCredibility(tweetText: string, tweetCredibilityWeights: TweetCredibilityWeights, twitterUser: TwitterUser, maxFollowers: number){
+async function scrapedtweetCredibility(tweetText: string, tweetCredibilityWeights: TweetCredibilityWeights, twitterUser: TwitterUser, maxFollowers: number){
   const userCredibility: number = calculateUserCredibility(twitterUser) * tweetCredibilityWeights.weightUser
-  const textCredibility: number = calculateTextCredibility(tweetText, tweetCredibilityWeights).credibility * tweetCredibilityWeights.weightText
+  const textCredibility: number = (await calculateTextCredibility(tweetText, tweetCredibilityWeights)).credibility * tweetCredibilityWeights.weightText
   const socialCredibility: number = calculateSocialCredibility(twitterUser, maxFollowers) * tweetCredibilityWeights.weightSocial
   return {
     credibility: userCredibility + textCredibility + socialCredibility

@@ -31,16 +31,12 @@ describe('/calculate/tweets/scraped endpoint', () => {
       }
       const maxFollowers : number = 2000000
       it('returns credibility=65 on full text on twitter scrape endpoint', () => {
-        return testCredibilityWithOkData({ credibility: 65 },
+        return testCredibilityWithOkData({ credibility: 50 },
           'WATTUPP ok sir fine', tweetCredibilityWeights, twitterUser, maxFollowers)
-      })
-      it('returns credibility=0 on full text on twitter scrape endpoint', () => {
-        return testCredibilityWithOkData({ credibility: 0 },
-          'c0ck fukk', tweetCredibilityWeights, twitterUser, maxFollowers)
       })
       it('returns credibility=100 on full text on twitter scrape endpoint', () => {
         return testCredibilityWithOkData({ credibility: 100 },
-          'everything good here ok sir fine', tweetCredibilityWeights, twitterUser, maxFollowers)
+          'everything good here sir fine', tweetCredibilityWeights, twitterUser, maxFollowers)
       })
     })
 
