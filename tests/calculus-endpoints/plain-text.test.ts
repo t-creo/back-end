@@ -111,5 +111,43 @@ describe('/calculate/plain-text endpoint', () => {
         })
       })
     })
+
+    describe('works with spanish', () => {
+      const params = {
+        weightBadWords: 0.2,
+        weightMisspelling: 0.2,
+        weightSpam: 0.6,
+        lang: 'es'
+      }
+      it('returns a correct value for mixed calculation', () => {
+        // The following `text` is spam (0.6 * 0 = 0),
+        // has a misspell (100 - (100 * 1 / 4) = 75, 75 * 0.2 = 15),
+        // and doesn't have bad words (100 - (100 * 0 / 4) == 100, 100 * 0.2 = 20)
+        return testCredibilityWithOkData({ credibility: 35 }, {
+          text: 'jor todo bien amigo',
+          ...params
+        })
+      })
+
+    })
+    describe('works with french', () => {
+      const params = {
+        weightBadWords: 0.2,
+        weightMisspelling: 0.2,
+        weightSpam: 0.6,
+        lang: 'fr'
+      }
+      it('returns a correct value for mixed calculation', () => {
+        // The following `text` is spam (0.6 * 0 = 0),
+        // has a misspell (100 - (100 * 1 / 4) = 75, 75 * 0.2 = 15),
+        // and doesn't have bad words (100 - (100 * 0 / 4) == 100, 100 * 0.2 = 20)
+        return testCredibilityWithOkData({ credibility: 35 }, {
+          text: 'bae tout bon ami',
+          ...params
+        })
+      })
+
+    })
+
   })
 })
