@@ -105,6 +105,7 @@ describe('/calculate/plain-text endpoint', () => {
         // The following `text` is spam (0.6 * 0 = 0),
         // has a misspell (100 - (100 * 1 / 4) = 75, 75 * 0.2 = 15),
         // and doesn't have bad words (100 - (100 * 0 / 4) == 100, 100 * 0.2 = 20)
+        jest.setTimeout(10000)
         return testCredibilityWithOkData({ credibility: 35 }, {
           text: 'WATUPPPPP fine sir all',
           ...params
@@ -123,6 +124,7 @@ describe('/calculate/plain-text endpoint', () => {
         // The following `text` is spam (0.6 * 0 = 0),
         // has a misspell (100 - (100 * 1 / 4) = 75, 75 * 0.2 = 15),
         // and doesn't have bad words (100 - (100 * 0 / 4) == 100, 100 * 0.2 = 20)
+        jest.setTimeout(10000)
         return testCredibilityWithOkData({ credibility: 35 }, {
           text: 'jor todo bien amigo',
           ...params
@@ -141,6 +143,7 @@ describe('/calculate/plain-text endpoint', () => {
         // The following `text` is spam (0.6 * 0 = 0),
         // has a misspell (100 - (100 * 1 / 4) = 75, 75 * 0.2 = 15),
         // and doesn't have bad words (100 - (100 * 0 / 4) == 100, 100 * 0.2 = 20)
+        jest.setTimeout(10000)
         return testCredibilityWithOkData({ credibility: 35 }, {
           text: 'bae tout bon ami',
           ...params
