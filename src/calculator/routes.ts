@@ -5,16 +5,22 @@ import { validate, errorMapper } from './validation'
 
 const calculatorRoutes = express.Router()
 
-calculatorRoutes.get('/plain-text', validate('calculateTextCredibility'), function(req: any, res: any) {
+calculatorRoutes.get('/plain-text', validate('calculateTextCredibility'), function(req, res, next) {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     errorMapper(errors.array())
   }
-  res.send(calculateTextCredibility(req.query.text, {
+  calculateTextCredibility({
+    text: req.query.text,
+    lang: req.query.lang
+  }, {
     weightBadWords: +req.query.weightBadWords,
     weightMisspelling: +req.query.weightMisspelling,
     weightSpam: +req.query.weightSpam
-  }))
+  }).then(credibility => {
+    res.send(credibility)
+    next()
+  })
 })
 
 calculatorRoutes.get('/twitter/user/:id', validate('twitterUserCredibility'), function(req, res, next) {
@@ -74,12 +80,15 @@ calculatorRoutes.get('/social/scrape', validate('scrapedSocialCredibility'), fun
   res.send(scrapedSocialCredibility(req.query.followersCount, req.query.friendsCount, req.query.maxFollowers))
 })
 
-calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), function(req, res){
+calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), function(req, res, done){
   const errors = validationResult(req)
   if (!errors.isEmpty()){
     errorMapper(errors.array())
   }
-  res.send(scrapedtweetCredibility(req.query.tweetText, {
+  scrapedtweetCredibility({
+    text: req.query.tweetText,
+    lang: req.query.lang
+  }, {
     weightSpam: +req.query.weightSpam,
     weightBadWords: +req.query.weightBadWords,
     weightMisspelling: +req.query.weightMisspelling,
@@ -94,8 +103,10 @@ calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), fun
     followersCount: +req.query.followersCount,
     friendsCount: +req.query.friendsCount
   },
-  req.query.maxFollowers
-  ))
+  req.query.maxFollowers).then(credibility => {
+    res.send(credibility)
+    done()
+  })
 })
 
 export default calculatorRoutes
