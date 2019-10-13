@@ -21,6 +21,7 @@ describe('/calculate/plain-text endpoint', () => {
         weightBadWords: 1,
         weightMisspelling: 0,
         weightSpam: 0,
+        lang: 'en'
       }
       it('returns credibility=100 with no bad words', () => {
         return testCredibilityWithOkData({ credibility: 100 }, {
@@ -48,7 +49,8 @@ describe('/calculate/plain-text endpoint', () => {
       const params = {
         weightBadWords: 0,
         weightMisspelling: 0,
-        weightSpam: 1
+        weightSpam: 1,
+        lang: 'en'
       }
       it('returns credibility=100 with not spam text', () => {
         return testCredibilityWithOkData({ credibility: 100 }, {
@@ -68,7 +70,8 @@ describe('/calculate/plain-text endpoint', () => {
       const params = {
         weightBadWords: 0,
         weightMisspelling: 1,
-        weightSpam: 0
+        weightSpam: 0,
+        lang: 'en'
       }
       it('returns credibility=100 when there are no misspells', () => {
         return testCredibilityWithOkData({ credibility: 100 }, {
@@ -95,7 +98,8 @@ describe('/calculate/plain-text endpoint', () => {
       const params = {
         weightBadWords: 0.2,
         weightMisspelling: 0.2,
-        weightSpam: 0.6
+        weightSpam: 0.6,
+        lang: 'en'
       }
       it('returns a correct value for mixed calculation', () => {
         // The following `text` is spam (0.6 * 0 = 0),

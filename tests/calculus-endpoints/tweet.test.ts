@@ -1,14 +1,18 @@
 import request from 'supertest'
 import app from '../../src/app'
-import { Credibility, TwitterUser, TweetCredibilityWeights } from '../../src/calculator/models'
+import { Credibility, TwitterUser, TweetCredibilityWeights, Text } from '../../src/calculator/models'
 
 describe('/calculate/tweets/scraped endpoint', () => {
   describe('http 200 requests', () => {
     function testCredibilityWithOkData(
-      expectedReturn : Credibility, tweetText: string, tweetCredibilityWeights: TweetCredibilityWeights, twitterUser: TwitterUser, maxFollowers: number) {
+      expectedReturn : Credibility, tweetText: Text, tweetCredibilityWeights: TweetCredibilityWeights, twitterUser: TwitterUser, maxFollowers: number) {
       return request(app)
         .get('/calculate/tweets/scraped')
-        .query({tweetText, ...tweetCredibilityWeights, ...twitterUser, maxFollowers})
+        .query({
+          tweetText: tweetText.text,
+          lang: tweetText.lang,
+          ...tweetCredibilityWeights, ...twitterUser, maxFollowers
+        })
         .expect(200)
         .expect(expectedReturn)
     }
@@ -31,17 +35,24 @@ describe('/calculate/tweets/scraped endpoint', () => {
       }
       const maxFollowers : number = 2000000
       it('returns credibility=65 on full text on twitter scrape endpoint', () => {
-        return testCredibilityWithOkData({ credibility: 50 },
-          'WATTUPP ok sir fine', tweetCredibilityWeights, twitterUser, maxFollowers)
+        return testCredibilityWithOkData({ credibility: 50 }, {
+          text: 'WATTUPP ok sir fine',
+          lang: 'en'
+        }, tweetCredibilityWeights, twitterUser, maxFollowers)
       })
       it('returns credibility=100 on full text on twitter scrape endpoint', () => {
-        return testCredibilityWithOkData({ credibility: 100 },
-          'everything good here sir fine', tweetCredibilityWeights, twitterUser, maxFollowers)
+        return testCredibilityWithOkData({ credibility: 100 }, {
+          text: 'everything good here sir fine',
+          lang: 'en'
+        }, tweetCredibilityWeights, twitterUser, maxFollowers)
       })
     })
 
     describe('test with only user cred filter', () => {
-      const tweetText: string = 'WATTUPPP ok sir fine'
+      const tweetText: Text = {
+        text: 'WATTUPPP ok sir fine',
+        lang: 'en'
+      }
       const tweetCredibilityWeights: TweetCredibilityWeights = {
         weightSpam: 0.2,
         weightBadWords: 0.2,
@@ -96,7 +107,10 @@ describe('/calculate/tweets/scraped endpoint', () => {
     })
 
     describe('test with only social user cred filter', () => {
-      const tweetText: string = 'WATTUPPP ok sir fine'
+      const tweetText: Text = {
+        text: 'WATTUPPP ok sir fine',
+        lang: 'en'
+      }
       const tweetCredibilityWeights: TweetCredibilityWeights = {
         weightSpam: 0.2,
         weightBadWords: 0.2,

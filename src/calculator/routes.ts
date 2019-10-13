@@ -10,7 +10,10 @@ calculatorRoutes.get('/plain-text', validate('calculateTextCredibility'), functi
   if (!errors.isEmpty()) {
     errorMapper(errors.array())
   }
-  calculateTextCredibility(req.query.text, {
+  calculateTextCredibility({
+    text: req.query.text,
+    lang: req.query.lang
+  }, {
     weightBadWords: +req.query.weightBadWords,
     weightMisspelling: +req.query.weightMisspelling,
     weightSpam: +req.query.weightSpam
@@ -82,7 +85,10 @@ calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), fun
   if (!errors.isEmpty()){
     errorMapper(errors.array())
   }
-  scrapedtweetCredibility(req.query.tweetText, {
+  scrapedtweetCredibility({
+    text: req.query.tweetText,
+    lang: req.query.lang
+  }, {
     weightSpam: +req.query.weightSpam,
     weightBadWords: +req.query.weightBadWords,
     weightMisspelling: +req.query.weightMisspelling,
