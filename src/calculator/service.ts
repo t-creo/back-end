@@ -15,6 +15,9 @@ async function dictionaryFactory(lang: Language) : Promise<Dictionary> {
     fr: frDictionary,
     es: esDictionary
   }
+  if (lang !== 'es' && lang !== 'en' && lang !== 'fr') {
+    return util.promisify(dictionaries.en)()
+  }
   return util.promisify(dictionaries[lang])()
 }
 
@@ -153,6 +156,7 @@ async function calculateTweetCredibility(tweetId: string,
   params: TweetCredibilityWeights, maxFollowers: number) : Promise<Credibility> {
   try {
     const tweet: Tweet = await getTweetInfo(tweetId)
+    console.log(tweet)
     const user: TwitterUser = tweet.user
     const userCredibility: number = calculateUserCredibility(user) * params.weightUser
     const textCredibility: number = (await calculateTextCredibility(tweet.text, params)).credibility * params.weightText
@@ -191,7 +195,12 @@ function followersImpact(userFollowers: number, maxFollowers: number) : number {
 }
 
 function ffProportion(userFollowers: number, userFollowing: number) : number {
-  return (userFollowers / (userFollowers + userFollowing)) * 50
+  if (userFollowers === 0 && userFollowing === 0) {
+    return 0
+  } else {
+    return (userFollowers / (userFollowers + userFollowing)) * 50
+  }
+  
 }
 
 async function socialCredibility(userID: string, maxFollowers: number) {
