@@ -1,12 +1,25 @@
-import {TextCredibilityWeights, Credibility, TwitterUser, TweetCredibilityWeights, Tweet} from './models'
+import {TextCredibilityWeights, Credibility, TwitterUser, TweetCredibilityWeights, Tweet, Language, Text} from './models'
 import config from '../config'
-import Filter, { FilterParams } from 'bad-words'
 import Twit from 'twit'
-import SimpleSpamFilter, { SimpleSpamFilterParams } from 'simple-spam-filter'
-import Spelling from 'spelling'
-import dictionary from 'spelling/dictionaries/en_US'
+import enDictionary, { Dictionary } from 'dictionary-en-us'
+import frDictionary from 'dictionary-fr'
+import esDictionary from 'dictionary-es'
+import util from 'util'
+import NSpell from 'nspell'
+import wash from 'washyourmouthoutwithsoap'
+import SimpleSpamFilter, { SimpleSpamFilterParams } from './spam-filter'
 
-const BAD_WORD_PLACEHOLDER = '*'
+async function dictionaryFactory(lang: Language) : Promise<Dictionary> {
+  const dictionaries = {
+    en: enDictionary,
+    fr: frDictionary,
+    es: esDictionary
+  }
+  if (lang !== 'es' && lang !== 'en' && lang !== 'fr') {
+    return util.promisify(dictionaries.en)()
+  }
+  return util.promisify(dictionaries[lang])()
+}
 
 function responseToTwitterUser(response: any) : TwitterUser {
   return {
@@ -20,7 +33,10 @@ function responseToTwitterUser(response: any) : TwitterUser {
 
 function responseToTweet(response: any) : Tweet {
   return {
-    text: response.text,
+    text: {
+      text: response.text,
+      lang: response.lang,
+    },
     user: responseToTwitterUser(response.user)
   }
 }
@@ -37,51 +53,48 @@ function getCleanedWords(text: string) : string[] {
   return text.replace(/[.]|\n|,/g, ' ').split(' ')
 }
 
-function isBadWord(word: string) : boolean {
-  return word.split('').every(i => i === BAD_WORD_PLACEHOLDER)
+function isBadWord(lang: Language) : (word: string) => boolean {
+  return (word) => wash.check(lang, word)
 }
 
-function getBadWords(words: string[]) : string[] {
-  return words.filter(isBadWord)
+function getBadWords(words: string[], lang: Language) : string[] {
+  return words.filter(isBadWord(lang))
 }
 
-function badWordsCriteria(text: string) : number {
-  const filterParams : FilterParams = {
-    placeHolder: BAD_WORD_PLACEHOLDER
-  }
-  const filter = new Filter(filterParams)
-  const cleanedString = filter.clean(text)
-  const wordsInText = getCleanedWords(cleanedString)
-  const badWordsInText = getBadWords(wordsInText)
+function badWordsCriteria(text: Text) : number {
+  const wordsInText = getCleanedWords(text.text)
+  const badWordsInText = getBadWords(wordsInText, text.lang)
   return 100 - (100 * badWordsInText.length / wordsInText.length)
 }
 
-function spamCriteria(text: string) : number {
+function spamCriteria(text: Text) : number {
   const spamParams : SimpleSpamFilterParams = {
     minWords: 5,
     maxPercentCaps: 30,
-    maxNumSwearWords: 2
+    maxNumSwearWords: 2,
+    lang: text.lang
   }
   const spamFilter : SimpleSpamFilter = new SimpleSpamFilter(spamParams)
-  return spamFilter.isSpam(text)
+  return spamFilter.isSpam(text.text)
     ? 0
     : 100
 }
 
-function missSpellingCriteria(text: string) : number {
-  const wordsInText = getCleanedWords(text)
-  const spellingChecker = new Spelling(dictionary)
+async function missSpellingCriteria(text: Text) : Promise<number> {
+  const wordsInText = getCleanedWords(text.text)
+  const d: Dictionary = await dictionaryFactory(text.lang)
+  const spellingChecker = new NSpell(d.aff, d.dic)
   const numOfMissSpells : number = wordsInText.reduce((acc, curr) =>
-    spellingChecker.lookup(curr).found
+    spellingChecker.correct(curr)
       ? acc
       : acc + 1, 0)
   return 100 - (100 * numOfMissSpells / wordsInText.length)
 }
 
-function calculateTextCredibility(text: string, params: TextCredibilityWeights) : Credibility {
+async function calculateTextCredibility(text: Text, params: TextCredibilityWeights) : Promise<Credibility> {
   const badWordsCalculation = params.weightBadWords * badWordsCriteria(text)
   const spamCalculation = params.weightSpam * spamCriteria(text)
-  const missSpellingCalculation = params.weightMisspelling * missSpellingCriteria(text)
+  const missSpellingCalculation = params.weightMisspelling * (await missSpellingCriteria(text))
   return {
     credibility: badWordsCalculation + spamCalculation + missSpellingCalculation
   }
@@ -143,9 +156,10 @@ async function calculateTweetCredibility(tweetId: string,
   params: TweetCredibilityWeights, maxFollowers: number) : Promise<Credibility> {
   try {
     const tweet: Tweet = await getTweetInfo(tweetId)
+    console.log(tweet)
     const user: TwitterUser = tweet.user
     const userCredibility: number = calculateUserCredibility(user) * params.weightUser
-    const textCredibility: number = calculateTextCredibility(tweet.text, params).credibility * params.weightText
+    const textCredibility: number = (await calculateTextCredibility(tweet.text, params)).credibility * params.weightText
     const socialCredibility: number = calculateSocialCredibility(user, maxFollowers) * params.weightSocial
     return {
       credibility: userCredibility + textCredibility + socialCredibility
@@ -181,7 +195,12 @@ function followersImpact(userFollowers: number, maxFollowers: number) : number {
 }
 
 function ffProportion(userFollowers: number, userFollowing: number) : number {
-  return (userFollowers / (userFollowers + userFollowing)) * 50
+  if (userFollowers === 0 && userFollowing === 0) {
+    return 0
+  } else {
+    return (userFollowers / (userFollowers + userFollowing)) * 50
+  }
+  
 }
 
 async function socialCredibility(userID: string, maxFollowers: number) {
@@ -191,9 +210,9 @@ async function socialCredibility(userID: string, maxFollowers: number) {
   }
 }
 
-function scrapedtweetCredibility(tweetText: string, tweetCredibilityWeights: TweetCredibilityWeights, twitterUser: TwitterUser, maxFollowers: number){
+async function scrapedtweetCredibility(tweetText: Text, tweetCredibilityWeights: TweetCredibilityWeights, twitterUser: TwitterUser, maxFollowers: number){
   const userCredibility: number = calculateUserCredibility(twitterUser) * tweetCredibilityWeights.weightUser
-  const textCredibility: number = calculateTextCredibility(tweetText, tweetCredibilityWeights).credibility * tweetCredibilityWeights.weightText
+  const textCredibility: number = (await calculateTextCredibility(tweetText, tweetCredibilityWeights)).credibility * tweetCredibilityWeights.weightText
   const socialCredibility: number = calculateSocialCredibility(twitterUser, maxFollowers) * tweetCredibilityWeights.weightSocial
   return {
     credibility: userCredibility + textCredibility + socialCredibility

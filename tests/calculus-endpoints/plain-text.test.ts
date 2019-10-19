@@ -21,6 +21,7 @@ describe('/calculate/plain-text endpoint', () => {
         weightBadWords: 1,
         weightMisspelling: 0,
         weightSpam: 0,
+        lang: 'en'
       }
       it('returns credibility=100 with no bad words', () => {
         return testCredibilityWithOkData({ credibility: 100 }, {
@@ -48,7 +49,8 @@ describe('/calculate/plain-text endpoint', () => {
       const params = {
         weightBadWords: 0,
         weightMisspelling: 0,
-        weightSpam: 1
+        weightSpam: 1,
+        lang: 'en'
       }
       it('returns credibility=100 with not spam text', () => {
         return testCredibilityWithOkData({ credibility: 100 }, {
@@ -68,7 +70,8 @@ describe('/calculate/plain-text endpoint', () => {
       const params = {
         weightBadWords: 0,
         weightMisspelling: 1,
-        weightSpam: 0
+        weightSpam: 0,
+        lang: 'en'
       }
       it('returns credibility=100 when there are no misspells', () => {
         return testCredibilityWithOkData({ credibility: 100 }, {
@@ -95,17 +98,59 @@ describe('/calculate/plain-text endpoint', () => {
       const params = {
         weightBadWords: 0.2,
         weightMisspelling: 0.2,
-        weightSpam: 0.6
+        weightSpam: 0.6,
+        lang: 'en'
       }
       it('returns a correct value for mixed calculation', () => {
-        // The following `text` is spam (0.4 * 0 = 0),
-        // has a misspell (100 - (100 * 1 / 4) = 75),
-        // and doesn't have bad words (100 - (100 * 0 / 4) == 100)
+        // The following `text` is spam (0.6 * 0 = 0),
+        // has a misspell (100 - (100 * 1 / 4) = 75, 75 * 0.2 = 15),
+        // and doesn't have bad words (100 - (100 * 0 / 4) == 100, 100 * 0.2 = 20)
+        jest.setTimeout(10000)
         return testCredibilityWithOkData({ credibility: 35 }, {
-          text: 'WATUPPPPP ok sir all',
+          text: 'WATUPPPPP fine sir all',
           ...params
         })
       })
     })
+
+    describe('works with spanish', () => {
+      const params = {
+        weightBadWords: 0.2,
+        weightMisspelling: 0.2,
+        weightSpam: 0.6,
+        lang: 'es'
+      }
+      it('returns a correct value for mixed calculation', () => {
+        // The following `text` is spam (0.6 * 0 = 0),
+        // has a misspell (100 - (100 * 1 / 4) = 75, 75 * 0.2 = 15),
+        // and doesn't have bad words (100 - (100 * 0 / 4) == 100, 100 * 0.2 = 20)
+        jest.setTimeout(10000)
+        return testCredibilityWithOkData({ credibility: 35 }, {
+          text: 'jor todo bien amigo',
+          ...params
+        })
+      })
+
+    })
+    describe('works with french', () => {
+      const params = {
+        weightBadWords: 0.2,
+        weightMisspelling: 0.2,
+        weightSpam: 0.6,
+        lang: 'fr'
+      }
+      it('returns a correct value for mixed calculation', () => {
+        // The following `text` is spam (0.6 * 0 = 0),
+        // has a misspell (100 - (100 * 1 / 4) = 75, 75 * 0.2 = 15),
+        // and doesn't have bad words (100 - (100 * 0 / 4) == 100, 100 * 0.2 = 20)
+        jest.setTimeout(10000)
+        return testCredibilityWithOkData({ credibility: 35 }, {
+          text: 'bae tout bon ami',
+          ...params
+        })
+      })
+
+    })
+
   })
 })
