@@ -67,7 +67,11 @@ describe('Input Validation', () => {
           { field: 'weightSpam',
             errorMessage: 'weightSpam.NOT_IN_RANGE',
             userErrorMessage: 'weightSpam.NOT_IN_RANGE',
-            validationCode: 'weightSpam.NOT_IN_RANGE' }]
+            validationCode: 'weightSpam.NOT_IN_RANGE' },
+          { field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
       }, { text: 'test', weightBadWords: 0, weightMisspelling: 0 })
     })
 
@@ -85,7 +89,11 @@ describe('Input Validation', () => {
           { field: 'weightSpam',
             errorMessage: 'weightSpam.NOT_IN_RANGE',
             userErrorMessage: 'weightSpam.NOT_IN_RANGE',
-            validationCode: 'weightSpam.NOT_IN_RANGE' } ]
+            validationCode: 'weightSpam.NOT_IN_RANGE' },
+          { field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
       }, { text: 'test', weightSpam: 'test', weightBadWords: 0, weightMisspelling: 0 })
     })
 
@@ -95,12 +103,15 @@ describe('Input Validation', () => {
         title: 'Bad Request',
         message: 'A validation failed',
         userMessage: 'An error has ocurred',
-        errors: [{
-          field: 'weightSpam',
-          errorMessage: 'weightSpam.NOT_IN_RANGE',
-          userErrorMessage: 'weightSpam.NOT_IN_RANGE',
-          validationCode: 'weightSpam.NOT_IN_RANGE'
-        }]
+        errors: [
+          { field: 'weightSpam',
+            errorMessage: 'weightSpam.NOT_IN_RANGE',
+            userErrorMessage: 'weightSpam.NOT_IN_RANGE',
+            validationCode: 'weightSpam.NOT_IN_RANGE' },
+          { field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
       }, { text: 'test', weightSpam: 101, weightBadWords: 0, weightMisspelling: 0 })
     })
 
@@ -122,7 +133,11 @@ describe('Input Validation', () => {
           { field: 'weightBadWords',
             errorMessage: 'weightBadWords.NOT_IN_RANGE',
             userErrorMessage: 'weightBadWords.NOT_IN_RANGE',
-            validationCode: 'weightBadWords.NOT_IN_RANGE' } ]
+            validationCode: 'weightBadWords.NOT_IN_RANGE' },
+          { field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
       }, { text: 'test', weightSpam: 0, weightMisspelling: 0 })
     })
 
@@ -140,7 +155,11 @@ describe('Input Validation', () => {
           { field: 'weightBadWords',
             errorMessage: 'weightBadWords.NOT_IN_RANGE',
             userErrorMessage: 'weightBadWords.NOT_IN_RANGE',
-            validationCode: 'weightBadWords.NOT_IN_RANGE' } ]
+            validationCode: 'weightBadWords.NOT_IN_RANGE' },
+          { field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
       }, { text: 'test', weightSpam: 0, weightBadWords: 'test', weightMisspelling: 0 })
     })
 
@@ -150,12 +169,15 @@ describe('Input Validation', () => {
         title: 'Bad Request',
         message: 'A validation failed',
         userMessage: 'An error has ocurred',
-        errors: [{
-          field: 'weightBadWords',
-          errorMessage: 'weightBadWords.NOT_IN_RANGE',
-          userErrorMessage: 'weightBadWords.NOT_IN_RANGE',
-          validationCode: 'weightBadWords.NOT_IN_RANGE'
-        }]
+        errors: [
+          { field: 'weightBadWords',
+            errorMessage: 'weightBadWords.NOT_IN_RANGE',
+            userErrorMessage: 'weightBadWords.NOT_IN_RANGE',
+            validationCode: 'weightBadWords.NOT_IN_RANGE' },
+          { field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
       }, { text: 'test', weightSpam: 0, weightBadWords: -1, weightMisspelling: 0 })
     })
 
@@ -177,7 +199,11 @@ describe('Input Validation', () => {
           { field: 'weightMisspelling',
             errorMessage: 'weightMisspelling.NOT_IN_RANGE',
             userErrorMessage: 'weightMisspelling.NOT_IN_RANGE',
-            validationCode: 'weightMisspelling.NOT_IN_RANGE' } ]
+            validationCode: 'weightMisspelling.NOT_IN_RANGE' },
+          { field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
       }, { text: 'test', weightSpam: 0, weightBadWords: 0 })
     })
 
@@ -195,7 +221,11 @@ describe('Input Validation', () => {
           { field: 'weightMisspelling',
             errorMessage: 'weightMisspelling.NOT_IN_RANGE',
             userErrorMessage: 'weightMisspelling.NOT_IN_RANGE',
-            validationCode: 'weightMisspelling.NOT_IN_RANGE' }]
+            validationCode: 'weightMisspelling.NOT_IN_RANGE' },
+          { field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
       }, { text: 'test', weightSpam: 0, weightBadWords: 3.3, weightMisspelling: 'test' })
     })
 
@@ -205,13 +235,31 @@ describe('Input Validation', () => {
         title: 'Bad Request',
         message: 'A validation failed',
         userMessage: 'An error has ocurred',
-        errors: [{
-          field: 'weightMisspelling',
-          errorMessage: 'weightMisspelling.NOT_IN_RANGE',
-          userErrorMessage: 'weightMisspelling.NOT_IN_RANGE',
-          validationCode: 'weightMisspelling.NOT_IN_RANGE'
-        }]
+        errors: [
+          { field: 'weightMisspelling',
+            errorMessage: 'weightMisspelling.NOT_IN_RANGE',
+            userErrorMessage: 'weightMisspelling.NOT_IN_RANGE',
+            validationCode: 'weightMisspelling.NOT_IN_RANGE' },
+          { field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
       }, { text: 'test', weightSpam: 0, weightBadWords: 1, weightMisspelling: -10 })
+    })
+
+    it('customValidation.WEIGHT_TEXT_CRED_SUM_NOT_1', () => {
+      return testPlainTextCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [{
+          field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+          errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+          userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+          validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+        }]
+      }, { text: 'test', weightSpam: 0, weightBadWords: 0.4, weightMisspelling: 0.4 })
     })
   })
 
@@ -350,8 +398,12 @@ describe('Input Validation', () => {
           { field: 'weightBadWords',
             errorMessage: 'weightBadWords.NOT_IN_RANGE',
             userErrorMessage: 'weightBadWords.NOT_IN_RANGE',
-            validationCode: 'weightBadWords.NOT_IN_RANGE' } ]
-      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0, weightBadWords: -1, weightMisspelling: 0, weightText: 0, weightUser: 0, weightSocial: 0})
+            validationCode: 'weightBadWords.NOT_IN_RANGE' },
+          { field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
+      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0, weightBadWords: -1, weightMisspelling: 0, weightText: 0, weightUser: 0.5, weightSocial: 0.5})
     })
     it('weightMisspelling.NOT_IN_RANGE', () => {
       return testTweetCredibility({
@@ -363,8 +415,12 @@ describe('Input Validation', () => {
           { field: 'weightMisspelling',
             errorMessage: 'weightMisspelling.NOT_IN_RANGE',
             userErrorMessage: 'weightMisspelling.NOT_IN_RANGE',
-            validationCode: 'weightMisspelling.NOT_IN_RANGE' } ]
-      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0, weightBadWords: 1, weightMisspelling: 1000, weightText: 0, weightUser: 0, weightSocial: 0})
+            validationCode: 'weightMisspelling.NOT_IN_RANGE' },
+          { field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
+      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0, weightBadWords: 1, weightMisspelling: 1000, weightText: 0.2, weightUser: 0.3, weightSocial: 0.5})
     })
     it('weightSpam.NOT_IN_RANGE', () => {
       return testTweetCredibility({
@@ -376,8 +432,12 @@ describe('Input Validation', () => {
           { field: 'weightSpam',
             errorMessage: 'weightSpam.NOT_IN_RANGE',
             userErrorMessage: 'weightSpam.NOT_IN_RANGE',
-            validationCode: 'weightSpam.NOT_IN_RANGE' } ]
-      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: -10, weightBadWords: 1, weightMisspelling: 0, weightText: 0, weightUser: 0, weightSocial: 0})
+            validationCode: 'weightSpam.NOT_IN_RANGE' },
+          { field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
+      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: -10, weightBadWords: 1, weightMisspelling: 0, weightText: 0.9, weightUser: 0.1, weightSocial: 0})
     })
     it('maxFollowers.POSITIVE', () => {
       return testTweetCredibility({
@@ -390,7 +450,7 @@ describe('Input Validation', () => {
             errorMessage: 'maxFollowers.POSITIVE',
             userErrorMessage: 'maxFollowers.POSITIVE',
             validationCode: 'maxFollowers.POSITIVE' } ]
-      }, { tweetId: 867412932409282560, maxFollowers: -1, weightSpam: 0, weightBadWords: 1, weightMisspelling: 0, weightText: 0, weightUser: 0, weightSocial: 0})
+      }, { tweetId: 867412932409282560, maxFollowers: -1, weightSpam: 0, weightBadWords: 1, weightMisspelling: 0, weightText: 0, weightUser: 1, weightSocial: 0})
     })
     it('weightUser.NOT_IN_RANGE', () => {
       return testTweetCredibility({
@@ -402,8 +462,73 @@ describe('Input Validation', () => {
           { field: 'weightUser',
             errorMessage: 'weightUser.NOT_IN_RANGE',
             userErrorMessage: 'weightUser.NOT_IN_RANGE',
-            validationCode: 'weightUser.NOT_IN_RANGE' } ]
+            validationCode: 'weightUser.NOT_IN_RANGE' },
+          { field: 'WEIGHT_TWEET_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1' } ]
       }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0, weightBadWords: 1, weightMisspelling: 0, weightText: 0, weightUser: -10, weightSocial: 0})
+    })
+    it('customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1', () => {
+      return testTweetCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [
+          { field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
+      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0.3, weightBadWords: 0.3, weightMisspelling: 0.3, weightText: 0, weightUser: 1, weightSocial: 0})
+    })
+    it('customValidation.WEIGHT_TWEET_CRED_SUM_NOT_1', () => {
+      return testTweetCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [
+          { field: 'WEIGHT_TWEET_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1' } ]
+      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0.3, weightBadWords: 0.3, weightMisspelling: 0.4, weightText: 1, weightUser: 1, weightSocial: 0})
+    })
+  })
+  describe('/GET /calculate/tweets/scraped', () => {
+    function testScrapedtweetCredibility(
+      expectedReturn : any, params: any) {
+      return request(app)
+        .get('/calculate/tweets/scraped')
+        .query(params)
+        .expect(expectedReturn)
+    }
+    it('customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1', () => {
+      return testScrapedtweetCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [
+          { field: 'WEIGHT_TEXT_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
+      }, { tweetText: 'test', followersCount: 2000, friendsCount: 100, verified: false, yearJoined: 2006, maxFollower: 10000, weightSpam: 0.3, weightBadWords: 0.3, weightMisspelling: 0.3, weightText: 0, weightUser: 1, weightSocial: 0})
+    })
+    it('customValidation.WEIGHT_TWEET_CRED_SUM_NOT_1', () => {
+      return testScrapedtweetCredibility({
+        status: 400,
+        title: 'Bad Request',
+        message: 'A validation failed',
+        userMessage: 'An error has ocurred',
+        errors: [
+          { field: 'WEIGHT_TWEET_CRED_SUM_NOT_1',
+            errorMessage: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1',
+            userErrorMessage: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1',
+            validationCode: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1' } ]
+      }, { tweetText: 'test', followersCount: 2000, friendsCount: 100, verified: false, yearJoined: 2006, maxFollower: 10000, weightSpam: 0.3, weightBadWords: 0.3, weightMisspelling: 0.4, weightText: 1, weightUser: 1, weightSocial: 0})
     })
   })
 })
