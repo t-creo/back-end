@@ -22,7 +22,7 @@ export function validate(method: string) : any {
       check('weightMisspelling', 'weightMisspelling.NOT_IN_RANGE').isFloat({min : 0, max : 100}),
       check('WEIGHT_TEXT_CRED_SUM_NOT_1', 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1')
         .custom((val: string, obj: any) => 
-          parseFloat(obj.req.query.weightSpam) + parseFloat(obj.req.query.weightBadWords) + parseFloat(obj.req.query.weightMisspelling) == 1),
+          Math.abs(parseFloat(obj.req.query.weightSpam) + parseFloat(obj.req.query.weightBadWords) + parseFloat(obj.req.query.weightMisspelling) - 1) < Number.EPSILON),
     ]
   }
   case 'twitterUserCredibility': {
@@ -75,10 +75,10 @@ export function validate(method: string) : any {
       check('yearJoined', 'yearJoined.NOT_IN_RANGE').isInt({min: 2006}),
       check('WEIGHT_TEXT_CRED_SUM_NOT_1', 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1')
         .custom((val: string, obj: any) => 
-          parseFloat(obj.req.query.weightSpam) + parseFloat(obj.req.query.weightBadWords) + parseFloat(obj.req.query.weightMisspelling) == 1),
+          Math.abs(parseFloat(obj.req.query.weightSpam) + parseFloat(obj.req.query.weightBadWords) + parseFloat(obj.req.query.weightMisspelling) - 1) < Number.EPSILON),
       check('WEIGHT_TWEET_CRED_SUM_NOT_1', 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1')
         .custom((val: string, obj: any) => 
-          parseFloat(obj.req.query.weightText) + parseFloat(obj.req.query.weightUser) + parseFloat(obj.req.query.weightSocial) == 1),
+          Math.abs(parseFloat(obj.req.query.weightText) + parseFloat(obj.req.query.weightUser) + parseFloat(obj.req.query.weightSocial) - 1) < Number.EPSILON),
     ]
   }
   case 'socialCredibility': {
@@ -114,10 +114,10 @@ export function validate(method: string) : any {
       check('maxFollowers', 'maxFollowers.POSITIVE').isInt({gt: -1}),
       check('WEIGHT_TEXT_CRED_SUM_NOT_1', 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1')
         .custom((val: string, obj: any) => 
-          parseFloat(obj.req.query.weightSpam) + parseFloat(obj.req.query.weightBadWords) + parseFloat(obj.req.query.weightMisspelling) == 1),
+          Math.abs(parseFloat(obj.req.query.weightSpam) + parseFloat(obj.req.query.weightBadWords) + parseFloat(obj.req.query.weightMisspelling) - 1) < Number.EPSILON),
       check('WEIGHT_TWEET_CRED_SUM_NOT_1', 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1')
         .custom((val: string, obj: any) => 
-          parseFloat(obj.req.query.weightText) + parseFloat(obj.req.query.weightUser) + parseFloat(obj.req.query.weightSocial) == 1),
+          Math.abs(parseFloat(obj.req.query.weightText) + parseFloat(obj.req.query.weightUser) + parseFloat(obj.req.query.weightSocial) - 1) < Number.EPSILON),
     ]
   }
   }
