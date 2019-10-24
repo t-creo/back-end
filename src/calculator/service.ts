@@ -1,4 +1,4 @@
-import {TextCredibilityWeights, Credibility, TwitterUser, TweetCredibilityWeights, Tweet, Language, Text} from './models'
+import {TextCredibilityWeights, Credibility, TwitterUser, TweetCredibilityWeights, Tweet, TwitterIdList, Language, Text} from './models'
 import config from '../config'
 import Twit from 'twit'
 import enDictionary, { Dictionary } from 'dictionary-en-us'
@@ -38,6 +38,12 @@ function responseToTweet(response: any) : Tweet {
       lang: response.lang,
     },
     user: responseToTwitterUser(response.user)
+  }
+}
+
+function responseToTwitterIdList(response: any) : TwitterIdList {
+  return {
+    ids: response.ids.map(String)
   }
 }
 
@@ -110,6 +116,26 @@ async function getUserInfo(userId: string) : Promise<TwitterUser> {
   }
 }
 
+async function getUserFollowersIds(userId: string) : Promise<TwitterIdList> {
+  const client = buildTwitClient()
+  try {
+    const response = await client.get('followers/ids', { user_id: userId })
+    return responseToTwitterIdList(response.data)
+  } catch (e) {
+    return e
+  }
+}
+
+async function getUserFollowingsIds(userId: string) : Promise<TwitterIdList> {
+  const client = buildTwitClient()
+  try {
+    const response = await client.get('friends/ids', { user_id: userId })
+    return responseToTwitterIdList(response.data)
+  } catch (e) {
+    return e
+  }
+}
+
 async function getTweetInfo(tweetId: string) : Promise<Tweet> {
   const client = buildTwitClient()
   try {
@@ -128,6 +154,28 @@ function calculateSocialCredibility(user: TwitterUser, maxFollowers: number) : n
   const followersImpactCalc = followersImpact(user.followersCount, maxFollowers)
   const ffProportionCalc = ffProportion(user.followersCount, user.friendsCount)
   return followersImpactCalc + ffProportionCalc
+}
+
+async function socialCredibilityFF(userId: string) {
+  return getUserFollowingsIds(userId)
+    .then(followingsList => {
+      return getUserFollowersIds(userId)
+        .then(followersList => {
+          const ff = followersList.ids.filter(id => followingsList.ids.includes(id))
+          return Promise.all(ff.map(getUserInfo))
+            .then(ffUserInfo => {
+              return getUserInfo(userId)
+                .then(userInfo => {
+                  const sumFF = ffUserInfo.map(user => ffProportion(user.followersCount, user.friendsCount)).reduce((a, b) => a + b, 0)
+                  const sizeFF = ff.length
+                  const userFFProportion = ffProportion(userInfo.followersCount, userInfo.friendsCount)
+                  return {
+                    credibility: (100 * sumFF) / (sizeFF * userFFProportion)
+                  }
+                })
+            })
+        })
+    })
 }
 
 async function twitterUserCredibility(userId: string) {
@@ -237,6 +285,7 @@ export {
   twitterUserCredibility,
   calculateTweetCredibility,
   socialCredibility,
+  socialCredibilityFF,
   scrapperTwitterUserCredibility,
   scrapedSocialCredibility,
   scrapedtweetCredibility

@@ -27,6 +27,10 @@ export interface Tweet {
   user: TwitterUser
 }
 
+export interface TwitterIdList {
+  ids: string[]
+}
+
 export interface Text {
   text: string
   lang: Language
