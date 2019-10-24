@@ -89,6 +89,12 @@ export function validate(method: string) : any {
       check('maxFollowers', 'maxFollowers.POSITIVE').isInt({gt: -1})
     ]
   }
+  case 'socialCredibilityFF': {
+    return [
+      check('userId', 'userId.REQUIRED').exists(),
+      check('userId', 'userId.NUMBER').isInt()
+    ]
+  }
   case 'tweetCredibility': {
     return [
       check('tweetId', 'tweetId.REQUIRED').exists(),
