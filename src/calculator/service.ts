@@ -1,24 +1,31 @@
 import {TextCredibilityWeights, Credibility, TwitterUser, TweetCredibilityWeights, Tweet, Language, Text} from './models'
 import config from '../config'
 import Twit from 'twit'
-import enDictionary, { Dictionary } from 'dictionary-en-us'
-import frDictionary from 'dictionary-fr'
-import esDictionary from 'dictionary-es'
-import util from 'util'
+import { Dictionary } from 'dictionary-en-us'
 import NSpell from 'nspell'
 import wash from 'washyourmouthoutwithsoap'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from './spam-filter'
+import fs from 'fs'
+import path from 'path'
 
-async function dictionaryFactory(lang: Language) : Promise<Dictionary> {
-  const dictionaries = {
-    en: enDictionary,
-    fr: frDictionary,
-    es: esDictionary
+const enDictionaryBase = require.resolve('dictionary-en-us')
+const frDictionaryBase = require.resolve('dictionary-fr')
+const esDictionaryBase = require.resolve('dictionary-es')
+
+
+const dictionaries = {
+  en: {
+    aff: fs.readFileSync(path.join(enDictionaryBase, '..', 'index.aff'), 'utf-8'),
+    dic: fs.readFileSync(path.join(enDictionaryBase, '..', 'index.dic'), 'utf-8')
+  },
+  fr: {
+    aff: fs.readFileSync(path.join(frDictionaryBase, '..', 'index.aff'), 'utf-8'),
+    dic: fs.readFileSync(path.join(frDictionaryBase, '..', 'index.dic'), 'utf-8')
+  },
+  es: {
+    aff: fs.readFileSync(path.join(esDictionaryBase, '..', 'index.aff'), 'utf-8'),
+    dic: fs.readFileSync(path.join(esDictionaryBase, '..', 'index.dic'), 'utf-8')
   }
-  if (lang !== 'es' && lang !== 'en' && lang !== 'fr') {
-    return util.promisify(dictionaries.en)()
-  }
-  return util.promisify(dictionaries[lang])()
 }
 
 function responseToTwitterUser(response: any) : TwitterUser {
@@ -101,7 +108,7 @@ function spamCriteria(text: Text) : number {
 async function missSpellingCriteria(text: Text) : Promise<number> {
   const cleanedText = cleanText(text.text)
   const wordsInText = getCleanedWords(cleanedText)
-  const d: Dictionary = await dictionaryFactory(text.lang)
+  const d: Dictionary = dictionaries[text.lang]
   const spellingChecker = new NSpell(d.aff, d.dic)
   const numOfMissSpells : number = wordsInText.reduce((acc, curr) =>
     spellingChecker.correct(curr)
