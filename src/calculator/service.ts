@@ -73,13 +73,13 @@ function removePunctuation(text: string) : string{
   return text.replace(/(~|`|!|@|#|$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|=)/g,'')
 }
 
-function cleanTweetText(text: string) : string{
+function cleanText(text: string) : string{
   return removePunctuation(removeMention(removeURL((text))))
 }
 
 function badWordsCriteria(text: Text) : number {
-  const cleanText = cleanTweetText(text.text)
-  const wordsInText = getCleanedWords(cleanText)
+  const cleanedText = cleanText(text.text)
+  const wordsInText = getCleanedWords(cleanedText)
   const badWordsInText = getBadWords(wordsInText, text.lang)
   return 100 - (100 * badWordsInText.length / wordsInText.length)
 }
@@ -92,15 +92,15 @@ function spamCriteria(text: Text) : number {
     lang: text.lang
   }
   const spamFilter : SimpleSpamFilter = new SimpleSpamFilter(spamParams)
-  const cleanText = cleanTweetText(text.text)
-  return spamFilter.isSpam(cleanText)
+  const cleanedText = cleanText(text.text)
+  return spamFilter.isSpam(cleanedText)
     ? 0
     : 100
 }
 
 async function missSpellingCriteria(text: Text) : Promise<number> {
-  const cleanText = cleanTweetText(text.text)
-  const wordsInText = getCleanedWords(cleanText)
+  const cleanedText = cleanText(text.text)
+  const wordsInText = getCleanedWords(cleanedText)
   const d: Dictionary = await dictionaryFactory(text.lang)
   const spellingChecker = new NSpell(d.aff, d.dic)
   const numOfMissSpells : number = wordsInText.reduce((acc, curr) =>
