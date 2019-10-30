@@ -1,7 +1,6 @@
 import {TextCredibilityWeights, Credibility, TwitterUser, TweetCredibilityWeights, Tweet, Language, Text} from './models'
 import config from '../config'
 import Twit from 'twit'
-import { Dictionary } from 'dictionary-en-us'
 import NSpell from 'nspell'
 import wash from 'washyourmouthoutwithsoap'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from './spam-filter'
@@ -26,6 +25,12 @@ const dictionaries = {
     aff: fs.readFileSync(path.join(esDictionaryBase, '..', 'index.aff'), 'utf-8'),
     dic: fs.readFileSync(path.join(esDictionaryBase, '..', 'index.dic'), 'utf-8')
   }
+}
+
+const spellingCheckers = {
+  en: new NSpell(dictionaries.en.aff, dictionaries.en.dic),
+  es: new NSpell(dictionaries.es.aff, dictionaries.es.dic),
+  fr: new NSpell(dictionaries.fr.aff, dictionaries.fr.dic),
 }
 
 function responseToTwitterUser(response: any) : TwitterUser {
@@ -108,8 +113,7 @@ function spamCriteria(text: Text) : number {
 async function missSpellingCriteria(text: Text) : Promise<number> {
   const cleanedText = cleanText(text.text)
   const wordsInText = getCleanedWords(cleanedText)
-  const d: Dictionary = dictionaries[text.lang]
-  const spellingChecker = new NSpell(d.aff, d.dic)
+  const spellingChecker = spellingCheckers[text.lang]
   const numOfMissSpells : number = wordsInText.reduce((acc, curr) =>
     spellingChecker.correct(curr)
       ? acc

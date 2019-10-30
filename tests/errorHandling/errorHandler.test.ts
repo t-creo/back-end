@@ -1,19 +1,19 @@
-import HttpError from '../../src/errorHandling/httpError'
+import { BadRequestError, UnauthorizedError, UnauthenticatedError, InternalServerError } from '../../src/errorHandling/httpError'
 
 var assert = require('assert')
 
 describe('Error Handler', () => {
-  
+
   test('Return HTTP error code 400', () => {
     try {
-      throw new HttpError(400, [{
+      throw new BadRequestError([{
         'field': 'text',
         'errorMessage': 'some error',
         'userErrorMessage': 'some error',
         'validationCode': 'text.REQUIRED'
       }])
     } catch (e) {
-      assert.deepEqual(e, 
+      assert.deepEqual(e,
         {
           status: 400,
           title: 'Bad Request',
@@ -32,12 +32,12 @@ describe('Error Handler', () => {
 
   test('Return HTTP error code 401', () => {
     try {
-      throw new HttpError(401)
+      throw new UnauthenticatedError()
     } catch (e) {
-      assert.deepEqual(e, 
+      assert.deepEqual(e,
         {
           status: 401,
-          title: 'Unauthorized',
+          title: 'Unauthenticated',
           message: 'Not authenticated',
           userMessage: 'Client needs to authenticate',
         }
@@ -47,9 +47,9 @@ describe('Error Handler', () => {
 
   test('Return HTTP error code 403', () => {
     try {
-      throw new HttpError(403)
+      throw new UnauthorizedError()
     } catch (e) {
-      assert.deepEqual(e, 
+      assert.deepEqual(e,
         {
           status: 403,
           title: 'Forbidden',
@@ -62,29 +62,14 @@ describe('Error Handler', () => {
 
   test('Return HTTP error code 500', () => {
     try {
-      throw new HttpError(500)
+      throw new InternalServerError()
     } catch (e) {
-      assert.deepEqual(e, 
+      assert.deepEqual(e,
         {
           status: 500,
           title: 'Internal Server Error',
           message: 'An error has ocurred',
           userMessage: 'An error has ocurred',
-        }
-      )
-    }
-  })
-
-  test('Request invalid code 999', () => {
-    try {
-      throw new HttpError(999)
-    } catch (e) {
-      assert.deepEqual(e, 
-        {
-          status: 0,
-          title: '',
-          message: '',
-          userMessage: '',
         }
       )
     }
