@@ -1,7 +1,6 @@
 import {TextCredibilityWeights, Credibility, TwitterUser, TweetCredibilityWeights, Tweet, Language, Text} from './models'
 import config from '../config'
 import Twit from 'twit'
-import { Dictionary } from 'dictionary-en-us'
 import NSpell from 'nspell'
 import wash from 'washyourmouthoutwithsoap'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from './spam-filter'

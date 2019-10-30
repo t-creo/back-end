@@ -19,8 +19,8 @@ export class BadRequestError extends HttpError {
     super()
     this.status = 400
     this.title = 'Bad Request'
-    this.message = 'A validation failed or the request was bad formatted'
-    this.userMessage = 'A validation failed'
+    this.message = 'A validation failed'
+    this.userMessage = 'An error has ocurred'
     if (errors.length !== 0) {
       this.errors = errors
     }

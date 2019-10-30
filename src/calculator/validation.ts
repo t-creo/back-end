@@ -1,5 +1,5 @@
 import { ValidationError } from 'express-validator'
-import HttpError from '../errorHandling/httpError'
+import { BadRequestError } from '../errorHandling/httpError'
 
 const { check } = require('express-validator')
 
@@ -21,7 +21,7 @@ export function validate(method: string) : any {
       check('weightMisspelling', 'weightMisspelling.NUMBER').isFloat(),
       check('weightMisspelling', 'weightMisspelling.NOT_IN_RANGE').isFloat({min : 0, max : 100}),
       check('WEIGHT_TEXT_CRED_SUM_NOT_1', 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1')
-        .custom((val: string, obj: any) => 
+        .custom((val: string, obj: any) =>
           Math.abs(parseFloat(obj.req.query.weightSpam) + parseFloat(obj.req.query.weightBadWords) + parseFloat(obj.req.query.weightMisspelling) - 1) < Number.EPSILON),
     ]
   }
@@ -74,10 +74,10 @@ export function validate(method: string) : any {
       check('yearJoined', 'yearJoined.NUMBER').isInt(),
       check('yearJoined', 'yearJoined.NOT_IN_RANGE').isInt({min: 2006}),
       check('WEIGHT_TEXT_CRED_SUM_NOT_1', 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1')
-        .custom((val: string, obj: any) => 
+        .custom((val: string, obj: any) =>
           Math.abs(parseFloat(obj.req.query.weightSpam) + parseFloat(obj.req.query.weightBadWords) + parseFloat(obj.req.query.weightMisspelling) - 1) < Number.EPSILON),
       check('WEIGHT_TWEET_CRED_SUM_NOT_1', 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1')
-        .custom((val: string, obj: any) => 
+        .custom((val: string, obj: any) =>
           Math.abs(parseFloat(obj.req.query.weightText) + parseFloat(obj.req.query.weightUser) + parseFloat(obj.req.query.weightSocial) - 1) < Number.EPSILON),
     ]
   }
@@ -113,10 +113,10 @@ export function validate(method: string) : any {
       check('maxFollowers', 'maxFollowers.NUMBER').isInt(),
       check('maxFollowers', 'maxFollowers.POSITIVE').isInt({gt: -1}),
       check('WEIGHT_TEXT_CRED_SUM_NOT_1', 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1')
-        .custom((val: string, obj: any) => 
+        .custom((val: string, obj: any) =>
           Math.abs(parseFloat(obj.req.query.weightSpam) + parseFloat(obj.req.query.weightBadWords) + parseFloat(obj.req.query.weightMisspelling) - 1) < Number.EPSILON),
       check('WEIGHT_TWEET_CRED_SUM_NOT_1', 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1')
-        .custom((val: string, obj: any) => 
+        .custom((val: string, obj: any) =>
           Math.abs(parseFloat(obj.req.query.weightText) + parseFloat(obj.req.query.weightUser) + parseFloat(obj.req.query.weightSocial) - 1) < Number.EPSILON),
     ]
   }
@@ -132,5 +132,5 @@ export function errorMapper(errors: ValidationError[]) : void {
       'validationCode': error.msg
     }
   })
-  throw new HttpError(400, mappedErrors)
+  throw new BadRequestError(mappedErrors)
 }
