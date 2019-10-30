@@ -28,6 +28,12 @@ const dictionaries = {
   }
 }
 
+const spellingCheckers = {
+  en: new NSpell(dictionaries.en.aff, dictionaries.en.dic),
+  es: new NSpell(dictionaries.es.aff, dictionaries.es.dic),
+  fr: new NSpell(dictionaries.fr.aff, dictionaries.fr.dic),
+}
+
 function responseToTwitterUser(response: any) : TwitterUser {
   return {
     name: response.name,
@@ -108,8 +114,7 @@ function spamCriteria(text: Text) : number {
 async function missSpellingCriteria(text: Text) : Promise<number> {
   const cleanedText = cleanText(text.text)
   const wordsInText = getCleanedWords(cleanedText)
-  const d: Dictionary = dictionaries[text.lang]
-  const spellingChecker = new NSpell(d.aff, d.dic)
+  const spellingChecker = spellingCheckers[text.lang]
   const numOfMissSpells : number = wordsInText.reduce((acc, curr) =>
     spellingChecker.correct(curr)
       ? acc

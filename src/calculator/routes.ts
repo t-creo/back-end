@@ -10,6 +10,7 @@ calculatorRoutes.get('/plain-text', validate('calculateTextCredibility'), functi
   if (!errors.isEmpty()) {
     errorMapper(errors.array())
   }
+  console.time('testing plain-text')
   calculateTextCredibility({
     text: req.query.text,
     lang: req.query.lang
@@ -19,6 +20,7 @@ calculatorRoutes.get('/plain-text', validate('calculateTextCredibility'), functi
     weightSpam: +req.query.weightSpam
   }).then(credibility => {
     res.send(credibility)
+    console.timeEnd('testing plain-text')
     next()
   })
 })
