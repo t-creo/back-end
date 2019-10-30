@@ -37,7 +37,7 @@ describe('Error Handler', () => {
       assert.deepEqual(e,
         {
           status: 401,
-          title: 'Unauthorized',
+          title: 'Unauthenticated',
           message: 'Not authenticated',
           userMessage: 'Client needs to authenticate',
         }
