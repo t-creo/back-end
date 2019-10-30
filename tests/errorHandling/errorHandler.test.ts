@@ -1,4 +1,4 @@
-import HttpError, { BadRequestError, UnauthorizedError, UnauthenticatedError, InternalServerError } from '../../src/errorHandling/httpError'
+import { BadRequestError, UnauthorizedError, UnauthenticatedError, InternalServerError } from '../../src/errorHandling/httpError'
 
 var assert = require('assert')
 
