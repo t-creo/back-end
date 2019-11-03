@@ -8,6 +8,9 @@ node_js:
 - 10.16.1
 - 10.16.2
 - 10.16.3
+addons:
+  ssh_known_hosts:
+  - 107.170.90.209:22
 if: branch IN (master, develop)
 script:
 - npm test
