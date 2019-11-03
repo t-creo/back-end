@@ -85,8 +85,12 @@ function removePunctuation(text: string) : string{
   return text.replace(/(~|`|!|@|#|$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|=)/g,'')
 }
 
-function cleanText(text: string) : string{
-  return removePunctuation(removeMention(removeURL((text))))
+function removeHashtag(text: string) {
+  return text.replace(/(\s|^)#\w\w+\b/g, '')
+}
+
+function cleanText(text: string) : string {
+  return removePunctuation(removeHashtag(removeMention(removeURL((text)))))
 }
 
 function badWordsCriteria(text: Text) : number {
@@ -190,6 +194,7 @@ async function calculateTweetCredibility(tweetId: string,
     const userCredibility: number = calculateUserCredibility(user) * params.weightUser
     const textCredibility: number = (await calculateTextCredibility(tweet.text, params)).credibility * params.weightText
     const socialCredibility: number = calculateSocialCredibility(user, maxFollowers) * params.weightSocial
+    console.log(cleanText(tweet.text.text))
     return {
       credibility: userCredibility + textCredibility + socialCredibility
     }
