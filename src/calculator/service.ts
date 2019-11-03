@@ -47,7 +47,7 @@ function responseToTweet(response: any) : Tweet {
   return {
     text: {
       text: response.text,
-      lang: response.lang,
+      lang: ['en', 'es', 'fr'].includes(response.lang) ? response.lang : 'en',
     },
     user: responseToTwitterUser(response.user)
   }
@@ -186,7 +186,6 @@ async function calculateTweetCredibility(tweetId: string,
   params: TweetCredibilityWeights, maxFollowers: number) : Promise<Credibility> {
   try {
     const tweet: Tweet = await getTweetInfo(tweetId)
-    console.log(tweet)
     const user: TwitterUser = tweet.user
     const userCredibility: number = calculateUserCredibility(user) * params.weightUser
     const textCredibility: number = (await calculateTextCredibility(tweet.text, params)).credibility * params.weightText
