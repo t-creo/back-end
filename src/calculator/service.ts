@@ -6,6 +6,7 @@ import wash from 'washyourmouthoutwithsoap'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from './spam-filter'
 import fs from 'fs'
 import path from 'path'
+import emojiStrip from 'emoji-strip'
 
 const enDictionaryBase = require.resolve('dictionary-en-us')
 const frDictionaryBase = require.resolve('dictionary-fr')
@@ -46,7 +47,7 @@ function responseToTwitterUser(response: any) : TwitterUser {
 function responseToTweet(response: any) : Tweet {
   return {
     text: {
-      text: response.text,
+      text: response.full_text,
       lang: ['en', 'es', 'fr'].includes(response.lang) ? response.lang : 'en',
     },
     user: responseToTwitterUser(response.user)
@@ -62,7 +63,7 @@ function buildTwitClient() : Twit {
 }
 
 function getCleanedWords(text: string) : string[] {
-  return text.replace(/[.]|\n|,/g, ' ').split(' ')
+  return text.replace(/ \s+/g, ' ').split(' ')
 }
 
 function isBadWord(lang: Language) : (word: string) => boolean {
@@ -86,11 +87,15 @@ function removePunctuation(text: string) : string{
 }
 
 function removeHashtag(text: string) {
-  return text.replace(/(\s|^)#\w\w+\b/g, '')
+  return text.replace(/(\s|^)#\w+\b/g, '')
+}
+
+function removeEmoji(text: string) {
+  return emojiStrip(text)
 }
 
 function cleanText(text: string) : string {
-  return removePunctuation(removeHashtag(removeMention(removeURL((text)))))
+  return removePunctuation(removeEmoji(removeHashtag(removeMention(removeURL((text))))))
 }
 
 function badWordsCriteria(text: Text) : number {
@@ -147,7 +152,7 @@ async function getUserInfo(userId: string) : Promise<TwitterUser> {
 async function getTweetInfo(tweetId: string) : Promise<Tweet> {
   const client = buildTwitClient()
   try {
-    const response = await client.get('statuses/show', { id: tweetId })
+    const response = await client.get('statuses/show', { id: tweetId, tweet_mode: 'extended' })
     return responseToTweet(response.data)
   } catch (e) {
     return e
@@ -234,7 +239,6 @@ function ffProportion(userFollowers: number, userFollowing: number) : number {
   } else {
     return (userFollowers / (userFollowers + userFollowing)) * 50
   }
-  
 }
 
 async function socialCredibility(userID: string, maxFollowers: number) {
