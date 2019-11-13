@@ -92,6 +92,12 @@ describe('/calculate/plain-text endpoint', () => {
           ...params
         })
       })
+      it('takes numbers as correct', () => {
+        return testCredibilityWithOkData({ credibility: 50 }, {
+          text: '2000 phrss',
+          ...params
+        })
+      })
     })
 
     describe('mixed one', () => {
