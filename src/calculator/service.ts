@@ -123,10 +123,12 @@ async function missSpellingCriteria(text: Text) : Promise<number> {
   const cleanedText = cleanText(text.text)
   const wordsInText = getCleanedWords(cleanedText)
   const spellingChecker = spellingCheckers[text.lang]
-  const numOfMissSpells : number = wordsInText.reduce((acc, curr) =>
-    spellingChecker.correct(curr)
-      ? acc
-      : acc + 1, 0)
+  const numOfMissSpells : number = wordsInText
+    .filter(word => isNaN(+word))
+    .reduce((acc, curr) =>
+      spellingChecker.correct(curr)
+        ? acc
+        : acc + 1, 0)
   return 100 - (100 * numOfMissSpells / wordsInText.length)
 }
 
