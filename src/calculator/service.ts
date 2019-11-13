@@ -101,7 +101,7 @@ function cleanText(text: string) : string {
 function badWordsCriteria(text: Text) : number {
   const cleanedText = cleanText(text.text)
   const wordsInText = getCleanedWords(cleanedText)
-  const badWordsInText = getBadWords(wordsInText.filter(word => isNaN(+word)), text.lang)
+  const badWordsInText = getBadWords(wordsInText, text.lang)
   return 100 - (100 * badWordsInText.length / wordsInText.length)
 }
 
