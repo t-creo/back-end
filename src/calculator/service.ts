@@ -150,7 +150,8 @@ async function getUserInfo(userId: string) : Promise<TwitterUser> {
     const response = await client.get('users/show', { user_id: userId })
     return responseToTwitterUser(response.data)
   } catch (e) {
-    return e
+    console.log(e)
+    throw e
   }
 }
 
@@ -160,7 +161,8 @@ async function getTweetInfo(tweetId: string) : Promise<Tweet> {
     const response = await client.get('statuses/show', { id: tweetId, tweet_mode: 'extended' })
     return responseToTweet(response.data)
   } catch (e) {
-    return e
+    console.log(e)
+    throw e
   }
 }
 
