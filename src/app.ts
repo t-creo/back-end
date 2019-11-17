@@ -7,6 +7,7 @@ import config from './config'
 
 const app = express()
 
+/* istanbul ignore next */
 if (config.NODE_ENV !== 'test') {
   app.use(expressWinston.logger({
     transports: [
