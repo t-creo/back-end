@@ -43,6 +43,13 @@ describe('/calculate/plain-text endpoint', () => {
           ...params
         })
       })
+
+      it('returns credibility=50 when a bad-word of any language is present', () => {
+        return testCredibilityWithOkData({ credibility: 50 }, {
+          text: 'puta hi',
+          ...params
+        })
+      })
     })
 
     describe('full spam criteria', () => {

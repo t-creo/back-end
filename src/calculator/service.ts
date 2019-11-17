@@ -1,4 +1,7 @@
-import {TextCredibilityWeights, Credibility, TwitterUser, TweetCredibilityWeights, Tweet, Language, Text} from './models'
+import {
+  TextCredibilityWeights, Credibility, TwitterUser,
+  TweetCredibilityWeights, Tweet, Text
+} from './models'
 import config from '../config'
 import Twit from 'twit'
 import NSpell from 'nspell'
@@ -48,7 +51,7 @@ function responseToTweet(response: any) : Tweet {
   return {
     text: {
       text: response.full_text,
-      lang: ['en', 'es', 'fr'].includes(response.lang) ? response.lang : 'en',
+      lang: Object.keys(spellingCheckers).includes(response.lang) ? response.lang : 'en',
     },
     user: responseToTwitterUser(response.user)
   }
@@ -66,12 +69,12 @@ function getCleanedWords(text: string) : string[] {
   return text.replace(/ \s+/g, ' ').split(' ')
 }
 
-function isBadWord(lang: Language) : (word: string) => boolean {
-  return (word) => wash.check(lang, word)
+function isBadWord(word: string) : boolean {
+  return Object.keys(spellingCheckers).some(lang => wash.check(lang, word))
 }
 
-function getBadWords(words: string[], lang: Language) : string[] {
-  return words.filter(isBadWord(lang))
+function getBadWords(words: string[]) : string[] {
+  return words.filter(isBadWord)
 }
 
 function removeURL(text: string) {
@@ -98,10 +101,10 @@ function cleanText(text: string) : string {
   return removePunctuation(removeEmoji(removeHashtag(removeMention(removeURL((text))))))
 }
 
-function badWordsCriteria(text: Text) : number {
-  const cleanedText = cleanText(text.text)
+function badWordsCriteria(text: string) : number {
+  const cleanedText = cleanText(text)
   const wordsInText = getCleanedWords(cleanedText)
-  const badWordsInText = getBadWords(wordsInText, text.lang)
+  const badWordsInText = getBadWords(wordsInText)
   return 100 - (100 * badWordsInText.length / wordsInText.length)
 }
 
@@ -133,7 +136,7 @@ async function missSpellingCriteria(text: Text) : Promise<number> {
 }
 
 async function calculateTextCredibility(text: Text, params: TextCredibilityWeights) : Promise<Credibility> {
-  const badWordsCalculation = params.weightBadWords * badWordsCriteria(text)
+  const badWordsCalculation = params.weightBadWords * badWordsCriteria(text.text)
   const spamCalculation = params.weightSpam * spamCriteria(text)
   const missSpellingCalculation = params.weightMisspelling * (await missSpellingCriteria(text))
   return {
@@ -201,7 +204,6 @@ async function calculateTweetCredibility(tweetId: string,
     const userCredibility: number = calculateUserCredibility(user) * params.weightUser
     const textCredibility: number = (await calculateTextCredibility(tweet.text, params)).credibility * params.weightText
     const socialCredibility: number = calculateSocialCredibility(user, maxFollowers) * params.weightSocial
-    console.log(cleanText(tweet.text.text))
     return {
       credibility: userCredibility + textCredibility + socialCredibility
     }
