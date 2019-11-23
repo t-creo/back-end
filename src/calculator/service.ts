@@ -167,7 +167,7 @@ async function getTweetInfo(tweetId: string) : Promise<Tweet> {
 }
 
 function calculateUserCredibility(user: TwitterUser) : number {
-  return getVerifWeight(user.verified) + getCreationWeight(user.yearJoined)
+  return Math.min(100, getVerifWeight(user.verified) + getCreationWeight(user.yearJoined))
 }
 
 function calculateSocialCredibility(user: TwitterUser, maxFollowers: number) : number {
