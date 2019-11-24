@@ -90,7 +90,8 @@ function removePunctuation(text: string) : string{
 }
 
 function removeHashtag(text: string) {
-  return text.replace(/(\s|^)#\w+\b/g, '')
+  return text.split(' ')
+    .filter(word => !(/^#/.test(word) || /#$/.test(word))).join(' ')
 }
 
 function removeEmoji(text: string) {
@@ -283,5 +284,6 @@ export {
   socialCredibility,
   scrapperTwitterUserCredibility,
   scrapedSocialCredibility,
-  scrapedtweetCredibility
+  scrapedtweetCredibility,
+  removeHashtag
 }
