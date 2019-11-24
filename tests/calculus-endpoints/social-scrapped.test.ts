@@ -28,6 +28,20 @@ describe('/calculate/social/scrape endpoint', () => {
       })
     })
 
+    describe('5.000.000 followers, 421 following, 2.000.000 MaxFollowers', () => {
+      const params = {
+        name: '',
+        verified: false,
+        yearJoined: 2000,
+        followersCount: 5000000,
+        friendsCount: 421,
+        maxFollowers: 2000000
+      }
+      it('returns credibility=100', () => {
+        return testCredibilityWithOkData({ credibility: 100 }, params)
+      })
+    })
+
     // This should be a test when we determine what credibiliy
     // the 0,0 pair should return.
     // describe('zero followers, zero following', () => {

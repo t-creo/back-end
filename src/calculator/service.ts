@@ -174,7 +174,7 @@ function calculateUserCredibility(user: TwitterUser) : number {
 function calculateSocialCredibility(user: TwitterUser, maxFollowers: number) : number {
   const followersImpactCalc = followersImpact(user.followersCount, maxFollowers)
   const ffProportionCalc = ffProportion(user.followersCount, user.friendsCount)
-  return followersImpactCalc + ffProportionCalc
+  return Math.min(100, followersImpactCalc + ffProportionCalc)
 }
 
 async function twitterUserCredibility(userId: string) {
