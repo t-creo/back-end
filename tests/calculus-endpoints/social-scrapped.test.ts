@@ -23,8 +23,8 @@ describe('/calculate/social/scrape endpoint', () => {
         friendsCount: 421,
         maxFollowers: 2000000
       }
-      it('returns credibility=30.04999998245834 with', () => {
-        return testCredibilityWithOkData({ credibility: 30.04999998245834 }, params)
+      it('returns credibility=79.98246448537638 with', () => {
+        return testCredibilityWithOkData({ credibility: 79.98246448537638 }, params)
       })
     })
 
