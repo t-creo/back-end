@@ -43,7 +43,7 @@ calculatorRoutes.get('/twitter/social/:userId', validate('socialCredibility'), a
   if (!errors.isEmpty()){
     errorMapper(errors.array())
   }
-  const socialCredibilityVal = await socialCredibility(req.params.userId, req.query.maxFollowers)
+  const socialCredibilityVal = await socialCredibility(req.params.userId, +req.query.maxFollowers)
   res.send(socialCredibilityVal)
 }))
 
@@ -59,7 +59,7 @@ calculatorRoutes.get('/twitter/tweets', validate('tweetCredibility'), asyncWrap(
     weightSocial: +req.query.weightSocial,
     weightText: +req.query.weightText,
     weightUser: +req.query.weightUser },
-  req.query.maxFollowers))
+  +req.query.maxFollowers))
 }))
 
 calculatorRoutes.get('/social/scrape', validate('scrapedSocialCredibility'), function(req, res){
@@ -67,7 +67,7 @@ calculatorRoutes.get('/social/scrape', validate('scrapedSocialCredibility'), fun
   if (!errors.isEmpty()){
     errorMapper(errors.array())
   }
-  res.send(scrapedSocialCredibility(req.query.followersCount, req.query.friendsCount, req.query.maxFollowers))
+  res.send(scrapedSocialCredibility(+req.query.followersCount, +req.query.friendsCount, +req.query.maxFollowers))
 })
 
 calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), asyncWrap(async function(req, res){
@@ -92,7 +92,7 @@ calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), asy
     yearJoined: +req.query.yearJoined,
     followersCount: +req.query.followersCount,
     friendsCount: +req.query.friendsCount
-  }, req.query.maxFollowers))
+  }, +req.query.maxFollowers))
 }))
 
 export default calculatorRoutes
