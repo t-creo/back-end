@@ -34,6 +34,8 @@
     "express-validator": "^6.2.0",
     "express-winston": "^4.0.0",
     "nspell": "^2.1.2",
+    "request": "^2.88.2",
+    "sync-request": "^6.1.0",
     "twit": "^2.2.11",
     "washyourmouthoutwithsoap": "^1.0.2",
     "winston": "^3.2.1"

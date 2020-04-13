@@ -15,6 +15,38 @@ const enDictionaryBase = require.resolve('dictionary-en-us')
 const frDictionaryBase = require.resolve('dictionary-fr')
 const esDictionaryBase = require.resolve('dictionary-es')
 
+var userTW={
+  'id_twitter':'',
+  'joined_date':'',
+  'user_name':'',
+  'following':0,
+  'followers':0,
+  'link':'',
+  'location':'',
+  'verified':'',
+  'extraction_method':'1',
+  'followers_impact':0,
+  'user_credibility':0
+}
+
+  
+var tweetTW={
+  'id_tweet_api':'',
+  'text':'',
+  'bad_words_filter':'',
+  'spam_filter':'',
+  'misspelling_filter':'',
+  'extraction_method':'1',
+  'tweet_credibility':'',
+  'retweets':'',
+  'favorites':'',
+  'replies':'',
+  'tweet_url':'',
+  'type':'',
+  'userAPIid':''
+}
+
+var Request = require('request')
 
 const dictionaries = {
   en: {
@@ -48,6 +80,22 @@ function responseToTwitterUser(response: any) : TwitterUser {
 }
 
 function responseToTweet(response: any) : Tweet {
+  
+  userTW = {
+    'id_twitter':response.user.id_str,
+    'joined_date':response.user.created_at.split(' ').pop(),
+    'user_name':response.user.screen_name,
+    'following':response.user.friends_count,
+    'followers':response.user.followers_count,
+    'link':response.user.url,
+    'location':response.user.location,
+    'verified':  (response.user.verified) ? '1': '0',
+    'extraction_method':'1',
+    'followers_impact':0,
+    'user_credibility': 0
+  }
+  
+
   return {
     text: {
       text: response.full_text,
@@ -207,8 +255,83 @@ async function calculateTweetCredibility(tweetId: string,
     const userCredibility: number = calculateUserCredibility(user) * params.weightUser
     const textCredibility: number = (await calculateTextCredibility(tweet.text, params)).credibility * params.weightText
     const socialCredibility: number = calculateSocialCredibility(user, maxFollowers) * params.weightSocial
+    console.log(socialCredibility)
+    await Request.post({
+      'headers': { 'content-type': 'application/json' },
+      'url': 'http://107.170.90.209//web-services/services/createTwitterUser.php',
+      'body': JSON.stringify(userTW)
+    },function optionalCallback(err:string, httpResponse:string, body:boolean) {
+      if (err) {console.error('upload failed:', err)}
+      if(body){ getUserTweets(userTW.user_name, userTW.id_twitter)}
+    })
+
+    const socialCredibilityNew:number= ((await calculateNewSocialCredibility('http://107.170.90.209//web-services/services/calculateSocialCredibility.php?id_twitter='+userTW.id_twitter)))* params.weightSocial  
+
     return {
-      credibility: userCredibility + textCredibility + socialCredibility
+      credibility: userCredibility + textCredibility + socialCredibilityNew
+    }
+  } catch (e) {
+    console.log(e)
+    throw e
+  }
+}
+
+
+function calculateNewSocialCredibility(url: any):Promise<number> {
+  return new Promise((resolve, reject) => {
+    Request(url, (error: any, response: { statusCode: string | number }, body: number) => {
+      if (error) reject(error)
+      if (response.statusCode != 200) {
+        reject('Invalid status code ' + response.statusCode + '>')
+      }
+      resolve(body)
+    })
+  })
+}
+
+async function getUserTweets(screenName: string, userId:string){
+  const client = buildTwitClient()
+  try {
+    const response = await client.get('statuses/user_timeline', {include_rts:false, screen_name: screenName, count:2000})
+    var tweetsAPI= (Object.values(response.data))
+    for(let element of tweetsAPI){
+      if (element=== 'undefined') {
+        break
+      } else{
+        // (tweetsAPI.forEach(element => {
+        var media=''
+        var type=''
+        // if (typeof element.entities.media === 'undefined') {
+        //   media=''
+        //   type=''
+        //}else{
+        //   media=element.entities.media[0].media_url
+        //   type=element.entities.media[0].type
+        //}
+        
+        tweetTW={
+          'id_tweet_api':element.id_str,  
+          'text':element.text,
+          'bad_words_filter':'0',
+          'spam_filter':'0',
+          'misspelling_filter':'0',
+          'extraction_method':'1',
+          'tweet_credibility':'0',
+          'retweets':element.retweet_count,
+          'favorites':element.favorite_count,
+          'replies':'0',
+          'tweet_url':media,
+          'type':type,
+          'userAPIid': userId //element.user.id_str
+        }
+        Request.post({
+          'headers': { 'content-type': 'application/json' },
+          'url': 'http://107.170.90.209//web-services/services/createTweet.php',
+          'body': JSON.stringify(
+            tweetTW
+          )
+        })
+      }
     }
   } catch (e) {
     console.log(e)
