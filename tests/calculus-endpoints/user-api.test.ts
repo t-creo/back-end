@@ -33,7 +33,7 @@ describe('/twitter/user/:id endpoint', () => {
     }
     describe('user 91891658', () => {
       it('returns credibility=30.76923076923077', () => {
-        return testCredibilityWithOkData({ credibility: 30.769230 })
+        return testCredibilityWithOkData({ credibility: 32.142857142857146 })
       })
     })
   })

@@ -403,7 +403,7 @@ describe('Input Validation', () => {
             errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
             userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
             validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
-      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0, weightBadWords: -1, weightMisspelling: 0, weightText: 0, weightUser: 0.5, weightSocial: 0.5})
+      }, { tweetId: 1244647948870455298, maxFollowers: 2000, weightSpam: 0, weightBadWords: -1, weightMisspelling: 0, weightText: 0, weightUser: 0.5, weightSocial: 0.5})
     })
     it('weightMisspelling.NOT_IN_RANGE', () => {
       return testTweetCredibility({
@@ -420,7 +420,7 @@ describe('Input Validation', () => {
             errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
             userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
             validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
-      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0, weightBadWords: 1, weightMisspelling: 1000, weightText: 0.2, weightUser: 0.3, weightSocial: 0.5})
+      }, { tweetId: 1244647948870455298, maxFollowers: 2000, weightSpam: 0, weightBadWords: 1, weightMisspelling: 1000, weightText: 0.2, weightUser: 0.3, weightSocial: 0.5})
     })
     it('weightSpam.NOT_IN_RANGE', () => {
       return testTweetCredibility({
@@ -437,7 +437,7 @@ describe('Input Validation', () => {
             errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
             userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
             validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
-      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: -10, weightBadWords: 1, weightMisspelling: 0, weightText: 0.9, weightUser: 0.1, weightSocial: 0})
+      }, { tweetId: 1244647948870455298, maxFollowers: 2000, weightSpam: -10, weightBadWords: 1, weightMisspelling: 0, weightText: 0.9, weightUser: 0.1, weightSocial: 0})
     })
     it('maxFollowers.POSITIVE', () => {
       return testTweetCredibility({
@@ -450,7 +450,7 @@ describe('Input Validation', () => {
             errorMessage: 'maxFollowers.POSITIVE',
             userErrorMessage: 'maxFollowers.POSITIVE',
             validationCode: 'maxFollowers.POSITIVE' } ]
-      }, { tweetId: 867412932409282560, maxFollowers: -1, weightSpam: 0, weightBadWords: 1, weightMisspelling: 0, weightText: 0, weightUser: 1, weightSocial: 0})
+      }, { tweetId: 1244647948870455298, maxFollowers: -1, weightSpam: 0, weightBadWords: 1, weightMisspelling: 0, weightText: 0, weightUser: 1, weightSocial: 0})
     })
     it('weightUser.NOT_IN_RANGE', () => {
       return testTweetCredibility({
@@ -467,7 +467,7 @@ describe('Input Validation', () => {
             errorMessage: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1',
             userErrorMessage: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1',
             validationCode: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1' } ]
-      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0, weightBadWords: 1, weightMisspelling: 0, weightText: 0, weightUser: -10, weightSocial: 0})
+      }, { tweetId: 1244647948870455298, maxFollowers: 2000, weightSpam: 0, weightBadWords: 1, weightMisspelling: 0, weightText: 0, weightUser: -10, weightSocial: 0})
     })
     it('customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1', () => {
       return testTweetCredibility({
@@ -480,7 +480,7 @@ describe('Input Validation', () => {
             errorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
             userErrorMessage: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1',
             validationCode: 'customValidation.WEIGHT_TEXT_CRED_NOT_EQUALS_TO_1' } ]
-      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0.3, weightBadWords: 0.3, weightMisspelling: 0.3, weightText: 0, weightUser: 1, weightSocial: 0})
+      }, { tweetId: 1244647948870455298, maxFollowers: 2000, weightSpam: 0.3, weightBadWords: 0.3, weightMisspelling: 0.3, weightText: 0, weightUser: 1, weightSocial: 0})
     })
     it('customValidation.WEIGHT_TWEET_CRED_SUM_NOT_1', () => {
       return testTweetCredibility({
@@ -493,7 +493,7 @@ describe('Input Validation', () => {
             errorMessage: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1',
             userErrorMessage: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1',
             validationCode: 'customValidation.WEIGHT_TWEET_CRED_NOT_EQUALS_TO_1' } ]
-      }, { tweetId: 867412932409282560, maxFollowers: 2000, weightSpam: 0.3, weightBadWords: 0.3, weightMisspelling: 0.4, weightText: 1, weightUser: 1, weightSocial: 0})
+      }, { tweetId: 1244647948870455298, maxFollowers: 2000, weightSpam: 0.3, weightBadWords: 0.3, weightMisspelling: 0.4, weightText: 1, weightUser: 1, weightSocial: 0})
     })
   })
   describe('/GET /calculate/tweets/scraped', () => {
