@@ -4,6 +4,8 @@
 
 Backend para la aplicación World White Web. MiniProyecto de Desarrollo de Software para la USBve.
 
+_If you want to see the english version, see [here](./README-EN.md)_
+
 ## Integrantes
 
 * Yuni Quintero
