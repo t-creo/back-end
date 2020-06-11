@@ -6,9 +6,13 @@ import { Credibility } from '../../src/calculator/models'
 
 jest.mock('twit')
 
+const RealFullYear = Date.prototype.getFullYear
+
 describe('/twitter/user/:id endpoint', () => {
 
   beforeAll(() => {
+    // we need to mock the getFullYear method of the Date objects
+    global.Date.prototype.getFullYear = jest.fn(() => 2019)
     Twit.prototype.get = jest.fn((path: string, params?: any) =>new Promise((resolve:any, reject:any) => resolve({
       data: {
         id: 91891658,
@@ -19,6 +23,10 @@ describe('/twitter/user/:id endpoint', () => {
         verified: false,
       }
     })))
+  })
+
+  afterAll(() => {
+    global.Date.prototype.getFullYear = RealFullYear
   })
 
   describe('http 200 calls', () => {
