@@ -65,8 +65,8 @@ class SimpleSpamFilter {
  */
 
 function percentCaps (tweet: string) {
-  var capCount = 0
-  var chars = tweet.split('')
+  let capCount = 0
+  const chars = tweet.split('')
 
   chars.forEach(function (char) {
     if (char === char.toUpperCase()) {

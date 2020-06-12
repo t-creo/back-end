@@ -1,6 +1,6 @@
 import { BadRequestError, UnauthorizedError, UnauthenticatedError, InternalServerError } from '../../src/errorHandling/httpError'
 
-var assert = require('assert')
+const assert = require('assert')
 
 describe('Error Handler', () => {
 
