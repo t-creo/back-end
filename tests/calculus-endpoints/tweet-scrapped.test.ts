@@ -27,7 +27,6 @@ describe('/calculate/tweets/scraped endpoint', () => {
         weightSocial: 0,
       }
       const twitterUser : TwitterUser = {
-        name: '',
         verified: false,
         yearJoined: 2010,
         followersCount: 2000,
@@ -62,7 +61,6 @@ describe('/calculate/tweets/scraped endpoint', () => {
         weightSocial: 0
       }
       const twitterUser : TwitterUser = {
-        name: '',
         verified: true,
         yearJoined: 2006,
         friendsCount: 2000,
@@ -120,7 +118,6 @@ describe('/calculate/tweets/scraped endpoint', () => {
         weightSocial: 1
       }
       const twitterUser : TwitterUser = {
-        name: '',
         verified: true,
         yearJoined: 2006,
         friendsCount: 2000,

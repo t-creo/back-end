@@ -87,7 +87,6 @@ calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), asy
     weightSocial: +req.query.weightSocial,
   },
   {
-    name: '',
     verified: req.query.verified === 'true',
     yearJoined: +req.query.yearJoined,
     followersCount: +req.query.followersCount,
