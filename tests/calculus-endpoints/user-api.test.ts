@@ -16,7 +16,6 @@ describe('/twitter/user/:id endpoint', () => {
     Twit.prototype.get = jest.fn((path: string, params?: any) =>new Promise((resolve:any, reject:any) => resolve({
       data: {
         id: 91891658,
-        name: 'Test name',
         followers_count: 116,
         friends_count: 138,
         created_at: 'Mon Feb 21 01:59:02 +0000 2011',

@@ -15,7 +15,6 @@ export interface TweetCredibilityWeights extends TextCredibilityWeights {
 }
 
 export interface TwitterUser {
-  name: string
   verified: boolean
   yearJoined: number
   followersCount: number

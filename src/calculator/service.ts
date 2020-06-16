@@ -39,7 +39,6 @@ const spellingCheckers = {
 
 function responseToTwitterUser(response: any) : TwitterUser {
   return {
-    name: response.name,
     verified: response.verified,
     yearJoined: response.created_at.split(' ').pop(),
     followersCount: response.followers_count,
@@ -188,7 +187,6 @@ async function twitterUserCredibility(userId: string) {
 
 function scrapperTwitterUserCredibility(verified: boolean, accountCreationYear: number) : Credibility{
   const user:  TwitterUser = {
-    name: '',
     verified: verified,
     yearJoined: accountCreationYear,
     followersCount: 0,
@@ -266,7 +264,6 @@ async function scrapedtweetCredibility(tweetText: Text, tweetCredibilityWeights:
 
 function scrapedSocialCredibility(followersCount: number, friendsCount: number, maxFollowers: number){
   const user : TwitterUser = {
-    name: '',
     verified: false,
     yearJoined: 2018,
     followersCount: followersCount,
