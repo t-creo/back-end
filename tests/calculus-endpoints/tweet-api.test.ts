@@ -15,7 +15,6 @@ describe('/twitter/tweets', () => {
         lang: 'en',
         user: {
           id: 91891658,
-          name: 'Test name',
           followers_count: 0,
           friends_count: 0,
           created_at: 'Mon Feb 21 01:59:02 +0000 2011',

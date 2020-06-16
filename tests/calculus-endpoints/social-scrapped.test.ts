@@ -16,7 +16,6 @@ describe('/calculate/social/scrape endpoint', () => {
 
     describe('1.200.000 followers, 421 following', () => {
       const params = {
-        name: '',
         verified: false,
         yearJoined: 2000,
         followersCount: 1200000,
@@ -30,7 +29,6 @@ describe('/calculate/social/scrape endpoint', () => {
 
     describe('5.000.000 followers, 421 following, 2.000.000 MaxFollowers', () => {
       const params = {
-        name: '',
         verified: false,
         yearJoined: 2000,
         followersCount: 5000000,
@@ -46,7 +44,6 @@ describe('/calculate/social/scrape endpoint', () => {
     // the 0,0 pair should return.
     // describe('zero followers, zero following', () => {
     //   const params = {
-    //     name: '',
     //     verified: false,
     //     yearJoined: 2000      
     //   }
@@ -72,7 +69,6 @@ describe('/calculate/social/scrape endpoint', () => {
 
     describe('negative followers, positive followings', () => {
       const params = {
-        name: '',
         verified: false,
         yearJoined: 2000,
         followersCount: -1,

@@ -19,7 +19,6 @@ describe('/user/scrape endpoint', () => {
     }
     describe('verified true, year joined 2006', () => {
       const params = {
-        name: 'f',
         followersCount: 123,
         friendsCount: 12
       }
