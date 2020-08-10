@@ -170,6 +170,7 @@ async function getTweetInfo(tweetId: string) : Promise<Tweet> {
     return responseToTweet(response.data)
   } catch (e) {
     console.log(e)
+    console.timeEnd(DEBUG_TWEET_TWITTER_API_TIME_LABEL)
     throw e
   }
 }
