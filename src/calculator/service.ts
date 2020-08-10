@@ -145,15 +145,9 @@ async function calculateTextCredibility(text: Text, params: TextCredibilityWeigh
 }
 
 async function getUserInfo(userId: string) : Promise<TwitterUser> {
-  const DEBUG_TWITTER_API_TIME_LABEL = 'Time spent calling the Twitter API \
-  to get user info'
-  
-  console.time(DEBUG_TWITTER_API_TIME_LABEL)
   const client = buildTwitClient()
   try {
     const response = await client.get('users/show', { user_id: userId })
-    console.timeEnd(DEBUG_TWITTER_API_TIME_LABEL)
-    
     return responseToTwitterUser(response.data)
   } catch (e) {
     console.log(e)
@@ -162,9 +156,10 @@ async function getUserInfo(userId: string) : Promise<TwitterUser> {
 }
 
 async function getTweetInfo(tweetId: string) : Promise<Tweet> {
-  const DEBUG_TWEET_TWITTER_API_TIME_LABEL = 'Time spent calling the Twitter API \
+  const DEBUG_TWEET_TWITTER_API_TIME_LABEL = 'Time spent calling the Twitter API\
   to get tweet info'
-
+  
+  console.log("1")
   console.time(DEBUG_TWEET_TWITTER_API_TIME_LABEL)
   const client = buildTwitClient()  
 
