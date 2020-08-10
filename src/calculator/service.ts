@@ -159,7 +159,7 @@ async function getTweetInfo(tweetId: string) : Promise<Tweet> {
   const DEBUG_TWEET_TWITTER_API_TIME_LABEL = 'Time spent calling the Twitter API\
   to get tweet info'
   
-  console.log("1")
+  console.log('1')
   console.time(DEBUG_TWEET_TWITTER_API_TIME_LABEL)
   const client = buildTwitClient()  
 
