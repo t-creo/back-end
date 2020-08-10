@@ -157,7 +157,7 @@ async function getUserInfo(userId: string) : Promise<TwitterUser> {
 
 async function getTweetInfo(tweetId: string) : Promise<Tweet> {
   const DEBUG_TWEET_TWITTER_API_TIME_LABEL = 'Time spent calling the Twitter API\
-  to get tweet info'
+  to get tweet info - ' + Math.random()
   
   console.log('1')
   console.time(DEBUG_TWEET_TWITTER_API_TIME_LABEL)
