@@ -156,12 +156,20 @@ async function getUserInfo(userId: string) : Promise<TwitterUser> {
 }
 
 async function getTweetInfo(tweetId: string) : Promise<Tweet> {
-  const client = buildTwitClient()
+  const DEBUG_TWEET_TWITTER_API_TIME_LABEL = 'Time spent calling the Twitter API\
+  to get tweet info - ' + Math.random()
+  
+  console.time(DEBUG_TWEET_TWITTER_API_TIME_LABEL)
+  const client = buildTwitClient()  
+
   try {
     const response = await client.get('statuses/show', { id: tweetId, tweet_mode: 'extended' })
+    console.timeEnd(DEBUG_TWEET_TWITTER_API_TIME_LABEL)
+    
     return responseToTweet(response.data)
   } catch (e) {
     console.log(e)
+    console.timeEnd(DEBUG_TWEET_TWITTER_API_TIME_LABEL)
     throw e
   }
 }
