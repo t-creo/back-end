@@ -1,6 +1,6 @@
-# www-back-end
+# t-creo-back-end
 
-![](https://img.shields.io/docker/automated/german1608/world-white-web?style=flat-square) ![](https://img.shields.io/travis/World-White-Web/www-back-end/develop?style=flat-square) ![npm type definitions](https://img.shields.io/npm/types/typescript?style=flat-square) [![Coverage Status](https://coveralls.io/repos/github/World-White-Web/www-back-end/badge.svg?branch=develop)](https://coveralls.io/github/World-White-Web/www-back-end?branch=develop)
+![](https://img.shields.io/docker/automated/german1608/t-creo?style=flat-square) ![](https://img.shields.io/travis/t-creo/back-end/develop?style=flat-square) ![npm type definitions](https://img.shields.io/npm/types/typescript?style=flat-square) [![Coverage Status](https://coveralls.io/repos/github/t-creo/back-end/badge.svg?branch=develop)](https://coveralls.io/github/t-creo/back-end?branch=develop)
 
 Backend for the World White Web Application. Miniproject of software development
 of Simon Bolivar University.
@@ -57,5 +57,5 @@ Request review from all members of the team.
 
 ## Who do I talk to?
 
-You can contact any contributor and member of the [World-White-Web](https://github.com/World-White-Web)
+You can contact any contributor and member of the [T-CREO](https://github.com/t-creo)
 team with any subject, though the most active maintainer is @german1608.
