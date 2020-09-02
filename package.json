@@ -1,5 +1,5 @@
 {
-  "name": "www-back-end",
+  "name": "t-creo-back-end",
   "version": "1.0.0",
   "description": "Backend para la aplicación World White Web",
   "main": "server.js",
