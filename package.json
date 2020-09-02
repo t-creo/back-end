@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/World-White-Web/www-back-end.git"
+    "url": "git+https://github.com/t-creo/back-end.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/World-White-Web/www-back-end/issues"
+    "url": "https://github.com/t-creo/back-end/issues"
   },
-  "homepage": "https://github.com/World-White-Web/www-back-end#readme",
+  "homepage": "https://github.com/t-creo/back-end#readme",
   "dependencies": {
     "@types/emoji-strip": "^1.0.0",
     "dictionary-en-us": "^2.1.1",

@@ -1,4 +1,4 @@
-DOCKER_IMAGE_NAME="german1608/world-white-web:latest"
+DOCKER_IMAGE_NAME="german1608/t-creo:latest"
 
 echo "Building docker image"
 docker build  -t $DOCKER_IMAGE_NAME .
