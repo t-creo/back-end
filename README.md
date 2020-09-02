@@ -19,6 +19,7 @@ _If you want to see the english version, see [here](./README-EN.md)_
 
 * Yudith Cardinale
 * Irvin Dongo
+* Ana Aguilera
 
 ## Instalación del Proyecto
 
