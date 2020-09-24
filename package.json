@@ -1,7 +1,7 @@
 {
   "name": "t-creo-back-end",
   "version": "1.0.0",
-  "description": "Backend para la aplicación World White Web",
+  "description": "Backend para la aplicación T-CREo",
   "main": "server.js",
   "scripts": {
     "start": "nodemon --watch src --exec ts-node src/server.ts",
