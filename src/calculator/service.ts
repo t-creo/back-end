@@ -8,6 +8,7 @@ import NSpell from 'nspell'
 import wash from 'washyourmouthoutwithsoap'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from './spam-filter'
 import fs from 'fs'
+import { performance } from 'perf_hooks'
 import path from 'path'
 import emojiStrip from 'emoji-strip'
 
@@ -136,12 +137,17 @@ function missSpellingCriteria(text: Text) : number {
 }
 
 function calculateTextCredibility(text: Text, params: TextCredibilityWeights) : Credibility {
+  const start = performance.now()
   const badWordsCalculation = params.weightBadWords * badWordsCriteria(text.text)
   const spamCalculation = params.weightSpam * spamCriteria(text)
   const missSpellingCalculation = params.weightMisspelling * missSpellingCriteria(text)
-  return {
-    credibility: badWordsCalculation + spamCalculation + missSpellingCalculation
-  }
+  const credibility = badWordsCalculation + spamCalculation + missSpellingCalculation
+  const end = performance.now()
+  console.log(JSON.stringify({
+    time: end - start,
+    metric: 'TEXT_CREDIBILITY'
+  }))
+  return { credibility }
 }
 
 async function getUserInfo(userId: string) : Promise<TwitterUser> {
