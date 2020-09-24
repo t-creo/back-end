@@ -2,7 +2,7 @@
 
 ![](https://img.shields.io/docker/automated/german1608/t-creo?style=flat-square) ![](https://img.shields.io/travis/t-creo/back-end/develop?style=flat-square) ![npm type definitions](https://img.shields.io/npm/types/typescript?style=flat-square) [![Coverage Status](https://coveralls.io/repos/github/t-creo/back-end/badge.svg?branch=develop)](https://coveralls.io/github/t-creo/back-end?branch=develop)
 
-Backend for the World White Web Application. Miniproject of software development
+Backend for the T-CREo Application. Miniproject of software development
 of Simon Bolivar University.
 
 ## Members

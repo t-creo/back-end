@@ -6,12 +6,12 @@ import { asyncWrap } from '../utils'
 
 const calculatorRoutes = express.Router()
 
-calculatorRoutes.get('/plain-text', validate('calculateTextCredibility'), asyncWrap(async function(req, res) {
+calculatorRoutes.get('/plain-text', validate('calculateTextCredibility'), function(req, res) {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     errorMapper(errors.array())
   }
-  res.json(await calculateTextCredibility({
+  res.json(calculateTextCredibility({
     text: req.query.text,
     lang: req.query.lang
   }, {
@@ -19,7 +19,7 @@ calculatorRoutes.get('/plain-text', validate('calculateTextCredibility'), asyncW
     weightMisspelling: +req.query.weightMisspelling,
     weightSpam: +req.query.weightSpam
   }))
-}))
+})
 
 calculatorRoutes.get('/twitter/user/:id', validate('twitterUserCredibility'), asyncWrap(async function(req, res) {
   const errors = validationResult(req)

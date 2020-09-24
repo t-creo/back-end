@@ -2,7 +2,7 @@
 
 ![](https://img.shields.io/docker/automated/german1608/t-creo?style=flat-square) ![](https://img.shields.io/travis/t-creo/back-end/develop?style=flat-square) ![npm type definitions](https://img.shields.io/npm/types/typescript?style=flat-square) [![Coverage Status](https://coveralls.io/repos/github/t-creo/back-end/badge.svg?branch=develop)](https://coveralls.io/github/t-creo/back-end?branch=develop)
 
-Backend para la aplicación World White Web. MiniProyecto de Desarrollo de Software para la USBve.
+Backend para la aplicación T-CREo. MiniProyecto de Desarrollo de Software para la USBve.
 
 _If you want to see the english version, see [here](./README-EN.md)_
 

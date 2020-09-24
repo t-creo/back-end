@@ -8,6 +8,7 @@ import NSpell from 'nspell'
 import wash from 'washyourmouthoutwithsoap'
 import SimpleSpamFilter, { SimpleSpamFilterParams } from './spam-filter'
 import fs from 'fs'
+import { performance } from 'perf_hooks'
 import path from 'path'
 import emojiStrip from 'emoji-strip'
 
@@ -122,7 +123,7 @@ function spamCriteria(text: Text) : number {
     : 100
 }
 
-async function missSpellingCriteria(text: Text) : Promise<number> {
+function missSpellingCriteria(text: Text) : number {
   const cleanedText = cleanText(text.text)
   const wordsInText = getCleanedWords(cleanedText)
   const spellingChecker = spellingCheckers[text.lang]
@@ -135,13 +136,18 @@ async function missSpellingCriteria(text: Text) : Promise<number> {
   return 100 - (100 * numOfMissSpells / wordsInText.length)
 }
 
-async function calculateTextCredibility(text: Text, params: TextCredibilityWeights) : Promise<Credibility> {
+function calculateTextCredibility(text: Text, params: TextCredibilityWeights) : Credibility {
+  const start = performance.now()
   const badWordsCalculation = params.weightBadWords * badWordsCriteria(text.text)
   const spamCalculation = params.weightSpam * spamCriteria(text)
-  const missSpellingCalculation = params.weightMisspelling * (await missSpellingCriteria(text))
-  return {
-    credibility: badWordsCalculation + spamCalculation + missSpellingCalculation
-  }
+  const missSpellingCalculation = params.weightMisspelling * missSpellingCriteria(text)
+  const credibility = badWordsCalculation + spamCalculation + missSpellingCalculation
+  const end = performance.now()
+  console.log(JSON.stringify({
+    time: end - start,
+    metric: 'TEXT_CREDIBILITY'
+  }))
+  return { credibility }
 }
 
 async function getUserInfo(userId: string) : Promise<TwitterUser> {
@@ -211,7 +217,7 @@ async function calculateTweetCredibility(tweetId: string,
     const tweet: Tweet = await getTweetInfo(tweetId)
     const user: TwitterUser = tweet.user
     const userCredibility: number = calculateUserCredibility(user) * params.weightUser
-    const textCredibility: number = (await calculateTextCredibility(tweet.text, params)).credibility * params.weightText
+    const textCredibility: number = calculateTextCredibility(tweet.text, params).credibility * params.weightText
     const socialCredibility: number = calculateSocialCredibility(user, maxFollowers) * params.weightSocial
     return {
       credibility: userCredibility + textCredibility + socialCredibility
@@ -263,7 +269,7 @@ async function socialCredibility(userID: string, maxFollowers: number) {
 
 async function scrapedtweetCredibility(tweetText: Text, tweetCredibilityWeights: TweetCredibilityWeights, twitterUser: TwitterUser, maxFollowers: number){
   const userCredibility: number = calculateUserCredibility(twitterUser) * tweetCredibilityWeights.weightUser
-  const textCredibility: number = (await calculateTextCredibility(tweetText, tweetCredibilityWeights)).credibility * tweetCredibilityWeights.weightText
+  const textCredibility: number = calculateTextCredibility(tweetText, tweetCredibilityWeights).credibility * tweetCredibilityWeights.weightText
   const socialCredibility: number = calculateSocialCredibility(twitterUser, maxFollowers) * tweetCredibilityWeights.weightSocial
   return {
     credibility: userCredibility + textCredibility + socialCredibility
