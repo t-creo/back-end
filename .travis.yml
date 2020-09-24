@@ -14,6 +14,7 @@ addons:
 if: branch IN (master, develop)
 script:
 - npm test
+after_success:
 - npm run upload-coverage
 before_install:
 - openssl aes-256-cbc -K $encrypted_cfeaf5955b9b_key -iv $encrypted_cfeaf5955b9b_iv
