@@ -70,12 +70,12 @@ calculatorRoutes.get('/social/scrape', validate('scrapedSocialCredibility'), fun
   res.send(scrapedSocialCredibility(+req.query.followersCount, +req.query.friendsCount, +req.query.maxFollowers))
 })
 
-calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), asyncWrap(async function(req, res){
+calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), function(req, res){
   const errors = validationResult(req)
   if (!errors.isEmpty()){
     errorMapper(errors.array())
   }
-  res.json(await scrapedtweetCredibility({
+  res.json(scrapedtweetCredibility({
     text: req.query.tweetText,
     lang: req.query.lang
   }, {
@@ -92,6 +92,6 @@ calculatorRoutes.get('/tweets/scraped', validate('scrapedTweetCredibility'), asy
     followersCount: +req.query.followersCount,
     friendsCount: +req.query.friendsCount
   }, +req.query.maxFollowers))
-}))
+})
 
 export default calculatorRoutes
