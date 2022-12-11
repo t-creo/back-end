@@ -30,7 +30,7 @@
     "dictionary-fr": "^2.3.2",
     "dotenv": "^8.1.0",
     "emoji-strip": "^1.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-validator": "^6.2.0",
     "express-winston": "^4.0.0",
     "nspell": "^2.1.2",
